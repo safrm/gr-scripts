@@ -1,0 +1,14 @@
+name: git recursive directories scripts
+version: 1.0
+author:  Miroslav Safr miroslav.safr@gmail.com
+web: https://github.com/safrm/gr-scripts
+description: let monkey work to be done by monkies :)
+
+content: 
+ gr-cleanall.sh ........... cleans up git clones in subdirectories
+ gr-pullall.sh ............ pulls all and keeps local chanegs in  subdirectories 
+ gr-pullresetall.sh ....... pulls all and resets local changes in subdirectories 
+ gr-showall.sh ............ shows local tags versus current remote situation in subdirectories 
+ gr-showlocal.sh .......... shows local tags and if it was edited in subdirectories 
+ 
+ install.sh ........... executes installation to /urs/local/bin directory
