@@ -1,0 +1,6 @@
+gr-cleanall /usr/bin/
+gr-pullall /usr/bin/
+gr-pullresetall /usr/bin/
+gr-showall /usr/bin/
+gr-showlocal /usr/bin/
+
