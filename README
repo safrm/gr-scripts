@@ -1,5 +1,4 @@
 name: git recursive directories scripts
-version: 1.0
 author:  Miroslav Safr <miroslav.safr@gmail.com>
 web: https://github.com/safrm/gr-scripts
 description: let monkey work to be done by monkies :)
