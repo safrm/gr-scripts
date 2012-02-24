@@ -39,11 +39,11 @@ export INSTALL_ROOT=$RPM_BUILD_ROOT
 # << install pre 
 #make install
 mkdir -p %{buildroot}/usr/bin
-cp ./gr-cleanall %{buildroot}/usr/bin/
-cp ./gr-pullall %{buildroot}/usr/bin/
-cp ./gr-pullresetall %{buildroot}/usr/bin/
-cp ./gr-showall %{buildroot}/usr/bin/
-cp ./gr-showlocal  %{buildroot}/usr/bin/
+install -m 755 ./gr-cleanall %{buildroot}/usr/bin/
+install -m 755 ./gr-pullall %{buildroot}/usr/bin/
+install -m 755 ./gr-pullresetall %{buildroot}/usr/bin/
+install -m 755 ./gr-showall %{buildroot}/usr/bin/
+install -m 755 ./gr-showlocal  %{buildroot}/usr/bin/
 
 # >> install post
 # << install post
