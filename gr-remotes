@@ -1,0 +1,28 @@
+#!/bin/bash
+#git recursive directories scripts - https://github.com/safrm/gr-scripts
+#author: Miroslav Safr <miroslav.safr@gmail.com>
+#shows remote branches in subdirectories ./ or $1/ 
+
+PROJECT_DIR="$1"
+if [ -z "$PROJECT_DIR" ] || [ ! -d "$PROJECT_DIR" ]; then
+	PROJECT_DIR="./"
+fi
+
+CWD=`pwd`
+cd $PROJECT_DIR
+PROJECT_DIR=`pwd`
+
+find ./  -type d -name ".git*"  |  sed 's/\/.git//g' | while read ENTRY
+do
+		cd $ENTRY 
+		#URLS=`git config --get remote.origin.url`
+        URLS=`git remote -v | awk '{print $1 " " $2 }' | sort -u`  
+		echo -e "\033[32m $ENTRY:\033[0m $URLS"
+		cd $PROJECT_DIR
+done
+
+TIME=`date +%H:%M:%S`
+echo "gr-remotes finished:$TIME"
+
+
+

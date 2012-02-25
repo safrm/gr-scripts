@@ -1,7 +1,6 @@
 #!/bin/bash
 #git recursive directories scripts - https://github.com/safrm/gr-scripts
-#version: 1.0
-#author:  Miroslav Safr miroslav.safr@gmail.com
+#author: Miroslav Safr <miroslav.safr@gmail.com>
 #pulls all and keeps local chanegs in  subdirectories ./ or $1/ except those which are marked by "touch <dir>/.git/no_updates"
 
 PROJECT_DIR="$1"

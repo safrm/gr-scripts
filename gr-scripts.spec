@@ -42,6 +42,7 @@ mkdir -p %{buildroot}/usr/bin
 install -m 755 ./gr-clean %{buildroot}/usr/bin/
 install -m 755 ./gr-pull %{buildroot}/usr/bin/
 install -m 755 ./gr-pullreset %{buildroot}/usr/bin/
+install -m 755 ./gr-remotes %{buildroot}/usr/bin/
 install -m 755 ./gr-show %{buildroot}/usr/bin/
 install -m 755 ./gr-showlocal  %{buildroot}/usr/bin/
 
@@ -59,6 +60,7 @@ install -m 755 ./gr-showlocal  %{buildroot}/usr/bin/
 %{_bindir}/gr-clean
 %{_bindir}/gr-pull
 %{_bindir}/gr-pullreset
+%{_bindir}/gr-remotes
 %{_bindir}/gr-show
 %{_bindir}/gr-showlocal
 # << files

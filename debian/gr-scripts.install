@@ -1,6 +1,7 @@
 gr-clean /usr/bin/
 gr-pull /usr/bin/
 gr-pullreset /usr/bin/
+gr-remotes /usr/bin/
 gr-show /usr/bin/
 gr-showlocal /usr/bin/
 
