@@ -1,3 +1,15 @@
+gr-scripts (1.0.1-1) unstable; urgency=low
+
+  * rely only to git version, debian packaging
+  * Fix: Problem with permissions
+  * Chg:ubuntu 11.10 source pkg compatibility
+  * Chg:removed suffix 'all' from scripts names to save keyboard hits
+  * New: gr-remotes shows remotes Chg: formating
+  * New: gr-branches for local branches
+  * Chg:updated documentation, printouts and formating
+
+ -- Miroslav Safr <miroslav.safr@gmail.com>  Sat, 25 Feb 2012 16:31:19 +0200
+
 gr-scripts (1.0.0-1) unstable; urgency=low
 
   * first released version
