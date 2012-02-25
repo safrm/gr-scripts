@@ -39,10 +39,10 @@ export INSTALL_ROOT=$RPM_BUILD_ROOT
 # << install pre 
 #make install
 mkdir -p %{buildroot}/usr/bin
-install -m 755 ./gr-cleanall %{buildroot}/usr/bin/
-install -m 755 ./gr-pullall %{buildroot}/usr/bin/
-install -m 755 ./gr-pullresetall %{buildroot}/usr/bin/
-install -m 755 ./gr-showall %{buildroot}/usr/bin/
+install -m 755 ./gr-clean %{buildroot}/usr/bin/
+install -m 755 ./gr-pull %{buildroot}/usr/bin/
+install -m 755 ./gr-pullreset %{buildroot}/usr/bin/
+install -m 755 ./gr-show %{buildroot}/usr/bin/
 install -m 755 ./gr-showlocal  %{buildroot}/usr/bin/
 
 # >> install post
@@ -56,10 +56,10 @@ install -m 755 ./gr-showlocal  %{buildroot}/usr/bin/
 %files
 %defattr(-,root,root,-)
 # >> files
-%{_bindir}/gr-cleanall
-%{_bindir}/gr-pullall
-%{_bindir}/gr-pullresetall
-%{_bindir}/gr-showall
+%{_bindir}/gr-clean
+%{_bindir}/gr-pull
+%{_bindir}/gr-pullreset
+%{_bindir}/gr-show
 %{_bindir}/gr-showlocal
 # << files
 
