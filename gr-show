@@ -40,5 +40,5 @@ do
 done
 
 TIME=`date +%H:%M:%S`
-echo "Showall finished:$TIME"
+echo "gr-show finished:$TIME"
 

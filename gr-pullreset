@@ -37,5 +37,5 @@ do
 done
 
 TIME=`date +%H:%M:%S`
-echo "Pullall (reset local) finished:$TIME"
+echo "gr-pull (reset local) finished:$TIME"
 

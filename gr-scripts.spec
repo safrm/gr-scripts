@@ -39,6 +39,7 @@ export INSTALL_ROOT=$RPM_BUILD_ROOT
 # << install pre 
 #make install
 mkdir -p %{buildroot}/usr/bin
+install -m 755 ./gr-branches %{buildroot}/usr/bin/
 install -m 755 ./gr-clean %{buildroot}/usr/bin/
 install -m 755 ./gr-pull %{buildroot}/usr/bin/
 install -m 755 ./gr-pullreset %{buildroot}/usr/bin/
@@ -57,6 +58,7 @@ install -m 755 ./gr-showlocal  %{buildroot}/usr/bin/
 %files
 %defattr(-,root,root,-)
 # >> files
+%{_bindir}/gr-branches
 %{_bindir}/gr-clean
 %{_bindir}/gr-pull
 %{_bindir}/gr-pullreset

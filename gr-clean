@@ -29,5 +29,5 @@ do
 done
 
 TIME=`date +%H:%M:%S`
-echo "Cleanall finished:$TIME"
+echo "gr-clean finished:$TIME"
 

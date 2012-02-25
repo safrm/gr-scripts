@@ -1,3 +1,4 @@
+gr-branches /usr/bin/
 gr-clean /usr/bin/
 gr-pull /usr/bin/
 gr-pullreset /usr/bin/
