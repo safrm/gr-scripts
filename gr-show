@@ -2,10 +2,28 @@
 #git recursive directories scripts - https://github.com/safrm/gr-scripts
 #author: Miroslav Safr <miroslav.safr@gmail.com>
 #shows local tags versus current remote situation in subdirectories ./ or $1/ except those which are marked by "touch <dir>/.git/no_updates"
+# -v shows the details
 
-PROJECT_DIR="$1"
-if [ -z "$PROJECT_DIR" ] || [ ! -d "$PROJECT_DIR" ]; then
+while [ $# -gt 0 ]; do
+  case "$1" in
+    -v|--verbose) 
+               VERBOSE=1
+               ;;
+	* )    PROJECT_DIR=$1;
+	       ;; 
+  esac
+  shift
+done
+
+if [ -z "$PROJECT_DIR" ]
+then
 	PROJECT_DIR="./"
+fi
+
+if [ ! -d "$PROJECT_DIR" ] 
+then
+  echo "directory $PROJECT_DIR does not exist";
+  exit 1
 fi
 
 CWD=`pwd`
@@ -34,6 +52,10 @@ do
 		else
 			NEEDS_UPDATE=" NEEDS UPDATE OR COMMIT"
                         echo -e "\033[33m$NEEDS_UPDATE\033[0m"
+                        if [ ! -z "$VERBOSE" ]
+			then
+			   git status -s
+			fi
 		fi
 		cd $PROJECT_DIR
 	fi
