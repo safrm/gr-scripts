@@ -29,18 +29,27 @@ PROJECT_DIR=`pwd`
 
 find ./  -type d -name ".git*"  |  sed 's/\/.git//g' | while read ENTRY
 do
-	if [ ! -f $ENTRY/.git/no_updates ]; then
+#	if [ ! -f $ENTRY/.git/no_updates ]; then
 		cd $ENTRY 
 	        LASTTAG=`git describe --tags --dirty=*  2> /dev/null`
-	        echo -e "\033[32m $ENTRY:\033[0m \033[34m $LASTTAG \033[0m"
+		BRANCH=`git branch | egrep "^\*" | cut -d' ' -f2`
+                COMMITCOUNT=`git shortlog origin/$BRANCH..HEAD | grep -E '^[ ]+\w+' | wc -l`
+                if [ "0" = "$COMMITCOUNT" ]
+  		then
+		        echo -e "\033[32m $ENTRY:\033[0m \033[34m $LASTTAG \033[0m (o/$BRANCH)"
+                else
+		        echo -e "\033[32m $ENTRY:\033[0m \033[34m $LASTTAG \033[0m (o/$BRANCH\033[33m+$COMMITCOUNT\033[0m)"
+		fi
+
         	LASTMSG=`git log -1 --pretty=format:'%h %s | %ad' --date=relative`
 	        echo -e "$LASTMSG"
+
                 if [ ! -z "$VERBOSE" ]
       		then
 		   git status -s
 		fi
 		cd $PROJECT_DIR
-	fi
+#	fi
 done
 
 TIME=`date +%H:%M:%S`

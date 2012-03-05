@@ -50,7 +50,8 @@ do
 		then
 			NEEDS_UPDATE=""
 		else
-			NEEDS_UPDATE=" NEEDS UPDATE OR COMMIT"
+			COMMITCOUNT=`git shortlog origin/$BRANCH..HEAD | grep -E '^[ ]+\w+' | wc -l`
+			NEEDS_UPDATE=" NEEDS UPDATE OR COMMIT (+$COMMITCOUNT)"
                         echo -e "\033[33m$NEEDS_UPDATE\033[0m"
                         if [ ! -z "$VERBOSE" ]
 			then
