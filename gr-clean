@@ -24,6 +24,8 @@ do
                         git gc --quiet
                         git clean -dfx
 			cd $PROJECT_DIR
+		else
+			echo -e "\033[32m $ENTRY:\033[0m \033[35m skipped clean \033[0m" 
 		fi
 	fi
 done

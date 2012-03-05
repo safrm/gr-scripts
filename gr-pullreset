@@ -33,6 +33,8 @@ do
                         echo -e "$LASTMSG"
 		fi
 		cd $PROJECT_DIR
+	else
+		echo -e "\033[32m $ENTRY:\033[0m \033[35m skipped update \033[0m" 
 	fi
 done
 

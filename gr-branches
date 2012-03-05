@@ -15,7 +15,7 @@ PROJECT_DIR=`pwd`
 find ./  -type d -name ".git*"  |  sed 's/\/.git//g' | while read ENTRY
 do
 		cd $ENTRY 
-        BRANCHES=`git branch   | tr -d '\n'`  
+                BRANCHES=`git branch   | tr -d '\n'`  
 		echo -e "\033[32m $ENTRY:\033[0m $BRANCHES"
 		cd $PROJECT_DIR
 done
