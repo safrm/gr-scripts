@@ -1,3 +1,9 @@
+gr-scripts (1.0.3-1) unstable; urgency=low
+  * Chg: legal stuff
+  * New: show with commit counts from origin/branch
+  * New: skipped update or clean  message for .git/no_updates
+ -- Miroslav Safr <miroslav.safr@gmail.com>  Mon, 12 Mar 2012 14:29:58 +0200
+
 gr-scripts (1.0.2-1) unstable; urgency=low
   * New: -v options for gr-show and gr-showlocal
   * Chg: install.sh explicit file names
