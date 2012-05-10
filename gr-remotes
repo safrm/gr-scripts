@@ -2,6 +2,7 @@
 #git recursive directories scripts - https://github.com/safrm/gr-scripts
 #author: Miroslav Safr <miroslav.safr@gmail.com>
 #shows remote branches in subdirectories ./ or $1/ 
+VERSION=NA
 
 PROJECT_DIR="$1"
 if [ -z "$PROJECT_DIR" ] || [ ! -d "$PROJECT_DIR" ]; then

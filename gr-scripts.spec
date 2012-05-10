@@ -40,13 +40,20 @@ export INSTALL_ROOT=$RPM_BUILD_ROOT
 # << install pre 
 #make install
 mkdir -p %{buildroot}/usr/bin
-install -m 755 ./gr-branches %{buildroot}/usr/bin/
-install -m 755 ./gr-clean %{buildroot}/usr/bin/
-install -m 755 ./gr-pull %{buildroot}/usr/bin/
-install -m 755 ./gr-pullreset %{buildroot}/usr/bin/
-install -m 755 ./gr-remotes %{buildroot}/usr/bin/
-install -m 755 ./gr-show %{buildroot}/usr/bin/
-install -m 755 ./gr-showlocal  %{buildroot}/usr/bin/
+install -m 755 ./gr-branches %{buildroot}%{_bindir}/
+sed -i".bkp" "1,/^VERSION=/s/^VERSION=.*/VERSION=%{version}/" %{buildroot}%{_bindir}/gr-branches && rm -f $BINDIR/gr-branches.bkp
+install -m 755 ./gr-clean %{buildroot}%{_bindir}/
+sed -i".bkp" "1,/^VERSION=/s/^VERSION=.*/VERSION=%{version}/" %{buildroot}%{_bindir}/gr-clean && rm -f $BINDIR/gr-clean.bkp
+install -m 755 ./gr-pull %{buildroot}%{_bindir}/
+sed -i".bkp" "1,/^VERSION=/s/^VERSION=.*/VERSION=%{version}/" %{buildroot}%{_bindir}/gr-pull && rm -f $BINDIR/gr-pull.bkp
+install -m 755 ./gr-pullreset %{buildroot}%{_bindir}/
+sed -i".bkp" "1,/^VERSION=/s/^VERSION=.*/VERSION=%{version}/" %{buildroot}%{_bindir}/gr-pullreset && rm -f $BINDIR/gr-pullreset.bkp
+install -m 755 ./gr-remotes %{buildroot}%{_bindir}/
+sed -i".bkp" "1,/^VERSION=/s/^VERSION=.*/VERSION=%{version}/" %{buildroot}%{_bindir}/gr-remotes && rm -f $BINDIR/gr-remotes.bkp
+install -m 755 ./gr-show %{buildroot}%{_bindir}/
+sed -i".bkp" "1,/^VERSION=/s/^VERSION=.*/VERSION=%{version}/" %{buildroot}%{_bindir}/gr-show && rm -f $BINDIR/gr-show.bkp
+install -m 755 ./gr-showlocal  %{buildroot}%{_bindir}/
+sed -i".bkp" "1,/^VERSION=/s/^VERSION=.*/VERSION=%{version}/" %{buildroot}%{_bindir}/gr-showlocal && rm -f $BINDIR/gr-showlocal.bkp
 
 # >> install post
 # << install post
