@@ -28,3 +28,5 @@ install -m 0777 -v ./gr-show $BINDIR
 sed -i".bkp" "1,/^VERSION=/s/^VERSION=.*/VERSION=$APP_FULL_VERSION_TAG/" $BINDIR/gr-show  && rm -f $BINDIR/gr-show.bkp
 install -m 0777 -v ./gr-showlocal $BINDIR
 sed -i".bkp" "1,/^VERSION=/s/^VERSION=.*/VERSION=$APP_FULL_VERSION_TAG/" $BINDIR/gr-showlocal  && rm -f $BINDIR/gr-showlocal.bkp
+install -m 0777 -v ./gr-initbare $BINDIR
+sed -i".bkp" "1,/^VERSION=/s/^VERSION=.*/VERSION=$APP_FULL_VERSION_TAG/" $BINDIR/gr-initbare  && rm -f $BINDIR/gr-initbare.bkp

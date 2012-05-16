@@ -1,0 +1,77 @@
+#/bin/sh
+#git recursive directories scripts - https://github.com/safrm/gr-scripts
+#author: Miroslav Safr <miroslav.safr@gmail.com>
+#
+
+VERSION=NA
+VERSION_DATE=NA
+usage() {
+    echo "usage: `basename $0` <new_repo_name> "
+    echo "git helper to create new inited local git bare repo "
+    echo "args:"
+    echo "  <new_repo_name>    	                  new svn repo name (mandatory) e.g. my_project "
+    echo "  -d | --description <project_descr>    few words about project (optional)"
+    echo "  -h | --help        prints this help"
+    echo ""
+    echo "gr-scipts: ${VERSION} ${VERSION_DATE} "
+}
+
+exiting() {
+    echo "$@ Try `basename $0` --help. Exiting.."
+    exit 1
+}
+
+
+#check arguments
+REPO_NAME=
+DESCRIPTION=
+while [ $# -gt 0 ]; do
+  case "$1" in
+    -d | --description) shift
+               DESCRIPTION=$1 
+               ;;
+    -h | --help ) usage 
+                  exit 0 
+               ;;
+	* )   REPO_NAME=$1  
+        ;; 
+  esac
+  shift
+done
+
+if [ "x$REPO_NAME" = "x" ]; then
+    exiting "No new git repository name."
+elif [ -d $REPO_NAME ]; then
+    exiting "Directory $REPO_NAME already exists."
+fi
+#echo "REPONAME: $REPO_NAME"
+
+#check params 
+mkdir $REPO_NAME
+cd $REPO_NAME
+REPO_PATH=`pwd`
+echo "$REPO_PATH"
+git init --bare
+
+if [ "x$DESCRIPTION" != "x" ]; then
+  echo "$DESCRIPTION" > description
+else
+  echo "$REPO_NAME " > description	
+fi
+	
+#make root checkout 
+cd ..
+git clone $REPO_NAME $REPO_NAME-clone
+cd $REPO_NAME-clone
+
+#set up directory structure
+cp -f ../$REPO_NAME/description .git/
+git commit --allow-empty -m "init" 
+git tag 0.0.0 -m "init tag"
+git push origin master
+git push --tags
+echo "new reposistory: $REPO_PATH"
+echo "cloned to:       `pwd`"
+
+
+

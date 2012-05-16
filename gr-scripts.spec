@@ -54,6 +54,8 @@ install -m 755 ./gr-show %{buildroot}%{_bindir}/
 sed -i".bkp" "1,/^VERSION=/s/^VERSION=.*/VERSION=%{version}/" %{buildroot}%{_bindir}/gr-show && rm -f $BINDIR/gr-show.bkp
 install -m 755 ./gr-showlocal  %{buildroot}%{_bindir}/
 sed -i".bkp" "1,/^VERSION=/s/^VERSION=.*/VERSION=%{version}/" %{buildroot}%{_bindir}/gr-showlocal && rm -f $BINDIR/gr-showlocal.bkp
+install -m 755 ./gr-initbare  %{buildroot}%{_bindir}/
+sed -i".bkp" "1,/^VERSION=/s/^VERSION=.*/VERSION=%{version}/" %{buildroot}%{_bindir}/gr-initbare && rm -f $BINDIR/gr-initbare.bkp
 
 # >> install post
 # << install post
@@ -68,6 +70,7 @@ sed -i".bkp" "1,/^VERSION=/s/^VERSION=.*/VERSION=%{version}/" %{buildroot}%{_bin
 # >> files
 %{_bindir}/gr-branches
 %{_bindir}/gr-clean
+%{_bindir}/gr-initbare
 %{_bindir}/gr-pull
 %{_bindir}/gr-pullreset
 %{_bindir}/gr-remotes
