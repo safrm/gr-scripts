@@ -3,7 +3,9 @@
 #author: Miroslav Safr <miroslav.safr@gmail.com>
 #shows local tags versus current remote situation in subdirectories ./ or $1/ except those which are marked by "touch <dir>/.git/no_updates"
 # -v shows the details
-VERSION=NA
+VERSION=NA                                                                   
+VERSION_DATE=NA
+
 
 while [ $# -gt 0 ]; do
   case "$1" in

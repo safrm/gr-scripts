@@ -2,9 +2,9 @@
 #git recursive directories scripts - https://github.com/safrm/gr-scripts
 #author: Miroslav Safr <miroslav.safr@gmail.com>
 #
-
-VERSION=NA
+VERSION=NA                                                                   
 VERSION_DATE=NA
+
 usage() {
     echo "usage: `basename $0` <new_repo_name> "
     echo "git helper to create new inited local git bare repo "

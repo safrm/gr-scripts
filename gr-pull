@@ -2,7 +2,9 @@
 #git recursive directories scripts - https://github.com/safrm/gr-scripts
 #author: Miroslav Safr <miroslav.safr@gmail.com>
 #pulls all and keeps local chanegs in  subdirectories ./ or $1/ except those which are marked by "touch <dir>/.git/no_updates"
-VERSION=NA
+VERSION=NA                                                                   
+VERSION_DATE=NA
+
 
 PROJECT_DIR="$1"
 if [ -z "$PROJECT_DIR" ] || [ ! -d "$PROJECT_DIR" ]; then

@@ -2,7 +2,9 @@
 #git recursive directories scripts - https://github.com/safrm/gr-scripts
 #author: Miroslav Safr <miroslav.safr@gmail.com>
 #shows remote branches in subdirectories ./ or $1/ 
-VERSION=NA
+VERSION=NA                                                                   
+VERSION_DATE=NA
+
 
 PROJECT_DIR="$1"
 if [ -z "$PROJECT_DIR" ] || [ ! -d "$PROJECT_DIR" ]; then
@@ -17,7 +19,7 @@ find ./  -type d -name ".git*"  |  sed 's/\/.git//g' | while read ENTRY
 do
 		cd $ENTRY 
 		#URLS=`git config --get remote.origin.url`
-        URLS=`git remote -v | awk '{print $1 " " $2 }' | sort -u`  
+                URLS=`git remote -v | awk '{print $1 " " $2 }' | sort -u`  
 		echo -e "\033[32m $ENTRY:\033[0m $URLS"
 		cd $PROJECT_DIR
 done

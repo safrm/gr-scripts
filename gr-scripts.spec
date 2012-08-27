@@ -1,4 +1,5 @@
 %define buildroot %{_topdir}/%{name}-%{version}-root
+%define APP_BUILD_DATE %(date +'%%Y%%m%%d_%%H%%M')
 
 Name:       gr-scripts
 Summary:    fast script to create rpm package inside the git repo without beeing root 
@@ -41,22 +42,29 @@ export INSTALL_ROOT=$RPM_BUILD_ROOT
 #make install
 mkdir -p %{buildroot}/usr/bin
 install -m 755 ./gr-branches %{buildroot}%{_bindir}/
-sed -i".bkp" "1,/^VERSION=/s/^VERSION=.*/VERSION=%{version}/" %{buildroot}%{_bindir}/gr-branches && rm -f $BINDIR/gr-branches.bkp
+sed -i".bkp" "1,/^VERSION=/s/^VERSION=.*/VERSION=%{version}/" %{buildroot}%{_bindir}/gr-branches && rm -f %{buildroot}%{_bindir}/gr-branches.bkp
+sed -i".bkp" "1,/^VERSION_DATE=/s/^VERSION_DATE=.*/VERSION_DATE=%{APP_BUILD_DATE}/" %{buildroot}%{_bindir}/gr-branches && rm -f %{buildroot}%{_bindir}/gr-branches.bkp
 install -m 755 ./gr-clean %{buildroot}%{_bindir}/
-sed -i".bkp" "1,/^VERSION=/s/^VERSION=.*/VERSION=%{version}/" %{buildroot}%{_bindir}/gr-clean && rm -f $BINDIR/gr-clean.bkp
+sed -i".bkp" "1,/^VERSION=/s/^VERSION=.*/VERSION=%{version}/" %{buildroot}%{_bindir}/gr-clean && rm -f %{buildroot}%{_bindir}/gr-clean.bkp
+sed -i".bkp" "1,/^VERSION_DATE=/s/^VERSION_DATE=.*/VERSION_DATE=%{APP_BUILD_DATE}/" %{buildroot}%{_bindir}/gr-clean && rm -f %{buildroot}%{_bindir}/gr-clean.bkp
 install -m 755 ./gr-pull %{buildroot}%{_bindir}/
-sed -i".bkp" "1,/^VERSION=/s/^VERSION=.*/VERSION=%{version}/" %{buildroot}%{_bindir}/gr-pull && rm -f $BINDIR/gr-pull.bkp
+sed -i".bkp" "1,/^VERSION=/s/^VERSION=.*/VERSION=%{version}/" %{buildroot}%{_bindir}/gr-pull && rm -f %{buildroot}%{_bindir}gr-pull.bkp
+sed -i".bkp" "1,/^VERSION_DATE=/s/^VERSION_DATE=.*/VERSION_DATE=%{APP_BUILD_DATE}/" %{buildroot}%{_bindir}/gr-pull && rm -f %{buildroot}%{_bindir}/gr-pull.bkp
 install -m 755 ./gr-pullreset %{buildroot}%{_bindir}/
-sed -i".bkp" "1,/^VERSION=/s/^VERSION=.*/VERSION=%{version}/" %{buildroot}%{_bindir}/gr-pullreset && rm -f $BINDIR/gr-pullreset.bkp
+sed -i".bkp" "1,/^VERSION=/s/^VERSION=.*/VERSION=%{version}/" %{buildroot}%{_bindir}/gr-pullreset && rm -f %{buildroot}%{_bindir}/gr-pullreset.bkp
+sed -i".bkp" "1,/^VERSION_DATE=/s/^VERSION_DATE=.*/VERSION_DATE=%{APP_BUILD_DATE}/" %{buildroot}%{_bindir}/gr-pullreset && rm -f %{buildroot}%{_bindir}/gr-pullreset.bkp
 install -m 755 ./gr-remotes %{buildroot}%{_bindir}/
-sed -i".bkp" "1,/^VERSION=/s/^VERSION=.*/VERSION=%{version}/" %{buildroot}%{_bindir}/gr-remotes && rm -f $BINDIR/gr-remotes.bkp
+sed -i".bkp" "1,/^VERSION=/s/^VERSION=.*/VERSION=%{version}/" %{buildroot}%{_bindir}/gr-remotes && rm -f %{buildroot}%{_bindir}/gr-remotes.bkp
+sed -i".bkp" "1,/^VERSION_DATE=/s/^VERSION_DATE=.*/VERSION_DATE=%{APP_BUILD_DATE}/" %{buildroot}%{_bindir}/gr-remotes && rm -f %{buildroot}%{_bindir}/gr-remotes.bkp
 install -m 755 ./gr-show %{buildroot}%{_bindir}/
-sed -i".bkp" "1,/^VERSION=/s/^VERSION=.*/VERSION=%{version}/" %{buildroot}%{_bindir}/gr-show && rm -f $BINDIR/gr-show.bkp
+sed -i".bkp" "1,/^VERSION=/s/^VERSION=.*/VERSION=%{version}/" %{buildroot}%{_bindir}/gr-show && rm -f %{buildroot}%{_bindir}/gr-show.bkp
+sed -i".bkp" "1,/^VERSION_DATE=/s/^VERSION_DATE=.*/VERSION_DATE=%{APP_BUILD_DATE}/" %{buildroot}%{_bindir}/gr-show && rm -f %{buildroot}%{_bindir}/gr-show.bkp
 install -m 755 ./gr-showlocal  %{buildroot}%{_bindir}/
-sed -i".bkp" "1,/^VERSION=/s/^VERSION=.*/VERSION=%{version}/" %{buildroot}%{_bindir}/gr-showlocal && rm -f $BINDIR/gr-showlocal.bkp
+sed -i".bkp" "1,/^VERSION=/s/^VERSION=.*/VERSION=%{version}/" %{buildroot}%{_bindir}/gr-showlocal && rm -f %{buildroot}%{_bindir}/gr-showlocal.bkp
+sed -i".bkp" "1,/^VERSION_DATE=/s/^VERSION_DATE=.*/VERSION_DATE=%{APP_BUILD_DATE}/" %{buildroot}%{_bindir}/gr-showlocal && rm -f %{buildroot}%{_bindir}/gr-showlocal.bkp
 install -m 755 ./gr-initbare  %{buildroot}%{_bindir}/
-sed -i".bkp" "1,/^VERSION=/s/^VERSION=.*/VERSION=%{version}/" %{buildroot}%{_bindir}/gr-initbare && rm -f $BINDIR/gr-initbare.bkp
-
+sed -i".bkp" "1,/^VERSION=/s/^VERSION=.*/VERSION=%{version}/" %{buildroot}%{_bindir}/gr-initbare && rm -f %{buildroot}%{_bindir}/gr-initbare.bkp
+sed -i".bkp" "1,/^VERSION_DATE=/s/^VERSION_DATE=.*/VERSION_DATE=%{APP_BUILD_DATE}/" %{buildroot}%{_bindir}/gr-initbare && rm -f %{buildroot}%{_bindir}/gr-initbare.bkp
 # >> install post
 # << install post
 
