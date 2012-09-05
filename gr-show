@@ -34,7 +34,7 @@ cd $PROJECT_DIR
 PROJECT_DIR=`pwd`
 
 
-find ./  -type d -name ".git*"  |  sed 's/\/.git//g' | while read ENTRY
+find ./  -type d -name ".git*"  |  sed 's/\/.git//g' | sort | while read ENTRY
 do
 	if [ ! -f $ENTRY/.git/no_updates ]; then
 		cd $ENTRY 
