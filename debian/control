@@ -9,5 +9,7 @@ Package: gr-scripts
 Architecture: all
 Depends: debhelper (>= 5), git-core, ${misc:Depends}, ${launcher:Depends}, ${shlibs:Depends}
 Description:  git recursive directories scripts 
+	let monkey work to be done by monkies  
+
 
 
