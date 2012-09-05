@@ -1,4 +1,4 @@
-#/bin/sh
+#!/bin/sh
 #git recursive directories scripts - https://github.com/safrm/gr-scripts
 #author: Miroslav Safr <miroslav.safr@gmail.com>
 #
