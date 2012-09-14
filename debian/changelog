@@ -1,25 +1,4 @@
-gr-scripts (1.0.3-1) unstable; urgency=low
-  * Chg: legal stuff
-  * New: show with commit counts from origin/branch
-  * New: skipped update or clean  message for .git/no_updates
- -- Miroslav Safr <miroslav.safr@gmail.com>  Mon, 12 Mar 2012 14:29:58 +0200
-
-gr-scripts (1.0.2-1) unstable; urgency=low
-  * New: -v options for gr-show and gr-showlocal
-  * Chg: install.sh explicit file names
- -- Miroslav Safr <miroslav.safr@gmail.com>  Wed, 29 Feb 2012 15:01:05 +0200
-
-gr-scripts (1.0.1-1) unstable; urgency=low
-  * Chg: rely only to git version, debian packaging
-  * Fix: Problem with permissions
-  * Chg: ubuntu 11.10 source pkg compatibility
-  * Chg: removed suffix 'all' from scripts names to save keyboard hits
-  * New: gr-remotes shows remotes Chg: formating
-  * New: gr-branches for local branches
-  * Chg: updated documentation, printouts and formating
- -- Miroslav Safr <miroslav.safr@gmail.com>  Sat, 25 Feb 2012 16:31:19 +0200
-
-gr-scripts (1.0.0-1) unstable; urgency=low
-  * first released version
+gr-scripts (0.0.0-1) unstable; urgency=low
+  * use rpmmake-debchangelog for automated git log 
  -- Miroslav Safr <miroslav.sar@gmail.com>  Thu, 23 Feb 2012 11:08:25 +0200
       

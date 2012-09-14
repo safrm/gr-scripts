@@ -1,6 +1,7 @@
 rpm/*
 debian/files
+debian/changelog
 debian/gr-scripts.debhelper.log
 debian/gr-scripts.substvars
 debian/gr-scripts/
-
+*.changes
