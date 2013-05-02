@@ -1,5 +1,5 @@
 #/bin/sh
-#git recursive directories scripts - https://github.com/safrm/gr-scripts
+#git recursive directories scripts - http://safrm.net/projects/gr-scripts
 #version: 1.0
 #author:  Miroslav Safr miroslav.safr@gmail.com
 BINDIR=/usr/bin/

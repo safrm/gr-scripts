@@ -1,6 +1,6 @@
 name: git recursive directories scripts
 author:  Miroslav Safr <miroslav.safr@gmail.com>
-web: https://github.com/safrm/gr-scripts
+web: http://safrm.net/projects/gr-scripts
 description: let monkey work to be done by monkies :)
 all scipts support subdirectory hierarchy <my-dir>/<my-project-group>/<git-clone>
 
