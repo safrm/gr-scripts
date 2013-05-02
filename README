@@ -13,7 +13,8 @@ content:
  gr-show ............ shows local tags versus current remote situation in subdirectories 
  gr-showlocal ....... shows local tags and if it was edited in subdirectories
  gr-initbare ........ initialize git bare repo, makes first commit and tag 0.0.0
- 
+ gr-authorcheck ..... search for inappropriate commits
+
  install.sh ......... executes installation to /urs/local/bin directory
 
 
