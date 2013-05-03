@@ -56,7 +56,7 @@ do
 done
 
 TIME=`date +%H:%M:%S`
-echo "gr-showlocal finished:$TIME"
+echo "`basename $0` finished:$TIME"
 
 
 

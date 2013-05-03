@@ -56,7 +56,7 @@ do
     if [ $CASE_SENS -eq 1 ]; then
      	git --no-pager log --pretty=tformat:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %n %C(bold blue)A:%an <%ae> %n C:%cn <%ce>%Creset' --author=$WHAT --committer=$WHAT ;
     else
-     	git --no-pager log --format='%H %an %ae %cn %ce' | grep -i $WHAT | cut -d ' ' -f1 |   xargs -n1 git --no-pager log -1 --pretty=tformat:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %n %C(bold blue)A:%an <%ae> %n C:%cn <%ce>%Creset';
+     	git --no-pager log --format='%H %an %ae %cn %ce' | grep -i $WHAT | cut -d ' ' -f1 |   xargs -n1 -r git --no-pager log -1 --pretty=tformat:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %n %C(bold blue)A:%an <%ae> %n C:%cn <%ce>%Creset';
     fi
 	cd $CWD
 done

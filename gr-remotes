@@ -25,7 +25,7 @@ do
 done
 
 TIME=`date +%H:%M:%S`
-echo "gr-remotes finished:$TIME"
+echo "`basename $0` finished:$TIME"
 
 
 

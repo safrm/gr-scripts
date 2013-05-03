@@ -34,5 +34,5 @@ do
 done
 
 TIME=`date +%H:%M:%S`
-echo "gr-clean finished:$TIME"
+echo "`basename $0` finished:$TIME"
 

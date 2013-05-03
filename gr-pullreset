@@ -42,5 +42,5 @@ do
 done
 
 TIME=`date +%H:%M:%S`
-echo "gr-pull (reset local) finished:$TIME"
+echo "`basename $0` (reset local) finished:$TIME"
 

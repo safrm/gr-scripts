@@ -24,7 +24,7 @@ do
 done
 
 TIME=`date +%H:%M:%S`
-echo "gr-branches finished:$TIME"
+echo "`basename $0` finished:$TIME"
 
 
 
