@@ -3,20 +3,48 @@
 #author: Miroslav Safr <miroslav.safr@gmail.com>
 #search for inappropriate commits
 #
-#gr-authorcheck <SEARCHED_PATTERN> [<DIR>]
+#gr-authorcheck [OPTIONS] <SEARCHED_PATTERN> [<PROJECT_DIR>]
 #  searching is case sensitive
 VERSION=NA                                                                   
 VERSION_DATE=NA
 
-WHAT="$1"
+usage() {
+    echo "`basename $0` ${VERSION}"
+    echo "Usage:`basename $0` [OPTIONS]... PATTERN [PROJECT_DIR]"
+    echo " PATTERN ............................ name or email of author or part of it "
+    echo " options: "
+    echo " -v, --verbose ...................... prints more output"
+    echo " -?, --help ......................... shows command line help"
+    echo " -cs ................................ case sensitive search (by default it is insensitive)"
+    echo " "
+}
+CASE_SENS=0
+VERBOSE=0
+while [ $# -gt 0 ]; do
+  case "$1" in
+    -v|--verbose) VERBOSE=1;;
+    -?|--help) usage exit ;;
+    -cs) CASE_SENS=1;;
+	* )      
+        if [ -z "$WHAT" ]; then  
+            WHAT=$1 ;
+        elif [ -z "$PROJECT_DIR" ]; then
+            $PROJECT_DIR=$1 ;
+        else
+            echo "There can be only 2 arguments without <WHAT> <WHERE>, exiting.."; exit 1;        
+        fi 
+  esac
+  shift
+done
+
 if [ -z "$WHAT" ]; then 
     echo "You have to specify searching pattern, exiting.."; exit 1;
 fi
 
-PROJECT_DIR="$2"
 if [ -z "$PROJECT_DIR" ] || [ ! -d "$PROJECT_DIR" ]; then
 	PROJECT_DIR="./"
 fi
+echo "searching for '$WHAT' in $PROJECT_DIR, CS: $CASE_SENS, VERBOSE:$VERBOSE"
 
 CWD=`pwd`
 cd $PROJECT_DIR
@@ -25,12 +53,16 @@ find $PROJECT_DIR -type d -name ".git*"  |  sed 's/\/.git//g' | sort | while rea
 do
 	cd $ENTRY 
     echo $ENTRY:
-	git --no-pager log --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset'  --author=$WHAT --committer=$WHAT
+    if [ $CASE_SENS -eq 1 ]; then
+     	git --no-pager log --pretty=tformat:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %n %C(bold blue)A:%an <%ae> %n C:%cn <%ce>%Creset' --author=$WHAT --committer=$WHAT ;
+    else
+     	git --no-pager log --format='%H %an %ae %cn %ce' | grep -i $WHAT | cut -d ' ' -f1 |   xargs -n1 git --no-pager log -1 --pretty=tformat:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %n %C(bold blue)A:%an <%ae> %n C:%cn <%ce>%Creset';
+    fi
 	cd $CWD
 done
 
 TIME=`date +%H:%M:%S`
-echo "gr-clean finished:$TIME"
+echo "`basename $0` finished:$TIME"
 
 
 
