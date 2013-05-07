@@ -1,0 +1,82 @@
+#!/bin/bash
+#git recursive directories scripts - http://safrm.net/projects/gr-scripts
+#author: Miroslav Safr <miroslav.safr@gmail.com>
+#shows untagged commits on head/local/remote 
+# -v shows the details
+VERSION=NA                                                                   
+VERSION_DATE=NA
+
+
+while [ $# -gt 0 ]; do
+  case "$1" in
+    -v|--verbose) 
+               VERBOSE=1
+               ;;
+	* )    PROJECT_DIR=$1;
+	       ;; 
+  esac
+  shift
+done
+
+if [ -z "$PROJECT_DIR" ]
+then
+	PROJECT_DIR="./"
+fi
+
+if [ ! -d "$PROJECT_DIR" ] 
+then
+  echo "directory $PROJECT_DIR does not exist";
+  exit 1
+fi
+
+CWD=`pwd`
+cd $PROJECT_DIR
+PROJECT_DIR=`pwd`
+
+find ./  -type d -name ".git*"  |  sed 's/\/.git//g' | sort | while read ENTRY
+do
+	if [ ! -f $ENTRY/.git/no_updates ]; then
+		cd $ENTRY 
+		git fetch origin 
+		git fetch origin --tags
+
+
+		BRANCH=`git branch | egrep "^\*" | cut -d' ' -f2`
+        LASTTAG_NAME=`git describe --tags --abbrev=0 2> /dev/null`
+        echo -e "\033[32m $ENTRY \033[0m \033[31m [$BRANCH]\033[0m: \033[33m`git tag -l -n1 $LASTTAG_NAME`\033[0m"
+
+        HEAD=`git describe --tags --dirty=* 2> /dev/null`
+        MASTER_LOCAL=`git describe --tags master 2> /dev/null`
+        MASTER_REMOTE=`git describe --tags origin/master 2> /dev/null`
+        LOCAL_COMMITS_FROM_LASTTAG_LOCAL=`git log --pretty=tformat:'%Cred%h%Creset - %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' $LASTTAG_NAME..master`
+        LCFT_COUNT=`echo "$LOCAL_COMMITS_FROM_LASTTAG_LOCAL" | grep -v '^$'  | wc -l`
+        LOCAL_COMMITS_HEAD=`git log --pretty=tformat:'%Cred%h%Creset - %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' master..HEAD `
+        LCH_COUNT=`echo "$LOCAL_COMMITS_HEAD" | grep -v '^$' |wc -l`
+        REMOTE_COMMITS_FROM_LASTTAG_LOCAL=`git log --pretty=tformat:'%Cred%h%Creset - %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' $LASTTAG_NAME..origin/$BRANCH `
+        RCFT_COUNT=`echo "$REMOTE_COMMITS_FROM_LASTTAG_LOCAL"| grep -v '^$' | wc -l`
+
+        echo -e "\033[36mhead  :\033[0m \033[34m $HEAD \033[0m $LCH_COUNT"
+        if [ ! -z "$LOCAL_COMMITS_HEAD" ]; then echo "$LOCAL_COMMITS_HEAD"; fi
+        echo -e "\033[36mlocal :\033[0m \033[34m $MASTER_LOCAL \033[0m $LCFT_COUNT"
+        if [ ! -z "$LOCAL_COMMITS_FROM_LASTTAG_LOCAL" ]; then echo "$LOCAL_COMMITS_FROM_LASTTAG_LOCAL"; fi
+        echo -e "\033[36mremote:\033[0m \033[34m $MASTER_REMOTE \033[0m $RCFT_COUNT"
+        if [ ! -z "$REMOTE_COMMITS_FROM_LASTTAG_LOCAL" ]; then echo "$REMOTE_COMMITS_FROM_LASTTAG_LOCAL"; fi
+
+		if [ "$HEAD" == "$MASTER_REMOTE" ]
+		then
+			NEEDS_UPDATE=""
+		else
+			COMMITCOUNT=`git shortlog origin/$BRANCH..HEAD | grep -E '^[ ]+\w+' | wc -l`
+			NEEDS_UPDATE=" NEEDS UPDATE OR COMMIT (+$COMMITCOUNT)"
+            echo -e "\033[33m$NEEDS_UPDATE\033[0m"
+            if [ ! -z "$VERBOSE" ]; then
+			   git status -s
+			fi
+		fi
+		cd $PROJECT_DIR
+	fi
+done
+
+TIME=`date +%H:%M:%S`
+echo "`basename $0` finished:$TIME"
+

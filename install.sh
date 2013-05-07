@@ -20,6 +20,9 @@ sed -i".bkp" "1,/^VERSION_DATE=/s/^VERSION_DATE=.*/VERSION_DATE=$APP_BUILD_DATE/
 install -m 0777 -v ./gr-clean $BINDIR
 sed -i".bkp" "1,/^VERSION=/s/^VERSION=.*/VERSION=$APP_FULL_VERSION_TAG/" $BINDIR/gr-clean && rm -f $BINDIR/gr-clean.bkp
 sed -i".bkp" "1,/^VERSION_DATE=/s/^VERSION_DATE=.*/VERSION_DATE=$APP_BUILD_DATE/" $BINDIR/gr-clean && rm -f $BINDIR/gr-clean.bkp
+install -m 0777 -v ./gr-commits2tag $BINDIR
+sed -i".bkp" "1,/^VERSION=/s/^VERSION=.*/VERSION=$APP_FULL_VERSION_TAG/" $BINDIR/gr-commits2tag && rm -f $BINDIR/gr-commits2tag.bkp
+sed -i".bkp" "1,/^VERSION_DATE=/s/^VERSION_DATE=.*/VERSION_DATE=$APP_BUILD_DATE/" $BINDIR/gr-commits2tag && rm -f $BINDIR/gr-commits2tag.bkp
 install -m 0777 -v ./gr-pull $BINDIR
 sed -i".bkp" "1,/^VERSION=/s/^VERSION=.*/VERSION=$APP_FULL_VERSION_TAG/" $BINDIR/gr-pull && rm -f $BINDIR/gr-pull.bkp
 sed -i".bkp" "1,/^VERSION_DATE=/s/^VERSION_DATE=.*/VERSION_DATE=$APP_BUILD_DATE/" $BINDIR/gr-pull && rm -f $BINDIR/gr-pull.bkp

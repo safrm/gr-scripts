@@ -47,6 +47,9 @@ sed -i".bkp" "1,/^VERSION_DATE=/s/^VERSION_DATE=.*/VERSION_DATE=%{APP_BUILD_DATE
 install -m 755 ./gr-clean %{buildroot}%{_bindir}/
 sed -i".bkp" "1,/^VERSION=/s/^VERSION=.*/VERSION=%{version}/" %{buildroot}%{_bindir}/gr-clean && rm -f %{buildroot}%{_bindir}/gr-clean.bkp
 sed -i".bkp" "1,/^VERSION_DATE=/s/^VERSION_DATE=.*/VERSION_DATE=%{APP_BUILD_DATE}/" %{buildroot}%{_bindir}/gr-clean && rm -f %{buildroot}%{_bindir}/gr-clean.bkp
+install -m 755 ./gr-commits2tag %{buildroot}%{_bindir}/
+sed -i".bkp" "1,/^VERSION=/s/^VERSION=.*/VERSION=%{version}/" %{buildroot}%{_bindir}/gr-commits2tag && rm -f %{buildroot}%{_bindir}/gr-commits2tag.bkp
+sed -i".bkp" "1,/^VERSION_DATE=/s/^VERSION_DATE=.*/VERSION_DATE=%{APP_BUILD_DATE}/" %{buildroot}%{_bindir}/gr-commits2tag && rm -f %{buildroot}%{_bindir}/gr-commits2tag.bkp
 install -m 755 ./gr-pull %{buildroot}%{_bindir}/
 sed -i".bkp" "1,/^VERSION=/s/^VERSION=.*/VERSION=%{version}/" %{buildroot}%{_bindir}/gr-pull && rm -f %{buildroot}%{_bindir}gr-pull.bkp
 sed -i".bkp" "1,/^VERSION_DATE=/s/^VERSION_DATE=.*/VERSION_DATE=%{APP_BUILD_DATE}/" %{buildroot}%{_bindir}/gr-pull && rm -f %{buildroot}%{_bindir}/gr-pull.bkp
@@ -75,14 +78,13 @@ sed -i".bkp" "1,/^VERSION_DATE=/s/^VERSION_DATE=.*/VERSION_DATE=%{APP_BUILD_DATE
 
 
 
-
-
 %files
 %defattr(-,root,root,-)
 # >> files
 %{_bindir}/gr-authorcheck
 %{_bindir}/gr-branches
 %{_bindir}/gr-clean
+%{_bindir}/gr-commits2tag
 %{_bindir}/gr-initbare
 %{_bindir}/gr-pull
 %{_bindir}/gr-pullreset
