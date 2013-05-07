@@ -38,16 +38,16 @@ find ./  -type d -name ".git*"  |  sed 's/\/.git//g' | sort | while read ENTRY
 do
 	if [ ! -f $ENTRY/.git/no_updates ]; then
 		cd $ENTRY 
-                LASTTAG=`git describe --tags --dirty=* 2> /dev/null`
-                echo -e "\033[32m $ENTRY:\033[0m"
+        LASTTAG=`git describe --tags --dirty=* 2> /dev/null`
+        echo -e "\033[32m $ENTRY:\033[0m"
 		BRANCH=`git branch | egrep "^\*" | cut -d' ' -f2`
 		git fetch origin 
 		git fetch origin --tags
 
-                TO=`git describe origin/master --tags 2> /dev/null`
+        TO=`git describe origin/master --tags 2> /dev/null`
 
-	        LASTMSG=`git log -1 --format="%s" `
-                echo -e "\033[31m [$BRANCH] \033[0m local: \033[34m $LASTTAG \033[0m remote: \033[34m $TO \033[0m ($LASTMSG)"
+	    LASTMSG=`git log -1 --format="%s" `
+        echo -e "\033[31m [$BRANCH] \033[0m local: \033[34m $LASTTAG \033[0m remote: \033[34m $TO \033[0m ($LASTMSG)"
 
 		if [ "$LASTTAG" == "$TO" ]
 		then
@@ -55,9 +55,8 @@ do
 		else
 			COMMITCOUNT=`git shortlog origin/$BRANCH..HEAD | grep -E '^[ ]+\w+' | wc -l`
 			NEEDS_UPDATE=" NEEDS UPDATE OR COMMIT (+$COMMITCOUNT)"
-                        echo -e "\033[33m$NEEDS_UPDATE\033[0m"
-                        if [ ! -z "$VERBOSE" ]
-			then
+            echo -e "\033[33m$NEEDS_UPDATE\033[0m"
+            if [ ! -z "$VERBOSE" ]; then
 			   git status -s
 			fi
 		fi
