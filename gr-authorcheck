@@ -62,12 +62,12 @@ PROJECT_DIR=`pwd`
 find $PROJECT_DIR -type d -name ".git*"  |  sed 's/\/.git//g' | sort | while read ENTRY
 do
 	cd $ENTRY ;
-    DIR_COMMIT_COUNT=`git --no-pager log --format='%h' | grep -v '^$'  | wc -l`
+    DIR_COMMIT_COUNT=`git --no-pager log --pretty=tformat:'%h' | grep -v '^$'  | wc -l`
     echo "$ENTRY: ($DIR_COMMIT_COUNT commits)"
     if [ $CASE_SENS -eq 1 ]; then
      	git --no-pager log --pretty=tformat:"$LOGFORMAT" --author=$WHAT --committer=$WHAT ;
     else
-        FOUND_COMMITS=`git --no-pager log --format='%H %an %ae %cn %ce' | grep -i $WHAT | cut -d ' ' -f1`
+        FOUND_COMMITS=`git --no-pager log --pretty=tformat:'%H %an %ae %cn %ce' | grep -i $WHAT | cut -d ' ' -f1`
         FOUND=`echo "$FOUND_COMMITS" | grep -v '^$' | wc -l`;
         for COMMIT in $FOUND_COMMITS; do  
             git --no-pager log -1 --pretty=tformat:"$LOGFORMAT" $COMMIT 

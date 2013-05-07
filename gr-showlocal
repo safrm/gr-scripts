@@ -44,7 +44,7 @@ do
 		        echo -e "\033[32m $ENTRY:\033[0m \033[34m $LASTTAG \033[0m (o/$BRANCH\033[33m+$COMMITCOUNT\033[0m)"
 		fi
 
-        	LASTMSG=`git log -1 --pretty=format:'%h %s | %ad' --date=relative`
+        	LASTMSG=`git log -1 --pretty=tformat:'%h %s | %ad' --date=relative`
 	        echo -e "$LASTMSG"
 
                 if [ ! -z "$VERBOSE" ]

@@ -46,7 +46,7 @@ do
 
                 TO=`git describe origin/master --tags 2> /dev/null`
 
-	        LASTMSG=`git log -1 --format="%s" `
+	        LASTMSG=`git log -1 --pretty=tformat:"%s" `
                 echo -e "\033[31m [$BRANCH] \033[0m local: \033[34m $LASTTAG \033[0m remote: \033[34m $TO \033[0m ($LASTMSG)"
 
 		if [ "$LASTTAG" == "$TO" ]
