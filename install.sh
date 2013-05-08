@@ -14,6 +14,9 @@ USERID=`id -u`
 if [ command -v appver >/dev/null 2>&1 ]; then . appver; else APP_FULL_VERSION_TAG=NA ; APP_BUILD_DATE=`date +'%Y%m%d_%H%M'`; fi
 
 mkdir -p -m 0755 $BINDIR
+install -m 0777 -v ./gr-authorcheck $BINDIR
+sed -i".bkp" "1,/^VERSION=/s/^VERSION=.*/VERSION=$APP_FULL_VERSION_TAG/" $BINDIR/gr-authorcheck  && rm -f $BINDIR/gr-authorcheck.bkp
+sed -i".bkp" "1,/^VERSION_DATE=/s/^VERSION_DATE=.*/VERSION_DATE=$APP_BUILD_DATE/" $BINDIR/gr-authorcheck  && rm -f $BINDIR/gr-authorcheck.bkp
 install -m 0777 -v ./gr-branches $BINDIR
 sed -i".bkp" "1,/^VERSION=/s/^VERSION=.*/VERSION=$APP_FULL_VERSION_TAG/" $BINDIR/gr-branches && rm -f $BINDIR/gr-branches.bkp
 sed -i".bkp" "1,/^VERSION_DATE=/s/^VERSION_DATE=.*/VERSION_DATE=$APP_BUILD_DATE/" $BINDIR/gr-branches && rm -f $BINDIR/gr-branches.bkp
@@ -41,7 +44,7 @@ sed -i".bkp" "1,/^VERSION_DATE=/s/^VERSION_DATE=.*/VERSION_DATE=$APP_BUILD_DATE/
 install -m 0777 -v ./gr-initbare $BINDIR
 sed -i".bkp" "1,/^VERSION=/s/^VERSION=.*/VERSION=$APP_FULL_VERSION_TAG/" $BINDIR/gr-initbare  && rm -f $BINDIR/gr-initbare.bkp
 sed -i".bkp" "1,/^VERSION_DATE=/s/^VERSION_DATE=.*/VERSION_DATE=$APP_BUILD_DATE/" $BINDIR/gr-initbare  && rm -f $BINDIR/gr-initbare.bkp
-install -m 0777 -v ./gr-authorcheck $BINDIR
-sed -i".bkp" "1,/^VERSION=/s/^VERSION=.*/VERSION=$APP_FULL_VERSION_TAG/" $BINDIR/gr-authorcheck  && rm -f $BINDIR/gr-authorcheck.bkp
-sed -i".bkp" "1,/^VERSION_DATE=/s/^VERSION_DATE=.*/VERSION_DATE=$APP_BUILD_DATE/" $BINDIR/gr-authorcheck  && rm -f $BINDIR/gr-authorcheck.bkp
+install -m 0777 -v ./gr-tags $BINDIR
+sed -i".bkp" "1,/^VERSION=/s/^VERSION=.*/VERSION=$APP_FULL_VERSION_TAG/" $BINDIR/gr-tags  && rm -f $BINDIR/gr-tags.bkp
+sed -i".bkp" "1,/^VERSION_DATE=/s/^VERSION_DATE=.*/VERSION_DATE=$APP_BUILD_DATE/" $BINDIR/gr-tags  && rm -f $BINDIR/gr-tags.bkp
 

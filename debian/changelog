@@ -1,4 +1,0 @@
-gr-scripts (0.0.0-1) unstable; urgency=low
-  * use rpmmake-debchangelog for automated git log 
- -- Miroslav Safr <miroslav.sar@gmail.com>  Thu, 23 Feb 2012 11:08:25 +0200
-      

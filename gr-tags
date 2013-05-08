@@ -1,0 +1,63 @@
+#!/bin/bash
+#git recursive directories scripts - http://safrm.net/projects/gr-scripts
+#author: Miroslav Safr <miroslav.safr@gmail.com>
+#shows local tags versus current remote situation in subdirectories ./ or $1/ except those which are marked by "touch <dir>/.git/no_updates"
+# -v shows the details
+VERSION=NA                                                                   
+VERSION_DATE=NA
+
+
+while [ $# -gt 0 ]; do
+  case "$1" in
+    -v|--verbose) 
+               VERBOSE=1
+               ;;
+	* )    PROJECT_DIR=$1;
+	       ;; 
+  esac
+  shift
+done
+
+if [ -z "$PROJECT_DIR" ]
+then
+	PROJECT_DIR="./"
+fi
+
+if [ ! -d "$PROJECT_DIR" ] 
+then
+  echo "directory $PROJECT_DIR does not exist";
+  exit 1
+fi
+
+CWD=`pwd`
+cd $PROJECT_DIR
+PROJECT_DIR=`pwd`
+
+
+find ./  -type d -name ".git*"  |  sed 's/\/.git//g' | sort | while read ENTRY
+do
+	if [ ! -f $ENTRY/.git/no_updates ]; then
+		cd $ENTRY 
+		BRANCH=`git branch | egrep "^\*" | cut -d' ' -f2`
+#		git fetch origin 
+		git fetch origin --tags
+
+        LASTTAG_NAME=`git describe --tags --abbrev=0 2> /dev/null`
+        PROJECT20=`basename $ENTRY`
+        PROJECT20=`printf '%-20s' $PROJECT20`
+
+        if [ -z $VERBOSE ]; then
+        echo -e "\033[32m$PROJECT20:\033[0m \033[31m [$BRANCH] \033[0m \033[34m $LASTTAG_NAME \033[0m "
+        else
+            COUNT_FROM_TAG=`git log --pretty=tformat:'%h' $LASTTAG_NAME..HEAD  | grep -v '^$' |wc -l`
+            TAGMESSAGE=`git tag -l -n1 $LASTTAG_NAME`
+    	    LASTMSG=`git log -1 --format="%s"  $LASTTAG_NAME`
+            echo -e "\033[32m$PROJECT20:\033[0m \033[31m [$BRANCH] \033[0m \033[34m $TAGMESSAGE \033[0m (+$COUNT_FROM_TAG)" ;
+        fi
+		cd $PROJECT_DIR
+	fi
+done
+
+TIME=`date +%H:%M:%S`
+echo "`basename $0` finished:$TIME"
+

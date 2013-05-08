@@ -41,6 +41,9 @@ export INSTALL_ROOT=$RPM_BUILD_ROOT
 # << install pre 
 #make install
 mkdir -p %{buildroot}/usr/bin
+install -m 755 ./gr-authorcheck  %{buildroot}%{_bindir}/
+sed -i".bkp" "1,/^VERSION=/s/^VERSION=.*/VERSION=%{version}/" %{buildroot}%{_bindir}/gr-authorcheck && rm -f %{buildroot}%{_bindir}/gr-authorcheck.bkp
+sed -i".bkp" "1,/^VERSION_DATE=/s/^VERSION_DATE=.*/VERSION_DATE=%{APP_BUILD_DATE}/" %{buildroot}%{_bindir}/gr-authorcheck && rm -f %{buildroot}%{_bindir}/gr-authorcheck.bkp
 install -m 755 ./gr-branches %{buildroot}%{_bindir}/
 sed -i".bkp" "1,/^VERSION=/s/^VERSION=.*/VERSION=%{version}/" %{buildroot}%{_bindir}/gr-branches && rm -f %{buildroot}%{_bindir}/gr-branches.bkp
 sed -i".bkp" "1,/^VERSION_DATE=/s/^VERSION_DATE=.*/VERSION_DATE=%{APP_BUILD_DATE}/" %{buildroot}%{_bindir}/gr-branches && rm -f %{buildroot}%{_bindir}/gr-branches.bkp
@@ -68,9 +71,9 @@ sed -i".bkp" "1,/^VERSION_DATE=/s/^VERSION_DATE=.*/VERSION_DATE=%{APP_BUILD_DATE
 install -m 755 ./gr-initbare  %{buildroot}%{_bindir}/
 sed -i".bkp" "1,/^VERSION=/s/^VERSION=.*/VERSION=%{version}/" %{buildroot}%{_bindir}/gr-initbare && rm -f %{buildroot}%{_bindir}/gr-initbare.bkp
 sed -i".bkp" "1,/^VERSION_DATE=/s/^VERSION_DATE=.*/VERSION_DATE=%{APP_BUILD_DATE}/" %{buildroot}%{_bindir}/gr-initbare && rm -f %{buildroot}%{_bindir}/gr-initbare.bkp
-install -m 755 ./gr-authorcheck  %{buildroot}%{_bindir}/
-sed -i".bkp" "1,/^VERSION=/s/^VERSION=.*/VERSION=%{version}/" %{buildroot}%{_bindir}/gr-authorcheck && rm -f %{buildroot}%{_bindir}/gr-authorcheck.bkp
-sed -i".bkp" "1,/^VERSION_DATE=/s/^VERSION_DATE=.*/VERSION_DATE=%{APP_BUILD_DATE}/" %{buildroot}%{_bindir}/gr-authorcheck && rm -f %{buildroot}%{_bindir}/gr-authorcheck.bkp
+install -m 755 ./gr-tags  %{buildroot}%{_bindir}/
+sed -i".bkp" "1,/^VERSION=/s/^VERSION=.*/VERSION=%{version}/" %{buildroot}%{_bindir}/gr-tags && rm -f %{buildroot}%{_bindir}/gr-tags.bkp
+sed -i".bkp" "1,/^VERSION_DATE=/s/^VERSION_DATE=.*/VERSION_DATE=%{APP_BUILD_DATE}/" %{buildroot}%{_bindir}/gr-tags && rm -f %{buildroot}%{_bindir}/gr-tags.bkp
 
 # >> install post
 # << install post
@@ -91,6 +94,7 @@ sed -i".bkp" "1,/^VERSION_DATE=/s/^VERSION_DATE=.*/VERSION_DATE=%{APP_BUILD_DATE
 %{_bindir}/gr-remotes
 %{_bindir}/gr-show
 %{_bindir}/gr-showlocal
+%{_bindir}/gr-tags
 # << files
 
 

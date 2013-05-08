@@ -8,5 +8,5 @@ gr-pullreset /usr/bin/
 gr-remotes /usr/bin/
 gr-show /usr/bin/
 gr-showlocal /usr/bin/
-
+gr-tags /usr/bin/
 
