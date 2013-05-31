@@ -15,25 +15,25 @@ CWD=`pwd`
 cd $PROJECT_DIR
 PROJECT_DIR=`pwd`
 
-find ./  -type d -name ".git*"  |  sed 's/\/.git//g' | sort | while read ENTRY
+find ./ -type d -name ".git*"  |  sed 's/\/.git//g' | sort | while read ENTRY
 do
 	if [ ! -f $ENTRY/.git/no_updates ]; then
 		cd $ENTRY 
-                LASTTAG=`git describe --tags --dirty=* 2> /dev/null`
+        LASTTAG=`git describe --tags --dirty=* --always 2> /dev/null`
 		BRANCH=`git branch | egrep "^\*" | cut -d' ' -f2`
-                echo -e "\033[32m $ENTRY:\033[0m \033[31m [$BRANCH] \033[0m from: \033[34m $LASTTAG \033[0m" 
+        echo -e "\033[32m $ENTRY:\033[0m \033[31m [$BRANCH] \033[0m from: \033[34m $LASTTAG \033[0m" 
 		git fetch origin 
 		git fetch origin --tags
 		git reset --hard origin/$BRANCH
-                git gc --quiet
-                git pull
+        git gc --quiet
+        git pull
 
-                TO=`git describe --tags --dirty=* 2> /dev/null`
+        TO=`git describe --tags --dirty=* --always 2> /dev/null`
 		if [ "$LASTTAG" != "$TO" ]
 		then
 			echo -e " \033[33mupdated to:\033[0m \033[34m $TO \033[0m  "
 			LASTMSG=`git log -1 --pretty=tformat:'%h %s | %ad' --date=relative`
-                        echo -e "$LASTMSG"
+            echo -e "$LASTMSG"
 		fi
 		cd $PROJECT_DIR
 	else

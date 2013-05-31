@@ -20,12 +20,12 @@ do
 	if [ -d $ENTRY ] && [ -d $ENTRY/.git ]; then
 		if [ ! -f $ENTRY/.git/no_updates ]; then
 			cd $ENTRY 
-                        LASTTAG=`git describe --tags --dirty=*  2> /dev/null`
-                        echo -e "\033[32m $ENTRY:\033[0m clean" 
+            LASTTAG=`git describe --tags --dirty=* --always 2> /dev/null`
+            echo -e "\033[32m $ENTRY:\033[0m clean" 
 			BRANCH=`git branch | egrep "^\*" | cut -d' ' -f2`
 			git reset --hard origin/$BRANCH
-                        git gc --quiet
-                        git clean -dfx
+            git gc --quiet
+            git clean -dfx
 			cd $PROJECT_DIR
 		else
 			echo -e "\033[32m $ENTRY:\033[0m \033[35m skipped clean \033[0m" 
