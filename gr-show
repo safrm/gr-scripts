@@ -1,11 +1,12 @@
-#!/bin/bash
+#!/bin/sh
 #git recursive directories scripts - http://safrm.net/projects/gr-scripts
 #author: Miroslav Safr <miroslav.safr@gmail.com>
 #shows local tags versus current remote situation in subdirectories ./ or $1/ except those which are marked by "touch <dir>/.git/no_updates"
 # -v shows the details
 VERSION=NA                                                                   
 VERSION_DATE=NA
-
+BASENAME=`basename $0`
+START_TIME=`date +'%s'`
 
 while [ $# -gt 0 ]; do
   case "$1" in
@@ -34,28 +35,36 @@ cd $PROJECT_DIR
 PROJECT_DIR=`pwd`
 
 
-find ./  -type d -name ".git*"  |  sed 's/\/.git//g' | sort | while read ENTRY
+find $PROJECT_DIR -type d -name ".git*"  |  sed 's/\/.git//g' | sort | while read ENTRY
 do
 	if [ ! -f $ENTRY/.git/no_updates ]; then
 		cd $ENTRY 
         LASTTAG=`git describe --tags --dirty=* --always 2> /dev/null`
-        echo -e "\033[32m $ENTRY:\033[0m"
+        PROJECT20=`basename $ENTRY`
+        PROJECT20=`printf '%-20s' $PROJECT20`
+        #\c = without new line
+        echo "\033[32m$PROJECT20\033[0m\c"
 		BRANCH=`git branch | egrep "^\*" | cut -d' ' -f2`
-		git fetch origin 
-		git fetch origin --tags
+    	git fetch origin 2> /dev/null
+        if [ $? = 128 ] ; then
+            NC="\033[41mNOT CONNECTED\033[0m "
+        else
+            NC=
+    		git fetch origin --tags
+        fi
 
         TO=`git describe origin/master --tags --always 2> /dev/null`
 
-	    LASTMSG=`git log -1 --format="%s" `
-        echo -e "\033[31m [$BRANCH] \033[0m local: \033[34m $LASTTAG \033[0m remote: \033[34m $TO \033[0m ($LASTMSG)"
+	    LASTMSG=`git --no-pager log -1 --pretty=tformat:'%Cred%h%Creset - %s' | cut -c -80`
+        echo "\033[31m[$BRANCH] \033[0m local:\033[34m$LASTTAG\033[0m remote:$NC\033[34m$TO\033[0m ($LASTMSG)"
 
-		if [ "$LASTTAG" == "$TO" ]
+		if [ "$LASTTAG" = "$TO" ]
 		then
 			NEEDS_UPDATE=""
 		else
 			COMMITCOUNT=`git shortlog origin/$BRANCH..HEAD | grep -E '^[ ]+\w+' | wc -l`
 			NEEDS_UPDATE=" NEEDS UPDATE OR COMMIT (+$COMMITCOUNT)"
-            echo -e "\033[33m$NEEDS_UPDATE\033[0m"
+            echo "\033[33m$NEEDS_UPDATE\033[0m"
             if [ ! -z "$VERBOSE" ]; then
 			   git status -s
 			fi
@@ -65,5 +74,6 @@ do
 done
 
 TIME=`date +%H:%M:%S`
-echo "`basename $0` finished:$TIME"
+ELAPSED_TIME=$((`date +'%s'` - $START_TIME))
+echo "$BASENAME finished:$TIME took:$(($ELAPSED_TIME/60)) min $(($ELAPSED_TIME%60)) s"
 
