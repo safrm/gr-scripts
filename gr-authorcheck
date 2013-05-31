@@ -9,8 +9,8 @@ VERSION=NA
 VERSION_DATE=NA
 BASENAME=`basename $0`
 usage() {
-    echo "`basename $0` ${VERSION}"
-    echo "Usage:`basename $0` [OPTIONS]... PATTERN [PROJECT_DIR]"
+    echo "$BASENAME ${VERSION}"
+    echo "Usage:$BASENAME [OPTIONS]... PATTERN [PROJECT_DIR]"
     echo " PATTERN ............................ name or email of author or part of it "
     echo " options: "
     echo " -v, --verbose ...................... prints more output"
@@ -50,7 +50,7 @@ fi
 if [ -z "$PROJECT_DIR" ] || [ ! -d "$PROJECT_DIR" ]; then
 	PROJECT_DIR="./"
 fi
-echo "searching for '$WHAT' in $PROJECT_DIR, CS: $CASE_SENS, VERBOSE:$VERBOSE"
+echo "searching for '\033[32m$WHAT\033[0m' in \033[34m$PROJECT_DIR\033[0m, CS: $CASE_SENS, VERBOSE:$VERBOSE"
 
 #so far the difference is only about new lines..
 if [ $VERBOSE -eq 1 ]; then
