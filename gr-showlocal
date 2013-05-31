@@ -28,16 +28,16 @@ CWD=`pwd`
 cd $PROJECT_DIR
 PROJECT_DIR=`pwd`
 
-find ./  -type d -name ".git*"  |  sed 's/\/.git//g' | sort | while read ENTRY
+find $PROJECT_DIR -type d -name ".git*"  |  sed 's/\/.git//g' | sort | while read ENTRY
 do
     cd $ENTRY 
     LASTTAG=`git describe --tags --dirty=*  2> /dev/null`
     BRANCH=`git branch | egrep "^\*" | cut -d' ' -f2`
     COMMITCOUNT=`git shortlog origin/$BRANCH..HEAD | grep -E '^[ ]+\w+' | wc -l`
     if [ "0" = "$COMMITCOUNT" ]; then
-        echo -e "\033[32m $ENTRY:\033[0m \033[34m $LASTTAG \033[0m (o/$BRANCH)"
+        echo -e "\033[32m`basename $ENTRY`:\033[0m \033[34m $LASTTAG \033[0m (o/$BRANCH)"
     else
-        echo -e "\033[32m $ENTRY:\033[0m \033[34m $LASTTAG \033[0m (o/$BRANCH\033[33m+$COMMITCOUNT\033[0m)"
+        echo -e "\033[32m`basename $ENTRY`:\033[0m \033[34m $LASTTAG \033[0m (o/$BRANCH\033[33m+$COMMITCOUNT\033[0m)"
     fi
 
     LASTMSG=`git log -1 --pretty=tformat:'%h %s | %ad' --date=relative`
