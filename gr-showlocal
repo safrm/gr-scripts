@@ -5,7 +5,8 @@
 # -v shows the details
 VERSION=NA                                                                   
 VERSION_DATE=NA
-
+BASENAME=`basename $0`
+START_TIME=`date +'%s'`
 
 while [ $# -gt 0 ]; do
   case "$1" in
@@ -34,14 +35,14 @@ do
     LASTTAG=`git describe --tags --dirty=*  2> /dev/null`
     BRANCH=`git branch | egrep "^\*" | cut -d' ' -f2`
     COMMITCOUNT=`git shortlog origin/$BRANCH..HEAD | grep -E '^[ ]+\w+' | wc -l`
+    LASTMSG=`git --no-pager log -1 --pretty=tformat:'%Cred%h%Creset - %s' | cut -c -200 `
+    PROJECT20=`basename $ENTRY`
+    PROJECT20=`printf '%-20s' $PROJECT20`
     if [ "0" = "$COMMITCOUNT" ]; then
-        echo -e "\033[32m`basename $ENTRY`:\033[0m \033[34m $LASTTAG \033[0m (o/$BRANCH)"
+        echo -e "\033[32m$PROJECT20\033[0m \033[34m $LASTTAG \033[0m (o/$BRANCH) $LASTMSG"
     else
-        echo -e "\033[32m`basename $ENTRY`:\033[0m \033[34m $LASTTAG \033[0m (o/$BRANCH\033[33m+$COMMITCOUNT\033[0m)"
+        echo -e "\033[32m$PROJECT20\033[0m \033[34m $LASTTAG \033[0m (o/$BRANCH\033[33m+$COMMITCOUNT\033[0m) $LASTMSG"
     fi
-
-    LASTMSG=`git log -1 --pretty=tformat:'%h %s | %ad' --date=relative`
-    echo -e "$LASTMSG"
 
     if [ ! -z "$VERBOSE" ]; then
         git status -s
@@ -50,7 +51,8 @@ do
 done
 
 TIME=`date +%H:%M:%S`
-echo "`basename $0` finished:$TIME"
+ELAPSED_TIME=$((`date +'%s'` - $START_TIME))
+echo "$BASENAME finished:$TIME took:$(($ELAPSED_TIME/60)) min $(($ELAPSED_TIME%60)) s"
 
 
 
