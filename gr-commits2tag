@@ -38,9 +38,13 @@ find "$PROJECT_DIR"  -type d -name ".git*"  |  sed 's/\/.git//g' | sort | while 
 do
 	if [ ! -f $ENTRY/.git/no_updates ]; then
 		cd $ENTRY 
-		git fetch origin 
-		git fetch origin --tags
-
+        git fetch origin 2> /dev/null
+        if [ $? = 128 ] ; then
+            NC="\033[41mNOT CONNECTED\033[0m "
+        else
+            NC=
+    		git fetch origin --tags
+        fi
 		BRANCH=`git branch | egrep "^\*" | cut -d' ' -f2`
         LASTTAG_NAME=`git describe --tags --abbrev=0 2> /dev/null`
         PROJECT20=`basename $ENTRY`
@@ -61,7 +65,7 @@ do
         if [ ! -z "$LOCAL_COMMITS_HEAD" ]; then echo "$LOCAL_COMMITS_HEAD"; fi
         echo "\033[46mlocal :\033[0m \033[34m $MASTER_LOCAL \033[0m \033[42m$LCFT_COUNT\033[0m"
         if [ ! -z "$LOCAL_COMMITS_FROM_LASTTAG_LOCAL" ]; then echo "$LOCAL_COMMITS_FROM_LASTTAG_LOCAL"; fi
-        echo "\033[46mremote:\033[0m \033[34m $MASTER_REMOTE \033[0m \033[42m$RCFT_COUNT\033[0m"
+        echo "\033[46mremote:\033[0m \033[34m $MASTER_REMOTE \033[0m \033[42m$RCFT_COUNT\033[0m $NC"
         if [ ! -z "$REMOTE_COMMITS_FROM_LASTTAG_LOCAL" ]; then echo "$REMOTE_COMMITS_FROM_LASTTAG_LOCAL"; fi
 
 		if [ "x$HEAD" = "x$MASTER_REMOTE" ]
