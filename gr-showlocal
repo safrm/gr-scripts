@@ -29,7 +29,7 @@ CWD=`pwd`
 cd $PROJECT_DIR
 PROJECT_DIR=`pwd`
 
-find $PROJECT_DIR -type d -name ".git*"  |  sed 's/\/.git//g' | sort | while read ENTRY
+find "$PROJECT_DIR" -type d -name ".git*"  |  sed 's/\/.git//g' | sort | while read ENTRY
 do
     cd $ENTRY 
     LASTTAG=`git describe --tags --dirty=* --always 2> /dev/null`

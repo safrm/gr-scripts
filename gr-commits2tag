@@ -1,11 +1,12 @@
-#!/bin/bash
+#!/bin/sh
 #git recursive directories scripts - http://safrm.net/projects/gr-scripts
 #author: Miroslav Safr <miroslav.safr@gmail.com>
 #shows untagged commits on head/local/remote 
 # -v shows the details
 VERSION=NA                                                                   
 VERSION_DATE=NA
-
+BASENAME=`basename $0`
+START_TIME=`date +'%s'`
 
 while [ $# -gt 0 ]; do
   case "$1" in
@@ -33,19 +34,18 @@ CWD=`pwd`
 cd $PROJECT_DIR
 PROJECT_DIR=`pwd`
 
-find ./  -type d -name ".git*"  |  sed 's/\/.git//g' | sort | while read ENTRY
+find "$PROJECT_DIR"  -type d -name ".git*"  |  sed 's/\/.git//g' | sort | while read ENTRY
 do
 	if [ ! -f $ENTRY/.git/no_updates ]; then
 		cd $ENTRY 
 		git fetch origin 
 		git fetch origin --tags
 
-
 		BRANCH=`git branch | egrep "^\*" | cut -d' ' -f2`
         LASTTAG_NAME=`git describe --tags --abbrev=0 2> /dev/null`
         PROJECT20=`basename $ENTRY`
         PROJECT20=`printf '%-20s' $PROJECT20` 
-        echo -e "\033[32m$PROJECT20\033[0m \033[31m [$BRANCH]\033[0m: \033[33m`git tag -l -n1 $LASTTAG_NAME`\033[0m"
+        echo "\033[32m$PROJECT20\033[0m \033[31m [$BRANCH]\033[0m \033[33m`git tag -l -n1 $LASTTAG_NAME`\033[0m"
 
         HEAD=`git describe --tags --dirty=* --always 2> /dev/null`
         MASTER_LOCAL=`git describe --tags master --always 2> /dev/null`
@@ -57,20 +57,25 @@ do
         REMOTE_COMMITS_FROM_LASTTAG_LOCAL=`git log --pretty=tformat:' %Cred%h%Creset - %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' $LASTTAG_NAME..origin/$BRANCH `
         RCFT_COUNT=`echo "$REMOTE_COMMITS_FROM_LASTTAG_LOCAL"| grep -v '^$' | wc -l`
 
-        echo -e "\033[46mhead  :\033[0m \033[34m $HEAD \033[0m \033[41m$LCH_COUNT\033[0m"
+        echo "\033[46mhead  :\033[0m \033[34m $HEAD \033[0m \033[42m$LCH_COUNT\033[0m"
         if [ ! -z "$LOCAL_COMMITS_HEAD" ]; then echo "$LOCAL_COMMITS_HEAD"; fi
-        echo -e "\033[46mlocal :\033[0m \033[34m $MASTER_LOCAL \033[0m \033[41m$LCFT_COUNT\033[0m"
+        echo "\033[46mlocal :\033[0m \033[34m $MASTER_LOCAL \033[0m \033[42m$LCFT_COUNT\033[0m"
         if [ ! -z "$LOCAL_COMMITS_FROM_LASTTAG_LOCAL" ]; then echo "$LOCAL_COMMITS_FROM_LASTTAG_LOCAL"; fi
-        echo -e "\033[46mremote:\033[0m \033[34m $MASTER_REMOTE \033[0m \033[41m$RCFT_COUNT\033[0m"
+        echo "\033[46mremote:\033[0m \033[34m $MASTER_REMOTE \033[0m \033[42m$RCFT_COUNT\033[0m"
         if [ ! -z "$REMOTE_COMMITS_FROM_LASTTAG_LOCAL" ]; then echo "$REMOTE_COMMITS_FROM_LASTTAG_LOCAL"; fi
 
-		if [ "$HEAD" == "$MASTER_REMOTE" ]
+		if [ "x$HEAD" = "x$MASTER_REMOTE" ]
 		then
 			NEEDS_UPDATE=""
 		else
-			COMMITCOUNT=`git shortlog origin/$BRANCH..HEAD | grep -E '^[ ]+\w+' | wc -l`
-			NEEDS_UPDATE=" NEEDS UPDATE OR COMMIT (+$COMMITCOUNT)"
-            echo -e "\033[33m$NEEDS_UPDATE\033[0m"
+			COMMITCOUNT_PULL=`git shortlog origin/$BRANCH..$BRANCH | grep -E '^[ ]+\w+' | wc -l`
+			COMMITCOUNT_PUSH=`git shortlog $BRANCH..HEAD | grep -E '^[ ]+\w+' | wc -l`
+            if [ `echo "$LASTTAG_NAME" | grep -q '*' 2> /dev/null` ]; then            
+                LCH="/local changes"
+            else
+                LCH="/local changes"
+            fi
+			echo "\043[33m NEEDS UPDATE OR COMMIT (pull:$COMMITCOUNT_PULL/push:$COMMITCOUNT_PUSH$LCH)\033[0m"
             if [ ! -z "$VERBOSE" ]; then
 			   git status -s
 			fi
@@ -80,5 +85,7 @@ do
 done
 
 TIME=`date +%H:%M:%S`
-echo "`basename $0` finished:$TIME"
+ELAPSED_TIME=$((`date +'%s'` - $START_TIME))
+echo "$BASENAME found \033[42m$FOUND_COUNT\033[0m finished:$TIME took:$(($ELAPSED_TIME/60)) min $(($ELAPSED_TIME%60)) s"
+
 

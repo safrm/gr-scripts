@@ -35,7 +35,7 @@ cd $PROJECT_DIR
 PROJECT_DIR=`pwd`
 
 
-find $PROJECT_DIR -type d -name ".git*"  |  sed 's/\/.git//g' | sort | while read ENTRY
+find "$PROJECT_DIR" -type d -name ".git*"  |  sed 's/\/.git//g' | sort | while read ENTRY
 do
 	if [ ! -f $ENTRY/.git/no_updates ]; then
 		cd $ENTRY 
@@ -62,9 +62,15 @@ do
 		then
 			NEEDS_UPDATE=""
 		else
-			COMMITCOUNT=`git shortlog origin/$BRANCH..HEAD | grep -E '^[ ]+\w+' | wc -l`
-			NEEDS_UPDATE=" NEEDS UPDATE OR COMMIT (+$COMMITCOUNT)"
-            echo "\033[33m$NEEDS_UPDATE\033[0m"
+            COMMITCOUNT_PULL=`git shortlog origin/$BRANCH..$BRANCH | grep -E '^[ ]+\w+' | wc -l`
+			COMMITCOUNT_PUSH=`git shortlog $BRANCH..HEAD | grep -E '^[ ]+\w+' | wc -l`
+            if [ `echo "$LASTTAG_NAME" | grep -q '*' 2> /dev/null` ]; then            
+                LCH="/local changes"
+            else
+                LCH="/local changes"
+            fi
+			NEEDS_UPDATE=" NEEDS UPDATE OR COMMIT (pull:$COMMITCOUNT_PULL/push:$COMMITCOUNT_PUSH$LCH)"
+            echo "\033[43m$NEEDS_UPDATE\033[0m"
             if [ ! -z "$VERBOSE" ]; then
 			   git status -s
 			fi

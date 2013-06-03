@@ -76,7 +76,7 @@ trap 'rm -f $FIFO' 0
 trap 'rm -f $FIFO2' 0
 mkfifo $FIFO
 mkfifo $FIFO2
-find $PROJECT_DIR -type d -name ".git*"  |  sed 's/\/.git//g' | sort | while read ENTRY
+find "$PROJECT_DIR" -type d -name ".git*"  |  sed 's/\/.git//g' | sort | while read ENTRY
 do
 	cd $ENTRY ;
     DIR_COMMIT_COUNT=`git --no-pager log --pretty=tformat:'%h' $ALL_BRANCHES_CMDPARAM | grep -v '^$'  | wc -l`
