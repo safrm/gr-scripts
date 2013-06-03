@@ -71,10 +71,10 @@ do
             fi
 			NEEDS_UPDATE=" NEEDS UPDATE OR COMMIT (pull:$COMMITCOUNT_PULL/push:$COMMITCOUNT_PUSH$LCH)"
             echo "\033[43m$NEEDS_UPDATE\033[0m"
-            if [ ! -z "$VERBOSE" ]; then
-			   git status -s
-			fi
 		fi
+        if [ ! -z "$VERBOSE" ]; then
+        	   git status -s
+    	fi
 		cd $PROJECT_DIR
 	fi
 done
