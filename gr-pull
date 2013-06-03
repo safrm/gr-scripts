@@ -1,45 +1,57 @@
-#!/bin/bash
+#!/bin/sh
 #git recursive directories scripts - http://safrm.net/projects/gr-scripts
 #author: Miroslav Safr <miroslav.safr@gmail.com>
 #pulls all and keeps local chanegs in  subdirectories ./ or $1/ except those which are marked by "touch <dir>/.git/no_updates"
 VERSION=NA                                                                   
 VERSION_DATE=NA
-
+BASENAME=`basename $0`
+START_TIME=`date +'%s'`
 
 PROJECT_DIR="$1"
 if [ -z "$PROJECT_DIR" ] || [ ! -d "$PROJECT_DIR" ]; then
 	PROJECT_DIR="./"
 fi
 
+if [ ! -d "$PROJECT_DIR" ]; then
+    echo "directory $PROJECT_DIR does not exist";
+    exit 1
+fi
+
 CWD=`pwd`
 cd $PROJECT_DIR
 PROJECT_DIR=`pwd`
 
-find ./  -type d -name ".git*"  |  sed 's/\/.git//g' | sort | while read ENTRY
+find $PROJECT_DIR -type d -name ".git*"  |  sed 's/\/.git//g' | sort | while read ENTRY
 do
 	if [ ! -f $ENTRY/.git/no_updates ]; then
 		cd $ENTRY 
 		LASTTAG=`git describe --tags --dirty=* --always 2> /dev/null`
 		BRANCH=`git branch | egrep "^\*" | cut -d' ' -f2`
-		echo -e "\033[32m $ENTRY:\033[0m \033[31m [$BRANCH] \033[0m from: \033[34m $LASTTAG \033[0m" 
-		git fetch origin 
-		git fetch origin --tags
-		git gc --quiet
-		git pull
-
-		TO=`git describe --tags --dirty=* --always 2> /dev/null`
-		if [ "$LASTTAG" != "$TO" ]
-		then
-			echo -e " \033[33mupdated to:\033[0m \033[34m $TO \033[0m  "
-			LASTMSG=`git log -1 --pretty=tformat:'%h %s | %ad' --date=relative`
-            echo -e "$LASTMSG"
-		fi
+        PROJECT20=`basename $ENTRY`
+        PROJECT20=`printf '%-20s' $PROJECT20`
+ 		echo "\033[32m$PROJECT20\033[0m \033[31m [$BRANCH] \033[0m from: \033[34m $LASTTAG \033[0m\c" 
+		git fetch origin 2> /dev/null 
+        if [ $? = 128 ] ; then
+            echo " remote \033[41mNOT CONNECTED\033[0m "
+        else
+    		git fetch origin --tags
+    		git gc --quiet
+            git pull
+    		TO=`git describe --tags --dirty=* --always 2> /dev/null`
+		    if [ "$LASTTAG" != "$TO" ]
+		    then
+			    echo " \033[33mupdated to:\033[0m \033[34m $TO \033[0m  "
+			    LASTMSG=`git log -1 --pretty=tformat:'%h %s | %ad' --date=relative`
+                echo "$LASTMSG"
+		    fi
+        fi
 		cd $PROJECT_DIR
 	else
-		echo -e "\033[32m $ENTRY:\033[0m \033[35m skipped update \033[0m" 
+		echo "\033[32m $ENTRY:\033[0m \033[35m skipped update \033[0m" 
 	fi
 done
 
 TIME=`date +%H:%M:%S`
-echo "`basename $0` (keep local) finished:$TIME"
+ELAPSED_TIME=$((`date +'%s'` - $START_TIME))
+echo "$BASENAME (keep local) finished:$TIME took:$(($ELAPSED_TIME/60)) min $(($ELAPSED_TIME%60)) s"
 
