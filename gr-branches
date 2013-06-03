@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 #git recursive directories scripts - http://safrm.net/projects/gr-scripts
 #author: Miroslav Safr <miroslav.safr@gmail.com>
 #shows branches in subdirectories ./ or $1/ 
@@ -7,19 +7,32 @@ VERSION_DATE=NA
 
 
 PROJECT_DIR="$1"
-if [ -z "$PROJECT_DIR" ] || [ ! -d "$PROJECT_DIR" ]; then
+
+if [ -z "$PROJECT_DIR" ]
+then
 	PROJECT_DIR="./"
+fi
+
+if [ ! -d "$PROJECT_DIR" ] 
+then
+  echo "directory $PROJECT_DIR does not exist";
+  exit 1
 fi
 
 CWD=`pwd`
 cd $PROJECT_DIR
 PROJECT_DIR=`pwd`
+CWD=`pwd`
+cd $PROJECT_DIR
+PROJECT_DIR=`pwd`
 
-find ./  -type d -name ".git*"  |  sed 's/\/.git//g' | sort | while read ENTRY
+find "$PROJECT_DIR" -type d -name ".git*"  |  sed 's/\/.git//g' | sort | while read ENTRY
 do
 		cd $ENTRY 
-                BRANCHES=`git branch   | tr -d '\n'`  
-		echo -e "\033[32m $ENTRY:\033[0m $BRANCHES"
+        BRANCHES=`git branch   | tr -d '\n'` 
+        PROJECT20=`basename $ENTRY`
+        PROJECT20=`printf '%-20s' $PROJECT20` 
+		echo "\033[32m$PROJECT20\033[0m $BRANCHES"
 		cd $PROJECT_DIR
 done
 
