@@ -43,23 +43,25 @@ do
 
 		BRANCH=`git branch | egrep "^\*" | cut -d' ' -f2`
         LASTTAG_NAME=`git describe --tags --abbrev=0 2> /dev/null`
-        echo -e "\033[32m $ENTRY \033[0m \033[31m [$BRANCH]\033[0m: \033[33m`git tag -l -n1 $LASTTAG_NAME`\033[0m"
+        PROJECT20=`basename $ENTRY`
+        PROJECT20=`printf '%-20s' $PROJECT20` 
+        echo -e "\033[32m$PROJECT20\033[0m \033[31m [$BRANCH]\033[0m: \033[33m`git tag -l -n1 $LASTTAG_NAME`\033[0m"
 
         HEAD=`git describe --tags --dirty=* --always 2> /dev/null`
         MASTER_LOCAL=`git describe --tags master --always 2> /dev/null`
         MASTER_REMOTE=`git describe --tags origin/master --always 2> /dev/null`
-        LOCAL_COMMITS_FROM_LASTTAG_LOCAL=`git log --pretty=tformat:'%Cred%h%Creset - %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' $LASTTAG_NAME..master`
+        LOCAL_COMMITS_FROM_LASTTAG_LOCAL=`git log --pretty=tformat:' %Cred%h%Creset - %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' $LASTTAG_NAME..master`
         LCFT_COUNT=`echo "$LOCAL_COMMITS_FROM_LASTTAG_LOCAL" | grep -v '^$'  | wc -l`
-        LOCAL_COMMITS_HEAD=`git log --pretty=tformat:'%Cred%h%Creset - %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' master..HEAD `
+        LOCAL_COMMITS_HEAD=`git log --pretty=tformat:' %Cred%h%Creset - %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' master..HEAD `
         LCH_COUNT=`echo "$LOCAL_COMMITS_HEAD" | grep -v '^$' |wc -l`
-        REMOTE_COMMITS_FROM_LASTTAG_LOCAL=`git log --pretty=tformat:'%Cred%h%Creset - %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' $LASTTAG_NAME..origin/$BRANCH `
+        REMOTE_COMMITS_FROM_LASTTAG_LOCAL=`git log --pretty=tformat:' %Cred%h%Creset - %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' $LASTTAG_NAME..origin/$BRANCH `
         RCFT_COUNT=`echo "$REMOTE_COMMITS_FROM_LASTTAG_LOCAL"| grep -v '^$' | wc -l`
 
-        echo -e "\033[36mhead  :\033[0m \033[34m $HEAD \033[0m $LCH_COUNT"
+        echo -e "\033[46mhead  :\033[0m \033[34m $HEAD \033[0m \033[41m$LCH_COUNT\033[0m"
         if [ ! -z "$LOCAL_COMMITS_HEAD" ]; then echo "$LOCAL_COMMITS_HEAD"; fi
-        echo -e "\033[36mlocal :\033[0m \033[34m $MASTER_LOCAL \033[0m $LCFT_COUNT"
+        echo -e "\033[46mlocal :\033[0m \033[34m $MASTER_LOCAL \033[0m \033[41m$LCFT_COUNT\033[0m"
         if [ ! -z "$LOCAL_COMMITS_FROM_LASTTAG_LOCAL" ]; then echo "$LOCAL_COMMITS_FROM_LASTTAG_LOCAL"; fi
-        echo -e "\033[36mremote:\033[0m \033[34m $MASTER_REMOTE \033[0m $RCFT_COUNT"
+        echo -e "\033[46mremote:\033[0m \033[34m $MASTER_REMOTE \033[0m \033[41m$RCFT_COUNT\033[0m"
         if [ ! -z "$REMOTE_COMMITS_FROM_LASTTAG_LOCAL" ]; then echo "$REMOTE_COMMITS_FROM_LASTTAG_LOCAL"; fi
 
 		if [ "$HEAD" == "$MASTER_REMOTE" ]
