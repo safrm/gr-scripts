@@ -34,6 +34,7 @@ do
     cd $ENTRY 
     LASTTAG=`git describe --tags --dirty=* --always 2> /dev/null`
     BRANCH=`git branch | egrep "^\*" | cut -d' ' -f2`
+    #commits to push
     COMMITCOUNT=`git shortlog origin/$BRANCH..HEAD | grep -E '^[ ]+\w+' | wc -l`
     LASTMSG=`git --no-pager log -1 --pretty=tformat:'%Cred%h%Creset - %s' | cut -c -80`
     PROJECT20=`basename $ENTRY`
@@ -44,9 +45,17 @@ do
         echo "\033[32m$PROJECT20\033[0m \033[34m $LASTTAG \033[0m (o/$BRANCH\033[33m+$COMMITCOUNT\033[0m) $LASTMSG"
     fi
 
-    if [ ! -z "$VERBOSE" ]; then
-        git status -s
+    #local changes
+	LOCAL_CHANGES=`git status -s`
+	LOCAL_CHANGES_COUNT=`echo "$LOCAL_CHANGES" | grep -v '^$'| wc -l`
+    if [ "x$LOCAL_CHANGES_COUNT" != "x0" ] || [ "x$COMMITCOUNT" != "x0" ]
+    then
+        echo "\033[43m NEEDS COMMIT (push:$COMMITCOUNT/local-files:$LOCAL_CHANGES_COUNT)\033[0m"    
     fi
+
+    if [ ! -z "$VERBOSE" ]; then
+        echo "$LOCAL_CHANGES"
+	fi
     cd $PROJECT_DIR
 done
 
