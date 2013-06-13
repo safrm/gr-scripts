@@ -68,22 +68,25 @@ do
         echo "\033[46mremote:\033[0m \033[34m $MASTER_REMOTE \033[0m \033[42m$RCFT_COUNT\033[0m $NC"
         if [ ! -z "$REMOTE_COMMITS_FROM_LASTTAG_LOCAL" ]; then echo "$REMOTE_COMMITS_FROM_LASTTAG_LOCAL"; fi
 
-		if [ "x$HEAD" = "x$MASTER_REMOTE" ]
-		then
-			NEEDS_UPDATE=""
-		else
-			COMMITCOUNT_PULL=`git shortlog origin/$BRANCH..$BRANCH | grep -E '^[ ]+\w+' | wc -l`
+        #local changes
+    	LOCAL_CHANGES=`git status -s`
+    	LOCAL_CHANGES_COUNT=`echo "$LOCAL_CHANGES" | grep -v '^$'| wc -l`
+        #remote & local repo
+        COMMITCOUNT_PULL=0
+        COMMITCOUNT_PUSH=0
+		if [ "$HEAD" != "$MASTER_REMOTE" ]; then
+            COMMITCOUNT_PULL=`git shortlog origin/$BRANCH..$BRANCH | grep -E '^[ ]+\w+' | wc -l`
 			COMMITCOUNT_PUSH=`git shortlog $BRANCH..HEAD | grep -E '^[ ]+\w+' | wc -l`
-            if [ `echo "$LASTTAG_NAME" | grep -q '*' 2> /dev/null` ]; then            
-                LCH=""
-            else
-                LCH="/local changes"
-            fi
-			echo "\043[33m NEEDS UPDATE OR COMMIT (pull:$COMMITCOUNT_PULL/push:$COMMITCOUNT_PUSH$LCH)\033[0m"
-            if [ ! -z "$VERBOSE" ]; then
-			   git status -s
-			fi
 		fi
+
+        if [ "x$LOCAL_CHANGES_COUNT" != "x0" ] || [ "x$COMMITCOUNT_PULL" != "x0" ] || [ "x$COMMITCOUNT_PUSH" != "x0" ] 
+        then
+            echo "\033[43m NEEDS UPDATE OR COMMIT (pull:$COMMITCOUNT_PULL/push:$COMMITCOUNT_PUSH/local:$LOCAL_CHANGES_COUNT)\033[0m"    
+        fi
+        if [ ! -z "$VERBOSE" ]; then
+            echo "$LOCAL_CHANGES"
+    	fi
+
 		cd $PROJECT_DIR
 	fi
 done
