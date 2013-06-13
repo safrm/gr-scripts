@@ -58,6 +58,7 @@ do
 	    LASTMSG=`git --no-pager log -1 --pretty=tformat:'%Cred%h%Creset - %s' | cut -c -80`
         echo "\033[31m[$BRANCH] \033[0m local:\033[34m$LASTTAG\033[0m remote:$NC\033[34m$TO\033[0m ($LASTMSG)"
 
+        git ls-files --exclude-standard --others
 		if [ "$LASTTAG" = "$TO" ]
 		then
 			NEEDS_UPDATE=""
@@ -65,7 +66,7 @@ do
             COMMITCOUNT_PULL=`git shortlog origin/$BRANCH..$BRANCH | grep -E '^[ ]+\w+' | wc -l`
 			COMMITCOUNT_PUSH=`git shortlog $BRANCH..HEAD | grep -E '^[ ]+\w+' | wc -l`
             if [ `echo "$LASTTAG_NAME" | grep -q '*' 2> /dev/null` ]; then            
-                LCH="/local changes"
+                LCH=""
             else
                 LCH="/local changes"
             fi

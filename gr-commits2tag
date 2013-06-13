@@ -75,7 +75,7 @@ do
 			COMMITCOUNT_PULL=`git shortlog origin/$BRANCH..$BRANCH | grep -E '^[ ]+\w+' | wc -l`
 			COMMITCOUNT_PUSH=`git shortlog $BRANCH..HEAD | grep -E '^[ ]+\w+' | wc -l`
             if [ `echo "$LASTTAG_NAME" | grep -q '*' 2> /dev/null` ]; then            
-                LCH="/local changes"
+                LCH=""
             else
                 LCH="/local changes"
             fi
