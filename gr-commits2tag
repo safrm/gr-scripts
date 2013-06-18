@@ -83,7 +83,7 @@ do
         then
             echo "\033[43m NEEDS UPDATE OR COMMIT (pull:$COMMITCOUNT_PULL/push:$COMMITCOUNT_PUSH/local-files:$LOCAL_CHANGES_COUNT)\033[0m"    
         fi
-        if [ ! -z "$VERBOSE" ]; then
+        if [ ! -z "$VERBOSE" ] && [ "x$LOCAL_CHANGES" != "x" ] ; then
             echo "$LOCAL_CHANGES"
     	fi
 
