@@ -6,6 +6,8 @@ VERSION=NA
 VERSION_DATE=NA
 BASENAME=`basename $0`
 START_TIME=`date +'%s'`
+#support color escape characters on different terminals
+alias echo="/bin/echo -e"
 
 PROJECT_DIR="$1"
 if [ -z "$PROJECT_DIR" ] || [ ! -d "$PROJECT_DIR" ]; then

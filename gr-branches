@@ -4,7 +4,8 @@
 #shows branches in subdirectories ./ or $1/ 
 VERSION=NA                                                                   
 VERSION_DATE=NA
-
+#support color escape characters on different terminals
+alias echo="/bin/echo -e"
 
 PROJECT_DIR="$1"
 

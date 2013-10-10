@@ -20,6 +20,9 @@ usage() {
     echo " -a --all  .......................... search in all branches(commits)"
     echo " "
 }
+#support color escape characters on different terminals
+alias echo="/bin/echo -e"
+
 CASE_SENS=0
 VERBOSE=0
 ALL_BRANCHES=0

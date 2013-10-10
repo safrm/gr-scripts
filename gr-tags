@@ -5,6 +5,9 @@
 # -v shows the details
 VERSION=NA                                                                   
 VERSION_DATE=NA
+#support color escape characters on different terminals
+alias echo="/bin/echo -e"
+
 BASENAME=`basename $0`
 START_TIME=`date +'%s'`
 

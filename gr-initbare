@@ -4,6 +4,8 @@
 #
 VERSION=NA                                                                   
 VERSION_DATE=NA
+#support color escape characters on different terminals
+alias echo="/bin/echo -e"
 
 usage() {
     echo "usage: `basename $0` <new_repo_name> "
