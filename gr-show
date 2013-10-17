@@ -16,6 +16,9 @@ while [ $# -gt 0 ]; do
     -v|--verbose) 
                VERBOSE=1
                ;;
+    -ns|--no-summary) 
+               NO_SUMMARY=1
+               ;;
 	* )    PROJECT_DIR=$1;
 	       ;; 
   esac
@@ -84,7 +87,8 @@ do
 	fi
 done
 
-TIME=`date +%H:%M:%S`
-ELAPSED_TIME=$((`date +'%s'` - $START_TIME))
-echo "$BASENAME finished:$TIME took:$(($ELAPSED_TIME/60)) min $(($ELAPSED_TIME%60)) s"
-
+if [ -z "$NO_SUMMARY" ]; then
+	TIME=`date +%H:%M:%S`
+	ELAPSED_TIME=$((`date +'%s'` - $START_TIME))
+	echo "$BASENAME finished:$TIME took:$(($ELAPSED_TIME/60)) min $(($ELAPSED_TIME%60)) s"
+fi

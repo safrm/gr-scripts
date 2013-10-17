@@ -7,7 +7,19 @@ VERSION_DATE=NA
 #support color escape characters on different terminals
 alias echo="/bin/echo -e"
 
-PROJECT_DIR="$1"
+while [ $# -gt 0 ]; do
+  case "$1" in
+    -a|--all) 
+               ALL_BRANCHES=1
+               ;;
+    -ns|--no-summary) 
+               NO_SUMMARY=1
+               ;;
+	* )    PROJECT_DIR=$1;
+	       ;; 
+  esac
+  shift
+done
 
 if [ -z "$PROJECT_DIR" ]
 then
@@ -17,7 +29,7 @@ fi
 if [ ! -d "$PROJECT_DIR" ] 
 then
   echo "directory $PROJECT_DIR does not exist";
-  exit 1
+  exit 1	
 fi
 
 CWD=`pwd`
@@ -30,15 +42,21 @@ PROJECT_DIR=`pwd`
 find "$PROJECT_DIR" -type d -name ".git*"  |  sed 's/\/.git//g' | sort | while read ENTRY
 do
 		cd $ENTRY 
-        BRANCHES=`git branch   | tr -d '\n'` 
+		if [ ! -z "$ALL_BRANCHES" ]; then	
+	        BRANCHES=`echo && git branch -a ` 
+		else
+	        BRANCHES=`git branch  | tr -d '\n'` 
+		fi
         PROJECT20=`basename $ENTRY`
         PROJECT20=`printf '%-20s' $PROJECT20` 
 		echo "\033[32m$PROJECT20\033[0m $BRANCHES"
 		cd $PROJECT_DIR
 done
 
-TIME=`date +%H:%M:%S`
-echo "`basename $0` finished:$TIME"
+if [ -z "$NO_SUMMARY" ]; then
+	TIME=`date +%H:%M:%S`
+	echo "`basename $0` finished:$TIME"
+fi
 
 
 

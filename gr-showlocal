@@ -13,7 +13,8 @@ START_TIME=`date +'%s'`
 
 while [ $# -gt 0 ]; do
   case "$1" in
-    -v|--verbose) VERBOSE=1;;
+    -v  | --verbose) VERBOSE=1;;
+    -ns | --no-summary) NO_SUMMARY=1 ;;
     * )       PROJECT_DIR=$1;; 
   esac
   shift
@@ -62,9 +63,11 @@ do
     cd $PROJECT_DIR
 done
 
-TIME=`date +%H:%M:%S`
-ELAPSED_TIME=$((`date +'%s'` - $START_TIME))
-echo "$BASENAME finished:$TIME took:$(($ELAPSED_TIME/60)) min $(($ELAPSED_TIME%60)) s"
+if [ -z "$NO_SUMMARY" ]; then
+	TIME=`date +%H:%M:%S`
+	ELAPSED_TIME=$((`date +'%s'` - $START_TIME))
+	echo "$BASENAME finished:$TIME took:$(($ELAPSED_TIME/60)) min $(($ELAPSED_TIME%60)) s"
+fi
 
 
 

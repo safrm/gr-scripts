@@ -7,7 +7,17 @@ VERSION_DATE=NA
 #support color escape characters on different terminals
 alias echo="/bin/echo -e"
 
-PROJECT_DIR="$1"
+while [ $# -gt 0 ]; do
+  case "$1" in
+    -ns|--no-summary) 
+               NO_SUMMARY=1
+               ;;
+	* )    PROJECT_DIR=$1;
+	       ;; 
+  esac
+  shift
+done
+
 if [ -z "$PROJECT_DIR" ]
 then
 	PROJECT_DIR="./"
@@ -43,6 +53,8 @@ do
 	fi
 done
 
-TIME=`date +%H:%M:%S`
-echo "`basename $0` finished:$TIME"
+if [ -z "$NO_SUMMARY" ]; then
+	TIME=`date +%H:%M:%S`
+	echo "`basename $0` finished:$TIME"
+fi
 

@@ -9,7 +9,17 @@ START_TIME=`date +'%s'`
 #support color escape characters on different terminals
 alias echo="/bin/echo -e"
 
-PROJECT_DIR="$1"
+while [ $# -gt 0 ]; do
+  case "$1" in
+    -ns|--no-summary) 
+               NO_SUMMARY=1
+               ;;
+	* )    PROJECT_DIR=$1;
+	       ;; 
+  esac
+  shift
+done
+
 if [ -z "$PROJECT_DIR" ] || [ ! -d "$PROJECT_DIR" ]; then
 	PROJECT_DIR="./"
 fi
@@ -53,7 +63,9 @@ do
 	fi
 done
 
-TIME=`date +%H:%M:%S`
-ELAPSED_TIME=$((`date +'%s'` - $START_TIME))
-echo "$BASENAME (keep local) finished:$TIME took:$(($ELAPSED_TIME/60)) min $(($ELAPSED_TIME%60)) s"
+if [ -z "$NO_SUMMARY" ]; then
+	TIME=`date +%H:%M:%S`
+	ELAPSED_TIME=$((`date +'%s'` - $START_TIME))
+	echo "$BASENAME (keep local) finished:$TIME took:$(($ELAPSED_TIME/60)) min $(($ELAPSED_TIME%60)) s"
+fi
 

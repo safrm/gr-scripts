@@ -16,8 +16,9 @@ usage() {
     echo " options: "
     echo " -v, --verbose ...................... prints more output"
     echo " --help ............................. shows command line help"
-    echo " -cs ................................ case sensitive search (by default it is insensitive)"
+    echo " -cs --case-sensitive ............... case sensitive search (by default it is insensitive)"
     echo " -a --all  .......................... search in all branches(commits)"
+	echo " -ns|--no-summary ................... do not print execution summary"
     echo " "
 }
 #support color escape characters on different terminals
@@ -32,8 +33,9 @@ while [ $# -gt 0 ]; do
   case "$1" in
     -v | --verbose) VERBOSE=1;;
     --help) usage exit ;;
-    -cs) CASE_SENS=1;;
-    -a | --all) ALL_BRANCHES=1;;
+    -cs | --case-sensitive) CASE_SENS=1	;;
+    -a | --all) ALL_BRANCHES=1 ;;
+    -ns|--no-summary) NO_SUMMARY=1 ;;
 	* )      
         if [ -z "$WHAT" ]; then  
             WHAT=$1 ; 
@@ -99,7 +101,7 @@ do
 	cd $CWD
     FOUND_COUNT=$(($FOUND_COUNT + $FOUND));
     TOTAL_COUNT=$(($TOTAL_COUNT + $DIR_COMMIT_COUNT));
-    echo "\tFOUND local:\033[42m$FOUND/$DIR_COMMIT_COUNT\033[0m";
+#    echo "\tFOUND local:\033[42m$FOUND/$DIR_COMMIT_COUNT\033[0m";
     echo "$TOTAL_COUNT" > $FIFO &
     echo "$FOUND_COUNT" > $FIFO2 &
 done
@@ -108,9 +110,11 @@ read TOTAL_COUNT < $FIFO
 read FOUND_COUNT < $FIFO2
 wait $!
 
-TIME=`date +%H:%M:%S`
-ELAPSED_TIME=$((`date +'%s'` - $START_TIME))
-echo "$BASENAME found \033[42m$FOUND_COUNT in $TOTAL_COUNT\033[0m commits, finished:$TIME took:$(($ELAPSED_TIME/60)) min $(($ELAPSED_TIME%60)) s"
+if [ -z "$NO_SUMMARY" ]; then
+	TIME=`date +%H:%M:%S`
+	ELAPSED_TIME=$((`date +'%s'` - $START_TIME))
+	echo "$BASENAME found \033[42m$FOUND_COUNT in $TOTAL_COUNT\033[0m commits, finished:$TIME took:$(($ELAPSED_TIME/60)) min $(($ELAPSED_TIME%60)) s"
+fi
 
 
 
