@@ -26,6 +26,9 @@ while [ $# -gt 0 ]; do
     -hm|--header-message) shift;
 	 	HEADER_MESSAGE=$1;
 		;;
+		-mc|--max-commits) shift;
+	 	MAX_COMMITS=$1;
+		;;
 	* )    PROJECT_DIR=$1;
 	       ;; 
   esac
