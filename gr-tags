@@ -19,6 +19,9 @@ while [ $# -gt 0 ]; do
     -ns|--no-summary) 
                NO_SUMMARY=1
                ;;
+    -hm|--header-message) shift;
+               HEADER_MESSAGE=$1;
+		           ;;
 	* )    PROJECT_DIR=$1;
 	       ;; 
   esac
@@ -40,6 +43,9 @@ CWD=`pwd`
 cd $PROJECT_DIR
 PROJECT_DIR=`pwd`
 
+if [ ! -z "$HEADER_MESSAGE" ]; then
+	echo "$HEADER_MESSAGE"
+fi
 
 find "$PROJECT_DIR" -type d -name ".git*"  |  sed 's/\/.git//g' | sort | while read ENTRY
 do
