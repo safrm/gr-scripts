@@ -71,8 +71,8 @@ do
         COMMITCOUNT_PULL=0
         COMMITCOUNT_PUSH=0
 		if [ "$LASTTAG" != "$TO" ]; then
-            COMMITCOUNT_PULL=`git shortlog origin/$BRANCH..$BRANCH | grep -E '^[ ]+\w+' | wc -l`
-			COMMITCOUNT_PUSH=`git shortlog $BRANCH..HEAD | grep -E '^[ ]+\w+' | wc -l`
+            COMMITCOUNT_PULL=`git shortlog HEAD..origin/$BRANCH | grep -E '^[ ]+\w+' | wc -l`
+			COMMITCOUNT_PUSH=`git shortlog origin/$BRANCH..$BRANCH | grep -E '^[ ]+\w+' | wc -l`
 		fi
 
         if [ "x$LOCAL_CHANGES_COUNT" != "x0" ] || [ "x$COMMITCOUNT_PULL" != "x0" ] || [ "x$COMMITCOUNT_PUSH" != "x0" ] 
