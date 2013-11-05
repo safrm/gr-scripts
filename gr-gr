@@ -1,0 +1,23 @@
+#!/bin/sh
+#git recursive directories scripts - http://safrm.net/projects/gr-scripts
+#author: Miroslav Safr <miroslav.safr@gmail.com>
+#general recurse script
+VERSION=NA
+VERSION_DATE=NA
+#support color escape characters on different terminals
+alias echo="/bin/echo -e"
+
+BASENAME=`basename $0`
+START_TIME=`date +'%s'`
+PROJECT_DIR=`pwd`
+
+find "$PROJECT_DIR" -type d -name ".git*"  |  sed 's/\/.git//g' | sort | while read ENTRY
+do
+		cd $ENTRY
+		$*
+		cd $PROJECT_DIR
+done
+
+TIME=`date +%H:%M:%S`
+ELAPSED_TIME=$((`date +'%s'` - $START_TIME))
+echo "$BASENAME \"$*\" finished:$TIME took:$(($ELAPSED_TIME/60)) min $(($ELAPSED_TIME%60)) s"

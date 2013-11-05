@@ -1,4 +1,3 @@
-%define buildroot %{_topdir}/%{name}-%{version}-root
 %define APP_BUILD_DATE %(date +'%%Y%%m%%d_%%H%%M')
 
 Name:       gr-scripts
@@ -13,7 +12,6 @@ Vendor:     Miroslav Safr <miroslav.safr@gmail.com>
 Source0:    %{name}-%{version}.tar.bz2
 Autoreq: on
 Autoreqprov: on
-BuildRoot: %{buildroot}
 
 %description
 fast script to create rpm package inside the git repo without beeing root 
@@ -22,24 +20,11 @@ fast script to create rpm package inside the git repo without beeing root
 
 %prep
 %setup -c -n ./%{name}-%{version}
-# >> setup
-# << setup
 
 %build
-# >> build pre
-#qmake install_prefix=/usr
-# << build pre
-#make %{?jobs:-j%jobs}
-
-# >> build post
-# << build post
 
 %install
-rm -fr $RPM_BUILD_ROOT
-# >> install pre
-export INSTALL_ROOT=$RPM_BUILD_ROOT
-# << install pre 
-#make install
+rm -fr %{buildroot}
 mkdir -p %{buildroot}/usr/bin
 install -m 755 ./gr-authorcheck  %{buildroot}%{_bindir}/
 sed -i".bkp" "1,/^VERSION=/s/^VERSION=.*/VERSION=%{version}/" %{buildroot}%{_bindir}/gr-authorcheck && rm -f %{buildroot}%{_bindir}/gr-authorcheck.bkp
@@ -53,6 +38,9 @@ sed -i".bkp" "1,/^VERSION_DATE=/s/^VERSION_DATE=.*/VERSION_DATE=%{APP_BUILD_DATE
 install -m 755 ./gr-commits2tag %{buildroot}%{_bindir}/
 sed -i".bkp" "1,/^VERSION=/s/^VERSION=.*/VERSION=%{version}/" %{buildroot}%{_bindir}/gr-commits2tag && rm -f %{buildroot}%{_bindir}/gr-commits2tag.bkp
 sed -i".bkp" "1,/^VERSION_DATE=/s/^VERSION_DATE=.*/VERSION_DATE=%{APP_BUILD_DATE}/" %{buildroot}%{_bindir}/gr-commits2tag && rm -f %{buildroot}%{_bindir}/gr-commits2tag.bkp
+install -m 755 ./gr-gr  %{buildroot}%{_bindir}/
+sed -i".bkp" "1,/^VERSION=/s/^VERSION=.*/VERSION=%{version}/" %{buildroot}%{_bindir}/gr-gr && rm -f %{buildroot}%{_bindir}/gr-gr.bkp
+sed -i".bkp" "1,/^VERSION_DATE=/s/^VERSION_DATE=.*/VERSION_DATE=%{APP_BUILD_DATE}/" %{buildroot}%{_bindir}/gr-gr && rm -f %{buildroot}%{_bindir}/gr-gr.bkp
 install -m 755 ./gr-pull %{buildroot}%{_bindir}/
 sed -i".bkp" "1,/^VERSION=/s/^VERSION=.*/VERSION=%{version}/" %{buildroot}%{_bindir}/gr-pull && rm -f %{buildroot}%{_bindir}gr-pull.bkp
 sed -i".bkp" "1,/^VERSION_DATE=/s/^VERSION_DATE=.*/VERSION_DATE=%{APP_BUILD_DATE}/" %{buildroot}%{_bindir}/gr-pull && rm -f %{buildroot}%{_bindir}/gr-pull.bkp
@@ -75,19 +63,17 @@ install -m 755 ./gr-tags  %{buildroot}%{_bindir}/
 sed -i".bkp" "1,/^VERSION=/s/^VERSION=.*/VERSION=%{version}/" %{buildroot}%{_bindir}/gr-tags && rm -f %{buildroot}%{_bindir}/gr-tags.bkp
 sed -i".bkp" "1,/^VERSION_DATE=/s/^VERSION_DATE=.*/VERSION_DATE=%{APP_BUILD_DATE}/" %{buildroot}%{_bindir}/gr-tags && rm -f %{buildroot}%{_bindir}/gr-tags.bkp
 
-# >> install post
-# << install post
 
 
 
 
 %files
 %defattr(-,root,root,-)
-# >> files
 %{_bindir}/gr-authorcheck
 %{_bindir}/gr-branches
 %{_bindir}/gr-clean
 %{_bindir}/gr-commits2tag
+%{_bindir}/gr-gr
 %{_bindir}/gr-initbare
 %{_bindir}/gr-pull
 %{_bindir}/gr-pullreset
@@ -95,6 +81,5 @@ sed -i".bkp" "1,/^VERSION_DATE=/s/^VERSION_DATE=.*/VERSION_DATE=%{APP_BUILD_DATE
 %{_bindir}/gr-show
 %{_bindir}/gr-showlocal
 %{_bindir}/gr-tags
-# << files
 
 

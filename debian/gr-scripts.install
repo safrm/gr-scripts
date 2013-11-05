@@ -2,6 +2,7 @@ gr-authorcheck /usr/bin/
 gr-commits2tag /usr/bin/
 gr-branches /usr/bin/
 gr-clean /usr/bin/
+gr-gr /usr/bin/
 gr-initbare /usr/bin/
 gr-pull /usr/bin/
 gr-pullreset /usr/bin/
@@ -9,4 +10,5 @@ gr-remotes /usr/bin/
 gr-show /usr/bin/
 gr-showlocal /usr/bin/
 gr-tags /usr/bin/
+
 

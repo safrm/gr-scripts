@@ -9,6 +9,7 @@ content:
  gr-branches ........ shows branches in subdirectories
  gr-clean ........... cleans up git clones in subdirectories
  gr-commits2tag ..... show commits from last tag divided to head,local,remote
+ gr-gr .............. general recussive script
  gr-initbare ........ initialize git bare repo, makes first commit and tag 0.0.0
  gr-pull ............ pulls all and keeps local chanegs in  subdirectories 
  gr-pullreset ....... pulls all and resets local changes in subdirectories 
