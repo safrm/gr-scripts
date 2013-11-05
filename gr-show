@@ -3,7 +3,7 @@
 #author: Miroslav Safr <miroslav.safr@gmail.com>
 #shows local tags versus current remote situation in subdirectories ./ or $1/ except those which are marked by "touch <dir>/.git/no_updates"
 # -v shows the details
-VERSION=NA                                                                   
+VERSION=NA
 VERSION_DATE=NA
 #support color escape characters on different terminals
 alias echo="/bin/echo -e"
@@ -13,6 +13,7 @@ START_TIME=`date +'%s'`
 
 while [ $# -gt 0 ]; do
   case "$1" in
+    -V | --version) echo "`basename $0` ${VERSION} ${VERSION_DATE}"; exit 0 ;;  
     -v|--verbose) 
                VERBOSE=1
                ;;
@@ -61,7 +62,7 @@ do
 
         TO=`git describe origin/master --tags --always 2> /dev/null`
 
-	    LASTMSG=`git --no-pager log -1 --pretty=tformat:'%Cred%h%Creset - %s' | cut -c -80`
+        LASTMSG=`git --no-pager log -1 --pretty=tformat:'%Cred%h%Creset - %s' | cut -c -80`
         echo "\033[31m[$BRANCH] \033[0m local:\033[34m$LASTTAG\033[0m remote:$NC\033[34m$TO\033[0m ($LASTMSG)"
 
         #local changes

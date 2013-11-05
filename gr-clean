@@ -2,13 +2,14 @@
 #git recursive directories scripts - http://safrm.net/projects/gr-scripts
 #author: Miroslav Safr <miroslav.safr@gmail.com>
 #cleans up git clones in all subdirectories ./ or $1/ except those which are marked by "touch <dir>/.git/no_updates"
-VERSION=NA                                                                   
+VERSION=NA
 VERSION_DATE=NA
 #support color escape characters on different terminals
 alias echo="/bin/echo -e"
 
 while [ $# -gt 0 ]; do
   case "$1" in
+    -V | --version) echo "`basename $0` ${VERSION} ${VERSION_DATE}"; exit 0 ;;  
     -ns|--no-summary) 
                NO_SUMMARY=1
                ;;

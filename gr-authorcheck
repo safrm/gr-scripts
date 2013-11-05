@@ -7,6 +7,9 @@
 #  searching is case sensitive
 VERSION=NA                                                                   
 VERSION_DATE=NA
+#support color escape characters on different terminals
+alias echo="/bin/echo -e"
+
 BASENAME=`basename $0`
 START_TIME=`date +'%s'`
 usage() {
@@ -16,13 +19,12 @@ usage() {
     echo " options: "
     echo " -v, --verbose ...................... prints more output"
     echo " --help ............................. shows command line help"
-    echo " -cs --case-sensitive ............... case sensitive search (by default it is insensitive)"
-    echo " -a --all  .......................... search in all branches(commits)"
-	echo " -ns|--no-summary ................... do not print execution summary"
+    echo " -cs, --case-sensitive ............... case sensitive search (by default it is insensitive)"
+    echo " -a, --all  .......................... search in all branches(commits)"
+	echo " -ns, --no-summary ................... do not print execution summary"
+    echo " -V, --version  ...................... prints version of scripts"
     echo " "
 }
-#support color escape characters on different terminals
-alias echo="/bin/echo -e"
 
 CASE_SENS=0
 VERBOSE=0
@@ -32,7 +34,8 @@ FOUND_COUNT=0
 while [ $# -gt 0 ]; do
   case "$1" in
     -v | --verbose) VERBOSE=1;;
-    --help) usage exit ;;
+    -V | --version) echo "`basename $0` ${VERSION} ${VERSION_DATE}"; exit 0 ;;  
+    --help) usage; exit ;;
     -cs | --case-sensitive) CASE_SENS=1	;;
     -a | --all) ALL_BRANCHES=1 ;;
     -ns|--no-summary) NO_SUMMARY=1 ;;
