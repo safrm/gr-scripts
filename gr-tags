@@ -63,16 +63,16 @@ do
 
         LASTTAG_NAME=`git describe --tags --abbrev=0 2> /dev/null`
         PROJECT20=`basename $ENTRY`
-        PROJECT20=`printf '%-20.20s' $PROJECT20`
-
-	
+        PROJECT20=`printf '%-22.22s' $PROJECT20`
+        BRANCH20=`printf '%-22.22s' [$BRANCH]`
+        
         if [ -z "$VERBOSE" ]; then
             if [ -z $LASTTAG_NAME ]; then 
               #no tags
-              echo "\033[32m$PROJECT20\033[0m \033[31m [$BRANCH] \033[0m \033[41m no tags available \033[0m $NC"
+              echo "\033[32m$PROJECT20\033[0m \033[31m$BRANCH20\033[0m \033[41m no tags available \033[0m $NC"
             else 
               #valid tag
-              echo "\033[32m$PROJECT20\033[0m \033[31m [$BRANCH] \033[0m \033[34m $LASTTAG_NAME \033[0m $NC"
+              echo "\033[32m$PROJECT20\033[0m \033[31m$BRANCH20\033[0m \033[34m $LASTTAG_NAME \033[0m $NC"
             fi           
         else
             if [ -z "$LASTTAG_NAME" ]; then
@@ -86,7 +86,7 @@ do
               TAGMESSAGE_COLOR="\033[34m $TAGMESSAGE \033[0m  (+$COUNT_FROM_TAG)"
               #LASTMSG=`git log -1 --format="%s"  $LASTTAG_NAME`
             fi
-            echo "\033[32m$PROJECT20:\033[0m \033[31m [$BRANCH] \033[0m $TAGMESSAGE_COLOR $NC" ;      
+            echo "\033[32m$PROJECT20:\033[0m \033[31m$BRANCH20\033[0m $TAGMESSAGE_COLOR $NC" ;      
         fi
 		cd "$PROJECT_DIR"
 	fi
