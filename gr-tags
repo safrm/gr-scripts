@@ -63,7 +63,7 @@ do
 
         LASTTAG_NAME=`git describe --tags --abbrev=0 2> /dev/null`
         PROJECT20=`basename $ENTRY`
-        PROJECT20=`printf '%-20s' $PROJECT20`
+        PROJECT20=`printf '%-20.20s' $PROJECT20`
 
 	
         if [ -z "$VERBOSE" ]; then
