@@ -1,7 +1,7 @@
 #!/bin/sh
 #git recursive directories scripts - http://safrm.net/projects/gr-scripts
 #author: Miroslav Safr <miroslav.safr@gmail.com>
-#pulls all and resets local changes in subdirectories ./ or $1/ except those which are marked by "touch <dir>/.git/no_updates"
+#
 VERSION=NA
 VERSION_DATE=NA
 #support color escape characters on different terminals
@@ -9,10 +9,21 @@ alias echo="/bin/echo -e"
 
 BASENAME=`basename $0`
 START_TIME=`date +'%s'`
-
+usage() {
+    echo "$BASENAME ${VERSION}"
+    echo "Pulls all and resets local changes in subdirectories ./ or PROJECT_DIR/"
+    echo "Usage:$BASENAME [OPTIONS]... [PROJECT_DIR]"
+    echo " options: "
+    echo " -h, --help .......................... shows command line help"
+    echo " -ns, --no-summary ................... do not print execution summary"
+    echo " -V, --version  ...................... prints version of scripts"
+    echo "Note: touch <dir>/.git/no_updates skips selected repo"
+    echo " "
+}
 while [ $# -gt 0 ]; do
   case "$1" in
     -V | --version) echo "`basename $0` ${VERSION} ${VERSION_DATE}"; exit 0 ;;  
+    -h | --help) usage; exit ;;
     -ns|--no-summary) 
                NO_SUMMARY=1
                ;;

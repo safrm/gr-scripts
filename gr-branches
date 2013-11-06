@@ -1,7 +1,7 @@
 #!/bin/sh
 #git recursive directories scripts - http://safrm.net/projects/gr-scripts
 #author: Miroslav Safr <miroslav.safr@gmail.com>
-#shows branches in subdirectories ./ or $1/ 
+#
 VERSION=NA
 VERSION_DATE=NA
 #support color escape characters on different terminals
@@ -10,6 +10,7 @@ alias echo="/bin/echo -e"
 usage() {
     echo "$BASENAME ${VERSION}"
     echo "Usage:$BASENAME [OPTIONS]... PATTERN [PROJECT_DIR]"
+    echo "Shows branches in subdirectories ./ or PROJECT_DIR/"
     echo " PATTERN ............................  shows branches in subdirectories"
     echo " options: "
     echo " --help .............................. shows command line help"
@@ -22,11 +23,11 @@ usage() {
 while [ $# -gt 0 ]; do
   case "$1" in
     -V | --version) echo "`basename $0` ${VERSION} ${VERSION_DATE}"; exit 0 ;;  
-    --help) usage; exit ;;
-    -a|--all) 
+    -h | --help) usage; exit ;;
+    -a | --all) 
                ALL_BRANCHES=1
                ;;
-    -ns|--no-summary) 
+    -ns | --no-summary) 
                NO_SUMMARY=1
                ;;
 	* )    PROJECT_DIR=$1;

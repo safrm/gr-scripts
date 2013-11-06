@@ -7,28 +7,30 @@ VERSION_DATE=NA
 #support color escape characters on different terminals
 alias echo="/bin/echo -e"
 
+BASENAME=`basename $0`
 usage() {
-    echo "usage: `basename $0` <new_repo_name> "
+    echo "$BASENAME ${VERSION}"
+    echo "Usage: $BASENAME <new_repo_name> "
     echo "git helper to create new inited local git bare repo "
     echo "args:"
-    echo "  <new_repo_name>    	                  new svn repo name (mandatory) e.g. my_project "
-    echo "  -d | --description <project_descr>    few words about project (optional)"
-    echo "  -h | --help        prints this help"
+    echo "  <new_repo_name> ..................... new git repo name (mandatory) e.g. my_project "
+    echo "  -d, --description <project_descr> ... few words about project (optional)"
+    echo "  -h, --help     ...................... prints this help"
+    echo "  -V, --version  ...................... prints version of scripts"
     echo ""
-    echo "gr-scipts: ${VERSION} ${VERSION_DATE} "
 }
 
 exiting() {
-    echo "$@ Try `basename $0` --help. Exiting.."
+    echo "$@ Try $BASENAME --help. Exiting.."
     exit 1
 }
-
 
 #check arguments
 REPO_NAME=
 DESCRIPTION=
 while [ $# -gt 0 ]; do
   case "$1" in
+    -V | --version) echo "`basename $0` ${VERSION} ${VERSION_DATE}"; exit 0 ;;  
     -d | --description) shift
                DESCRIPTION=$1 
                ;;
