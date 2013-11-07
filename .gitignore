@@ -5,3 +5,4 @@ debian/gr-scripts.debhelper.log
 debian/gr-scripts.substvars
 debian/gr-scripts/
 *.changes
+*~

@@ -17,7 +17,7 @@ usage() {
     echo " -h, --help .......................... shows command line help"
     echo " -ns, --no-summary ................... do not print execution summary"
     echo " -V, --version  ...................... prints version of scripts"
-    echo "Note: touch <dir>/.git/no_updates skips selected repo"
+    echo "Note: touch <dir>/.git/skip skips selected repo"
     echo " "
 }
 while [ $# -gt 0 ]; do
@@ -51,7 +51,7 @@ find "$PROJECT_DIR" -type d -name ".git*"  |  sed 's/\/.git//g' | sort | while r
 do
     PROJECT20=`basename $ENTRY`
     PROJECT20=`printf '%-20s' $PROJECT20`
-	if [ ! -f $ENTRY/.git/no_updates ]; then
+	if [ ! -f $ENTRY/.git/skip ]; then
 		cd $ENTRY 
         LASTTAG=`git describe --tags --dirty=* --always 2> /dev/null`
 		BRANCH=`git branch | egrep "^\*" | cut -d' ' -f2`
