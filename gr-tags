@@ -16,6 +16,7 @@ usage() {
     echo " PATTERN ............................. name or email of author or part of it "
     echo " options: "
     echo " -d, --depth <N> ..................... historical depth N tags"
+    echo " -c, --commits ....................... show commits"
     echo " -hm, --header-message ............... prints header message"
     echo " -v, --verbose ....................... prints more output"
     echo " -h, --help .......................... shows command line help"
@@ -34,6 +35,9 @@ while [ $# -gt 0 ]; do
                ;;
     -d | --depth) shift 
 		DEPTH=$1 
+		;;
+    -c | --commits)
+		COMMITS=1 
 		;;
     -h | --help) usage; exit ;;
     -ns|--no-summary) 
@@ -72,7 +76,6 @@ do
     if [ ! -f $ENTRY/.git/skip ]; then
 	    cd $ENTRY 
 	    BRANCH=`git branch | egrep "^\*" | cut -d' ' -f2`
-    #	git fetch origin 
 	    git fetch origin --tags 2> /dev/null 
         if [ $? = 128 ] ; then
              NC=" remote \033[41mNOT CONNECTED\033[0m "
@@ -84,14 +87,6 @@ do
         PROJECT20=`basename $ENTRY`
         PROJECT20=`printf '%-22.22s' $PROJECT20`
         BRANCH20=`printf '%-22.22s' [$BRANCH]`
-
-	    if [ $DEPTH -eq 1 ]; then
-		    TAGS=$LASTTAG_NAME
-	    else	        
-		    #let's search tags according commits threads
-		    TAGS=$( for REF in $(git rev-list $LASTTAG_NAME ); do  git describe --exact-match $REF 2> /dev/null ; done | head -$DEPTH)
-	    fi
-	    
 	    
 	    if [ -z $LASTTAG_NAME ]; then 
 	        #no tags
@@ -102,21 +97,29 @@ do
                TAGMESSAGE_COLOR="\033[34m $TAGMESSAGE \033[0m  (+$COUNT_FROM_TAG)"
             fi
 	        echo "\033[32m$PROJECT20:\033[0m \033[31m$BRANCH20\033[0m $TAGMESSAGE_COLOR $NC" ;
-	    else 
+	        if [ ! -z "$COMMITS" ]; then
+	             git --no-pager log --pretty=oneline --abbrev-commit 
+	        fi
+	    else        
+		    TAGS=$( for REF in $(git rev-list $LASTTAG_NAME ); do  git describe --exact-match $REF 2> /dev/null ; done | head -$DEPTH)   
 	        for TAG in $TAGS; do 
 	            if [ -z "$VERBOSE" ]; then
                       TAGMESSAGE_COLOR="\033[34m $TAG \033[0m"          
                 else
-                      COUNT_FROM_TAG=`git log --pretty=tformat:'%h' $TAG..HEAD  | grep -v '^$' |wc -l`
+                      COUNT_FROM_TAG=`git log --pretty=tformat:'%h' $TAG..$LASTTAG_NAME  | grep -v '^$' |wc -l`
                       TAGMESSAGE=`git tag -l -n1 $TAG`
                       TAGMESSAGE_COLOR="\033[34m $TAGMESSAGE \033[0m  (+$COUNT_FROM_TAG)"
                       #LASTMSG=`git log -1 --format="%s"  $LASTTAG_NAME`
                 fi
+                if [ ! -z "$COMMITS" -a ! -z "$HIGHER_TAG" ]; then
+                     git --no-pager log --pretty=oneline --abbrev-commit $TAG..$HIGHER_TAG
+	            fi
                 if [ "x$TAG" = "x$LASTTAG_NAME" ]; then
                     echo "\033[32m$PROJECT20:\033[0m \033[31m$BRANCH20\033[0m $TAGMESSAGE_COLOR $NC" ;
                 else
                     echo "                                               $TAGMESSAGE_COLOR $NC" ;  
                 fi
+	            HIGHER_TAG=$TAG
            done
         fi
      	cd "$PROJECT_DIR"
