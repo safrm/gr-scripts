@@ -21,3 +21,9 @@ content:
  install.sh ......... executes installation to /urs/local/bin directory
 
 
+Examples:
+
+current release contents:
+	gr-tags <PROJ_DIR> -v -ns -d 2 -c -hm "these changes are in last release:"
+next release contents:
+	gr-commits2tag <PROJ_DIR> -or -ns -mc 50 -hm "these changes will be in next release:"
