@@ -89,7 +89,7 @@ do
 	cd $ENTRY ;
     DIR_COMMIT_COUNT=`git --no-pager log --pretty=tformat:'%h' $ALL_BRANCHES_CMDPARAM | grep -v '^$'  | wc -l`
     PROJECT20=`basename $ENTRY`
-    PROJECT20=`printf '%-20s' $PROJECT20`
+    PROJECT20=`printf '\e[1m%-22.22s\e[21m' $PROJECT20`
     echo "\033[32m$PROJECT20\033[0m ($DIR_COMMIT_COUNT commits) \c"
     if [ $CASE_SENS -eq 1 ]; then
      	git --no-pager log --pretty=tformat:"$LOGFORMAT" $ALL_BRANCHES_CMDPARAM --author=$WHAT --committer=$WHAT ;

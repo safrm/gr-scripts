@@ -50,7 +50,7 @@ PROJECT_DIR=`pwd`
 find "$PROJECT_DIR" -type d -name ".git*"  |  sed 's/\/.git//g' | sort | while read ENTRY
 do
     PROJECT20=`basename $ENTRY`
-    PROJECT20=`printf '%-20s' $PROJECT20`
+    PROJECT20=`printf '\e[1m%-22.22s\e[21m' $PROJECT20`
 	if [ ! -f $ENTRY/.git/skip ]; then
 		cd $ENTRY 
         LASTTAG=`git describe --tags --dirty=* --always 2> /dev/null`

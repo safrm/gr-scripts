@@ -85,7 +85,7 @@ do
 	BRANCH=`git branch | egrep "^\*" | cut -d' ' -f2`
         LASTTAG_NAME=`git describe --tags --abbrev=0 2> /dev/null`
         PROJECT20=`basename $ENTRY`
-        PROJECT20=`printf '%-22.22s' $PROJECT20`
+        PROJECT20=`printf '\e[1m%-22.22s\e[21m' $PROJECT20`
         BRANCH20=`printf '%-22.22s' [$BRANCH]`
 
 	if [ -z $LASTTAG_NAME ]; then 

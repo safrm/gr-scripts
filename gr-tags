@@ -84,7 +84,7 @@ do
 
       LASTTAG_NAME=`git describe --tags --abbrev=0 2> /dev/null`
       PROJECT20=`basename $ENTRY`
-      PROJECT20=`printf '%-22.22s' $PROJECT20`
+      PROJECT20=`printf '\e[1m%-22.22s\e[21m' $PROJECT20`
       BRANCH20=`printf '%-22.22s' [$BRANCH]`
 	    
 	    if [ -z $LASTTAG_NAME ]; then 
@@ -106,16 +106,15 @@ do
                 else
                       COUNT_FROM_TAG=`git log --pretty=tformat:'%h' $TAG..$LASTTAG_NAME  | grep -v '^$' |wc -l`
                       TAGMESSAGE=`git tag -l -n1 $TAG`
-                      TAGMESSAGE_COLOR="\033[34m $TAGMESSAGE \033[0m  (+$COUNT_FROM_TAG)"
+                      TAGMESSAGE_COLOR="\033[34m $TAGMESSAGE \033[0m  (-$COUNT_FROM_TAG)"
                       #LASTMSG=`git log -1 --format="%s"  $LASTTAG_NAME`
                 fi
                 if [ ! -z "$COMMITS" -a ! -z "$HIGHER_TAG" ]; then
-                     COUNT_FROM_TAG=`git log --pretty=tformat:'%h' $TAG..HEAD  | grep -v '^$' |wc -l`
-                     TAGMESSAGE_COLOR="\033[34m $TAGMESSAGE \033[0m  (-$COUNT_FROM_TAG)"
                      git --no-pager log --pretty=oneline --abbrev-commit $TAG..$HIGHER_TAG
 	              fi
                 if [ "x$TAG" = "x$LASTTAG_NAME" ]; then
-                    COUNT_FROM_TAG=`git log --pretty=tformat:'%h' $TAG..$LASTTAG_NAME  | grep -v '^$' |wc -l`
+                    COUNT_FROM_TAG=`git log --pretty=tformat:'%h' $TAG..HEAD  | grep -v '^$' |wc -l`
+                    TAGMESSAGE_COLOR="\033[34m $TAGMESSAGE \033[0m  (+$COUNT_FROM_TAG)"
                     echo "\033[32m$PROJECT20:\033[0m \033[31m$BRANCH20\033[0m $TAGMESSAGE_COLOR $NC" ;
                 else
                     echo "                                               $TAGMESSAGE_COLOR $NC" ;  
@@ -132,6 +131,5 @@ if [ -z "$NO_SUMMARY" ]; then
 	ELAPSED_TIME=$((`date +'%s'` - $START_TIME))
 	echo "$BASENAME finished:$TIME took:$(($ELAPSED_TIME/60)) min $(($ELAPSED_TIME%60)) s"
 fi
-
 
 

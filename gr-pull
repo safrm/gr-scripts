@@ -54,7 +54,7 @@ do
 		LASTTAG=`git describe --tags --dirty=* --always 2> /dev/null`
 		BRANCH=`git branch | egrep "^\*" | cut -d' ' -f2`
         PROJECT20=`basename $ENTRY`
-        PROJECT20=`printf '%-20s' $PROJECT20`
+        PROJECT20=`printf '\e[1m%-22.22s\e[21m' $PROJECT20`
  		echo "\033[32m$PROJECT20\033[0m \033[31m [$BRANCH] \033[0m from: \033[34m $LASTTAG \033[0m\c" 
 		git fetch origin 2> /dev/null 
         if [ $? = 128 ] ; then
