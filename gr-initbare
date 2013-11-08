@@ -37,7 +37,7 @@ while [ $# -gt 0 ]; do
     -h | --help ) usage 
                   exit 0 
                ;;
-	* )   REPO_NAME=$1  
+        * )   REPO_NAME=$1  
         ;; 
   esac
   shift
@@ -60,9 +60,9 @@ git init --bare
 if [ "x$DESCRIPTION" != "x" ]; then
   echo "$DESCRIPTION" > description
 else
-  echo "$REPO_NAME " > description	
+  echo "$REPO_NAME " > description      
 fi
-	
+        
 #make root checkout 
 cd ..
 git clone $REPO_NAME $REPO_NAME-clone

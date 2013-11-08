@@ -15,7 +15,7 @@ usage() {
     echo " options: "
     echo " --help .............................. shows command line help"
     echo " -a, --all  .......................... show all branches"
-	echo " -ns, --no-summary ................... do not print execution summary"
+    echo " -ns, --no-summary ................... do not print execution summary"
     echo " -V, --version  ...................... prints version of scripts"
     echo " "
 }
@@ -30,21 +30,21 @@ while [ $# -gt 0 ]; do
     -ns | --no-summary) 
                NO_SUMMARY=1
                ;;
-	* )    PROJECT_DIR=$1;
-	       ;; 
+        * )    PROJECT_DIR=$1;
+               ;; 
   esac
   shift
 done
 
 if [ -z "$PROJECT_DIR" ]
 then
-	PROJECT_DIR="./"
+        PROJECT_DIR="./"
 fi
 
 if [ ! -d "$PROJECT_DIR" ] 
 then
-  echo "directory $PROJECT_DIR does not exist";
-  exit 1	
+        echo "directory $PROJECT_DIR does not exist";
+        exit 1        
 fi
 
 CWD=`pwd`
@@ -56,21 +56,21 @@ PROJECT_DIR=`pwd`
 
 find "$PROJECT_DIR" -type d -name ".git*"  |  sed 's/\/.git//g' | sort | while read ENTRY
 do
-		cd $ENTRY 
-		if [ ! -z "$ALL_BRANCHES" ]; then	
-	        BRANCHES=`echo && git branch -a ` 
-		else
-	        BRANCHES=`git branch  | tr -d '\n'` 
-		fi
-                PROJECT20=`basename $ENTRY`
-                PROJECT20=`printf '\e[1m%-22.22s\e[21m' $PROJECT20`
-		echo "\033[32m$PROJECT20\033[0m $BRANCHES"
-		cd $PROJECT_DIR
+        cd $ENTRY 
+        if [ ! -z "$ALL_BRANCHES" ]; then       
+                BRANCHES=`echo && git branch -a ` 
+        else
+                BRANCHES=`git branch  | tr -d '\n'` 
+        fi
+        PROJECT20=`basename $ENTRY`
+        PROJECT20=`printf '\e[1m%-22.22s\e[21m' $PROJECT20`
+        echo "\033[32m$PROJECT20\033[0m $BRANCHES"
+        cd $PROJECT_DIR
 done
 
 if [ -z "$NO_SUMMARY" ]; then
-	TIME=`date +%H:%M:%S`
-	echo "`basename $0` finished:$TIME"
+        TIME=`date +%H:%M:%S`
+        echo "`basename $0` finished:$TIME"
 fi
 
 
