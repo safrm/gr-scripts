@@ -19,6 +19,7 @@ usage() {
     echo " -h, --help .......................... shows command line help"
     echo " -cs, --case-sensitive ............... case sensitive search (by default it is insensitive)"
     echo " -a, --all  .......................... search in all branches(commits)"
+    echo " -ls, --line-separator ............... project separated by colored line"
     echo " -ns, --no-summary ................... do not print execution summary"
     echo " -V, --version  ...................... prints version of scripts"
     echo " "
@@ -34,8 +35,12 @@ while [ $# -gt 0 ]; do
     -v | --verbose) VERBOSE=1;;
     -V | --version) echo "`basename $0` ${VERSION} ${VERSION_DATE}"; exit 0 ;;  
     -h | --help) usage; exit ;;
+
     -cs | --case-sensitive) CASE_SENS=1 ;;
     -a | --all) ALL_BRANCHES=1 ;;
+    -ls | --line-separator)
+		LINE_SEPARATOR=1
+		;;
     -ns|--no-summary) NO_SUMMARY=1 ;;
         * )      
         if [ -z "$WHAT" ]; then  
@@ -86,7 +91,10 @@ mkfifo $FIFO
 mkfifo $FIFO2
 find "$PROJECT_DIR" -type d -name ".git*"  |  sed 's/\/.git//g' | sort | while read ENTRY
 do
-        cd $ENTRY ;
+    cd $ENTRY ;
+    if [ ! -z "$LINE_SEPARATOR" ]; then 
+         echo "\033[44m $(tput el) $(tput sgr0)"
+    fi
     DIR_COMMIT_COUNT=`git --no-pager log --pretty=tformat:'%h' $ALL_BRANCHES_CMDPARAM | grep -v '^$'  | wc -l`
     PROJECT20=`basename $ENTRY`
     PROJECT20=`printf '\e[1m%-22.22s\e[21m' $PROJECT20`
@@ -114,6 +122,9 @@ read FOUND_COUNT < $FIFO2
 wait $!
 
 if [ -z "$NO_SUMMARY" ]; then
+        if [ ! -z "$LINE_SEPARATOR" ]; then 
+             echo "\033[44m $(tput el) $(tput sgr0)"
+        fi
         TIME=`date +%H:%M:%S`
         ELAPSED_TIME=$((`date +'%s'` - $START_TIME))
         echo "$BASENAME found \033[42m$FOUND_COUNT in $TOTAL_COUNT\033[0m commits, finished:$TIME took:$(($ELAPSED_TIME/60)) min $(($ELAPSED_TIME%60)) s"

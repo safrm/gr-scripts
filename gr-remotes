@@ -13,6 +13,9 @@ START_TIME=`date +'%s'`
 while [ $# -gt 0 ]; do
   case "$1" in
     -V | --version) echo "`basename $0` ${VERSION} ${VERSION_DATE}"; exit 0 ;;  
+    -ls | --line-separator)
+		LINE_SEPARATOR=1
+		;;
     -ns|--no-summary) 
                NO_SUMMARY=1
                ;;
@@ -39,6 +42,9 @@ PROJECT_DIR=`pwd`
 find "$PROJECT_DIR"  -type d -name ".git*"  |  sed 's/\/.git//g' | sort | while read ENTRY
 do
         cd $ENTRY 
+        if [ ! -z "$LINE_SEPARATOR" ]; then 
+             echo "\033[44m $(tput el) $(tput sgr0)"
+        fi
         #URLS=`git config --get remote.origin.url`
         URLS=`git remote -v | awk '{print $1 " " $2 }' | sort -u`  
         PROJECT20=`basename $ENTRY`
@@ -48,6 +54,9 @@ do
 done
 
 if [ -z "$NO_SUMMARY" ]; then
+        if [ ! -z "$LINE_SEPARATOR" ]; then 
+             echo "\033[44m $(tput el) $(tput sgr0)"
+        fi
         TIME=`date +%H:%M:%S`
         ELAPSED_TIME=$((`date +'%s'` - $START_TIME))
         echo "$BASENAME finished:$TIME took:$(($ELAPSED_TIME/60)) min $(($ELAPSED_TIME%60)) s"

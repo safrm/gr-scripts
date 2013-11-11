@@ -16,6 +16,7 @@ usage() {
     echo "Usage:$BASENAME [OPTIONS]... [PROJECT_DIR]"
     echo " options: "
     echo " --help ............................. shows command line help"
+    echo " -ls, --line-separator ............... project separated by colored line"
     echo " -ns, --no-summary ................... do not print execution summary"
     echo " -V, --version  ...................... prints version of scripts"
     echo " "
@@ -25,6 +26,9 @@ while [ $# -gt 0 ]; do
   case "$1" in
     --help) usage; exit ;;
     -V | --version) echo "`basename $0` ${VERSION} ${VERSION_DATE}"; exit 0 ;;  
+    -ls | --line-separator)
+		LINE_SEPARATOR=1
+		;;
     -ns|--no-summary) 
                NO_SUMMARY=1
                ;;
@@ -54,6 +58,9 @@ do
         if [ -d $ENTRY ] && [ -d $ENTRY/.git ]; then
                 if [ ! -f $ENTRY/.git/no_updates ]; then
                         cd $ENTRY 
+                        if [ ! -z "$LINE_SEPARATOR" ]; then 
+                             echo "\033[44m $(tput el) $(tput sgr0)"
+                        fi
                         LASTTAG=`git describe --tags --dirty=* --always 2> /dev/null`
                         PROJECT20=`basename $ENTRY`
                         PROJECT20=`printf '%-20s' $PROJECT20`
@@ -70,6 +77,9 @@ do
 done
 
 if [ -z "$NO_SUMMARY" ]; then
+        if [ ! -z "$LINE_SEPARATOR" ]; then 
+             echo "\033[44m $(tput el) $(tput sgr0)"
+        fi
         TIME=`date +%H:%M:%S`
         ELAPSED_TIME=$((`date +'%s'` - $START_TIME))
         echo "$BASENAME finished:$TIME took:$(($ELAPSED_TIME/60)) min $(($ELAPSED_TIME%60)) s"

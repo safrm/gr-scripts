@@ -15,6 +15,7 @@ usage() {
     echo " options: "
     echo " --help .............................. shows command line help"
     echo " -a, --all  .......................... show all branches"
+    echo " -ls, --line-separator ............... project separated by colored line"
     echo " -ns, --no-summary ................... do not print execution summary"
     echo " -V, --version  ...................... prints version of scripts"
     echo " "
@@ -27,6 +28,9 @@ while [ $# -gt 0 ]; do
     -a | --all) 
                ALL_BRANCHES=1
                ;;
+    -ls | --line-separator)
+		LINE_SEPARATOR=1
+		;;
     -ns | --no-summary) 
                NO_SUMMARY=1
                ;;
@@ -57,6 +61,9 @@ PROJECT_DIR=`pwd`
 find "$PROJECT_DIR" -type d -name ".git*"  |  sed 's/\/.git//g' | sort | while read ENTRY
 do
         cd $ENTRY 
+        if [ ! -z "$LINE_SEPARATOR" ]; then 
+             echo "\033[44m $(tput el) $(tput sgr0)"
+        fi
         if [ ! -z "$ALL_BRANCHES" ]; then       
                 BRANCHES=`echo && git branch -a ` 
         else
@@ -69,6 +76,9 @@ do
 done
 
 if [ -z "$NO_SUMMARY" ]; then
+        if [ ! -z "$LINE_SEPARATOR" ]; then 
+             echo "\033[44m $(tput el) $(tput sgr0)"
+        fi
         TIME=`date +%H:%M:%S`
         echo "`basename $0` finished:$TIME"
 fi

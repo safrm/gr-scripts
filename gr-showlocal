@@ -17,6 +17,7 @@ usage() {
     echo " options: "
     echo " -v, --verbose ....................... prints more output"
     echo " -h, --help .......................... shows command line help"
+    echo " -ls, --line-separator ............... project separated by colored line"
     echo " -ns, --no-summary ................... do not print execution summary"
     echo " -V, --version  ...................... prints version of scripts"
     echo "Note: touch <dir>/.git/skip skips selected repo"
@@ -28,6 +29,9 @@ while [ $# -gt 0 ]; do
     -V | --version) echo "`basename $0` ${VERSION} ${VERSION_DATE}"; exit 0 ;;  
     -h | --help) usage; exit ;;
     -v  | --verbose) VERBOSE=1;;
+    -ls | --line-separator)
+		LINE_SEPARATOR=1
+		;;
     -ns | --no-summary) NO_SUMMARY=1 ;;
     * )       PROJECT_DIR=$1;; 
   esac
@@ -50,6 +54,9 @@ PROJECT_DIR=`pwd`
 find "$PROJECT_DIR" -type d -name ".git*"  |  sed 's/\/.git//g' | sort | while read ENTRY
 do
         cd $ENTRY 
+        if [ ! -z "$LINE_SEPARATOR" ]; then 
+             echo "\033[44m $(tput el) $(tput sgr0)"
+        fi
         LASTTAG=`git describe --tags --dirty=* --always 2> /dev/null`
         BRANCH=`git branch | egrep "^\*" | cut -d' ' -f2`
         #commits to push
@@ -78,6 +85,9 @@ do
 done
 
 if [ -z "$NO_SUMMARY" ]; then
+        if [ ! -z "$LINE_SEPARATOR" ]; then 
+             echo "\033[44m $(tput el) $(tput sgr0)"
+        fi
         TIME=`date +%H:%M:%S`
         ELAPSED_TIME=$((`date +'%s'` - $START_TIME))
         echo "$BASENAME finished:$TIME took:$(($ELAPSED_TIME/60)) min $(($ELAPSED_TIME%60)) s"
