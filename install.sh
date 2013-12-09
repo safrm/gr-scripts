@@ -14,7 +14,7 @@ USERID=`id -u`
 if [ command -v appver >/dev/null 2>&1 ]; then . appver; else APP_FULL_VERSION_TAG=NA ; APP_BUILD_DATE=`date +'%Y%m%d_%H%M'`; fi
 
 #test
-for TEST in $(  grep -r -l -h "#\!/bin/sh" . )
+for TEST in $(  grep -r -l -h "#\!/bin/sh"  --exclude-dir=.git . )
 do
 		sh -n $TEST
 		if  [ $? != 0 ]; then
