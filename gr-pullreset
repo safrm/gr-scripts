@@ -63,7 +63,7 @@ do
                 LASTTAG=`git describe --tags --dirty=* --always 2> /dev/null`
                 BRANCH=`git branch | egrep "^\*" | cut -d' ' -f2`
                 BRANCH20=`printf '%-22.22s' [$BRANCH]`
-                echo "\033[32m$PROJECT20\033[0m \033[31m$BRANCH20\033[0m from: \033[34m $LASTTAG \033[0m \c" 
+                echo "\033[32m$PROJECT20\033[0m \033[31m$BRANCH20\033[0m from: \033[01;34m $LASTTAG \033[0m \c" 
                 git fetch origin 2> /dev/null
                 if [ $? = 128 ] ; then
                     echo "remote \033[41mNOT CONNECTED\033[0m "
@@ -77,7 +77,7 @@ do
     
                 TO=`git describe --tags --dirty=* --always 2> /dev/null`
                 if [ "$LASTTAG" != "$TO" ]; then
-                        echo " \033[33mupdated to:\033[0m \033[34m $TO \033[0m  "
+                        echo " \033[33mupdated to:\033[0m \033[01;34m $TO \033[0m  "
                         LASTMSG=`git log -1 --pretty=tformat:'%h %s | %ad' --date=relative`
                         echo " $LASTMSG"
                 fi

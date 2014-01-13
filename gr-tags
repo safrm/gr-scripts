@@ -111,11 +111,11 @@ do
                for TAG in $TAGS; do 
                    if [ -z "$VERBOSE" ]; then
                         TAGMESSAGE=$TAG
-                        TAGMESSAGE_COLOR="\033[34m $TAGMESSAGE \033[0m"          
+                        TAGMESSAGE_COLOR="\033[01;34m $TAGMESSAGE \033[0m"          
                    else
                         COUNT_FROM_TAG=`git log --pretty=tformat:'%h' $TAG..$LASTTAG_NAME  | grep -v '^$' |wc -l`
                         TAGMESSAGE=`git tag -l -n1 $TAG`
-                        TAGMESSAGE_COLOR="\033[34m $TAGMESSAGE \033[0m  (-$COUNT_FROM_TAG)"
+                        TAGMESSAGE_COLOR="\033[01;34m $TAGMESSAGE \033[0m  (-$COUNT_FROM_TAG)"
                         #LASTMSG=`git log -1 --format="%s"  $LASTTAG_NAME`
                    fi
                    if [ ! -z "$COMMITS" -a ! -z "$HIGHER_TAG" ]; then
@@ -123,7 +123,7 @@ do
                    fi
                    if [ "x$TAG" = "x$LASTTAG_NAME" ]; then
                         COUNT_FROM_TAG=`git log --pretty=tformat:'%h' $TAG..HEAD  | grep -v '^$' |wc -l`
-                        TAGMESSAGE_COLOR="\033[34m $TAGMESSAGE \033[0m  (+$COUNT_FROM_TAG)"
+                        TAGMESSAGE_COLOR="\033[01;34m $TAGMESSAGE \033[0m  (+$COUNT_FROM_TAG)"
                         echo "\033[32m$PROJECT20:\033[0m \033[31m$BRANCH20\033[0m $TAGMESSAGE_COLOR $NC" ;
                    else
                         echo "                                               $TAGMESSAGE_COLOR $NC" ;  

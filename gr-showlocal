@@ -65,9 +65,9 @@ do
         PROJECT20=`basename $ENTRY`
         PROJECT20=`printf '\e[1m%-22.22s\e[21m' $PROJECT20`
         if [ "0" = "$COMMITCOUNT" ]; then
-        echo "\033[32m$PROJECT20\033[0m \033[34m $LASTTAG \033[0m (o/$BRANCH) $LASTMSG"
+        echo "\033[32m$PROJECT20\033[0m \033[01;34m $LASTTAG \033[0m (o/$BRANCH) $LASTMSG"
         else
-        echo "\033[32m$PROJECT20\033[0m \033[34m $LASTTAG \033[0m (o/$BRANCH\033[33m+$COMMITCOUNT\033[0m) $LASTMSG"
+        echo "\033[32m$PROJECT20\033[0m \033[01;34m $LASTTAG \033[0m (o/$BRANCH\033[33m+$COMMITCOUNT\033[0m) $LASTMSG"
         fi
 
         #local changes

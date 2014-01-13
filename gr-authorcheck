@@ -68,7 +68,7 @@ CWD=`pwd`
 cd $PROJECT_DIR
 PROJECT_DIR=`pwd`
 
-echo "searching for '\033[32m$WHAT\033[0m' in \033[34m$PROJECT_DIR\033[0m, CS: $CASE_SENS, VERBOSE:$VERBOSE"
+echo "searching for '\033[32m$WHAT\033[0m' in \033[01;34m$PROJECT_DIR\033[0m, CS: $CASE_SENS, VERBOSE:$VERBOSE"
 
 #so far the difference is only about new lines..
 if [ $VERBOSE -eq 1 ]; then
