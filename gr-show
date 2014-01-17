@@ -85,7 +85,7 @@ do
                 TO=`git describe origin/master --tags --always 2> /dev/null`
 
                 LASTMSG=`git --no-pager log -1 --pretty=tformat:'%Cred%h%Creset - %s' | cut -c -80`
-                echo "\033[31m[$BRANCH] \033[0m local:\033[34m$LASTTAG\033[0m remote:$NC\033[34m$TO\033[0m ($LASTMSG)"
+                echo "\033[31m[$BRANCH] \033[0m local:\033[01;34m$LASTTAG\033[0m remote:$NC\033[01;34m$TO\033[0m ($LASTMSG)"
 
                 #local changes
                 LOCAL_CHANGES=`git status -s`
