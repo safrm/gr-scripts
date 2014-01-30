@@ -18,6 +18,8 @@ usage() {
     echo " -or, --only-remote .................. prints only remote situation"
     echo " -hm, --header-message ............... prints header message"
     echo " -mc, --max-commits <N> .............. limits maximum commit count (default 50)"
+    echo " -ti, --time-iso ..................... time in absolute iso format"
+    echo " -tr, --time-relative  ............... time in relative format (default)"
     echo " -h, --help .......................... shows command line help"
     echo " -ls, --line-separator ............... project separated by colored line"
     echo " -ns, --no-summary ................... do not print execution summary"
@@ -27,6 +29,7 @@ usage() {
 }
 
 MAX_COMMITS=200 #maximum commits to show
+TFORMAT=' %Cred%h%Creset - %s %Cgreen(%cr) %C(bold blue)<%an>%Creset ' #default relative format cr
 
 while [ $# -gt 0 ]; do
   case "$1" in
@@ -50,6 +53,12 @@ while [ $# -gt 0 ]; do
                 -mc|--max-commits) shift;
                 MAX_COMMITS=$1;
                 ;;
+    -ti| --time-iso)
+              TFORMAT=' %Cred%h%Creset - %s %Cgreen(%ci) %C(bold blue)<%an>%Creset '
+              ;;
+    -tr| --time-relative)
+              TFORMAT=' %Cred%h%Creset - %s %Cgreen(%cr) %C(bold blue)<%an>%Creset '
+              ;;
         * )    PROJECT_DIR=$1;
                ;; 
   esac
@@ -111,14 +120,14 @@ do
         MASTER_REMOTE=`git describe --tags origin/master --always 2> /dev/null`
 
 
-        REMOTE_COMMITS_FROM_LASTTAG_LOCAL=`git log -$MAX_COMMITS --pretty=tformat:' %Cred%h%Creset - %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' ${FROM_LASTTAG}origin/$BRANCH `
+        REMOTE_COMMITS_FROM_LASTTAG_LOCAL=`git log -$MAX_COMMITS --pretty=tformat:"$TFORMAT" ${FROM_LASTTAG}origin/$BRANCH `
         RCFT_COUNT=$( echo "$REMOTE_COMMITS_FROM_LASTTAG_LOCAL" | grep -v '^$' | wc -l) 
 
 
         if [ -z "$ONLY_REMOTE" ]; then
-                LOCAL_COMMITS_FROM_LASTTAG_LOCAL=`git log --pretty=tformat:' %Cred%h%Creset - %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' ${FROM_LASTTAG}master`
+                LOCAL_COMMITS_FROM_LASTTAG_LOCAL=`git log --pretty=tformat:"$TFORMAT" ${FROM_LASTTAG}master`
                 LCFT_COUNT=`echo "$LOCAL_COMMITS_FROM_LASTTAG_LOCAL" | grep -v '^$'  | wc -l`
-                LOCAL_COMMITS_HEAD=`git log --pretty=tformat:' %Cred%h%Creset - %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' master..HEAD `
+                LOCAL_COMMITS_HEAD=`git log --pretty=tformat:"$TFORMAT" master..HEAD `
                 LCH_COUNT=`echo "$LOCAL_COMMITS_HEAD" | grep -v '^$' |wc -l`
 
                 echo "\033[46mhead  :\033[0m \033[01;34m $HEAD \033[0m \033[42m$LCH_COUNT\033[0m"
