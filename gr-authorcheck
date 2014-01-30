@@ -2,7 +2,7 @@
 #git recursive directories scripts - http://safrm.net/projects/gr-scripts
 #author: Miroslav Safr <miroslav.safr@gmail.com>
 #
-VERSION=NA                                                                   
+VERSION=NA
 VERSION_DATE=NA
 #support color escape characters on different terminals
 alias echo="/bin/echo -e"
@@ -32,26 +32,39 @@ TOTAL_COUNT=0
 FOUND_COUNT=0
 while [ $# -gt 0 ]; do
   case "$1" in
-    -v | --verbose) VERBOSE=1;;
-    -V | --version) echo "`basename $0` ${VERSION} ${VERSION_DATE}"; exit 0 ;;  
-    -h | --help) usage; exit ;;
-
-    -cs | --case-sensitive) CASE_SENS=1 ;;
-    -a | --all) ALL_BRANCHES=1 ;;
+    -v | --verbose) 
+	VERBOSE=1
+	;;
+    -V | --version) 
+	echo "`basename $0` ${VERSION} ${VERSION_DATE}"; 
+	exit 0 
+	;;
+    -h | --help) 
+	usage; 
+	exit 
+	;;
+    -cs | --case-sensitive) 
+	CASE_SENS=1 
+	;;
+    -a | --all) 
+	ALL_BRANCHES=1 
+	;;
     -ls | --line-separator)
-		LINE_SEPARATOR=1
-		;;
-    -ns|--no-summary) NO_SUMMARY=1 ;;
-        * )      
-        if [ -z "$WHAT" ]; then  
+	LINE_SEPARATOR=1
+	;;
+    -ns|--no-summary) 
+	NO_SUMMARY=1 
+	;;
+    * )
+        if [ -z "$WHAT" ]; then
             WHAT=$1 ; 
         elif [ -z "$PROJECT_DIR" ]; then
             PROJECT_DIR=$1 ;
         else
-            echo "There can be only 2 arguments without <WHAT> <WHERE>, exiting.."; 
-            usage; 
-            exit 1;        
-        fi 
+            echo "There can be only 2 arguments without <WHAT> <WHERE>, exiting.."
+            usage
+            exit 1
+        fi
         ;;
   esac
   shift
