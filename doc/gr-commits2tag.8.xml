@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<refentry id="gr-commits2tag.8">
+
+<refmeta>
+    <refentrytitle>gr-commits2tag</refentrytitle>
+	<manvolnum>8</manvolnum>
+</refmeta>
+
+
+<refnamediv>
+    <refname>gr-commits2tag</refname>
+    <refpurpose>Shows untagged commits on head/local/remote </refpurpose>
+</refnamediv>
+
+<refsynopsisdiv>
+	<cmdsynopsis>
+        <command>gr-commits2tag  [OPTIONS] ... [PROJECT_DIR]</command>
+        <arg choice="opt">-v --verbose</arg>
+        <arg choice="opt">-or --only-remote</arg>
+        <arg choice="opt">-hm --header-message</arg>
+        <arg choice="opt">-h --help</arg>
+        <arg choice="opt">-cs --case-sensitive</arg>
+        <arg choice="opt">-a --all</arg>
+        <arg choice="opt">-ls --line-separator</arg>
+        <arg choice="opt">-V --version</arg>
+	</cmdsynopsis>
+</refsynopsisdiv>
+
+  <refsect1><title>DESCRIPTION</title>
+    <para>
+      Search for inappropriate commits by git recursive directories scripts.
+    </para>
+  </refsect1>
+
+  <refsect1>
+    <title>OPTIONS</title>
+
+    <variablelist>
+      <varlistentry><term>-v --verbose</term>
+        <listitem>
+          <para>
+            Prints more output.
+          </para>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry><term>-h --help</term>
+        <listitem>
+          <para>
+            Print help text to the screen.
+          </para>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry><term>-cs --case-sensitive</term>
+        <listitem>
+          <para>
+            Case sensitive search (by default it is insensitive)
+          </para>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry><term>-a --all</term>
+        <listitem>
+          <para>
+            Search in all branches (commits) for deeper searching.
+          </para>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry><term>-ls --line-separator</term>
+        <listitem>
+          <para>
+            Projects are separated by colored line
+          </para>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry><term>-V --version</term>
+        <listitem>
+          <para>
+            Prints version to the screen and exits.
+          </para>
+        </listitem>
+      </varlistentry>
+
+    </variablelist>
+  </refsect1>
+
+
+  <refsect1>
+    <title>PATTERN</title>
+    <para>
+      Author's string used for searching.
+    </para>
+    <para>
+      Needs quoted format when spaces or special characters are used. "\@something "
+    </para>
+  </refsect1>
+
+  <refsect1>
+    <title>PROJECT_DIR</title>
+    <para>
+      Root directory with git clones. By default is used current directory.
+    </para>
+    <para>
+      All gr-scipts support subdirectory hierarchy &lt;my-dir&gt;/&lt;my-project-group&gt;/&lt;git-clone&gt;.
+    </para>
+  </refsect1>
+
+  <refsect1><title>SEE ALSO</title>
+    <para>
+      gr-scripts(8).
+      <ulink url="http://safrm.net/projects/gr-scripts/"/>
+    </para>
+  </refsect1>
+
+  <refsect1><title>AUTHOR</title>
+    Miroslav Šafr &lt;miroslav.safr@gmail.com&gt;
+  </refsect1>
+  <refsect1><title>LICENSE</title>
+   LGPL2
+  </refsect1>
+</refentry>

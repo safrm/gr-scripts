@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<refentry id="gr-clean.8">
+
+<refmeta>
+    <refentrytitle>gr-branches</refentrytitle>
+	<manvolnum>8</manvolnum>
+</refmeta>
+
+
+<refnamediv>
+    <refname>gr-clean</refname>
+    <refpurpose>Cleans up git clones in all subdirectories except those which are marked by:
+    <screen format="linespecific">
+    touch  &lt;dir&gt;/.git/no_updates
+    </screen>
+    </refpurpose>
+</refnamediv>
+
+<refsynopsisdiv>
+	<cmdsynopsis>
+        <command>gr-clean  [OPTIONS] ... [PROJECT_DIR]</command>
+        <arg choice="opt">-h, --help</arg>
+        <arg choice="opt">-ls --line-separator</arg>
+        <arg choice="opt">-ns --no-summary</arg>
+        <arg choice="opt">-V --version</arg>
+	</cmdsynopsis>
+</refsynopsisdiv>
+
+  <refsect1><title>DESCRIPTION</title>
+    <para>
+        Cleans up  git clones in all subdirectories except those which are marked by:
+        <screen format="linespecific">
+        touch  &lt;dir&gt;/.git/no_updates
+        </screen>
+        Cleaning pattern consists from:
+        <screen format="linespecific">
+            git reset --hard
+            git gc
+            git clean -dfx
+         </screen>
+        </para>
+  </refsect1>
+
+  <refsect1>
+    <title>OPTIONS</title>
+
+    <variablelist>
+
+      <varlistentry><term>-h --help</term>
+        <listitem>
+          <para>
+            Print help text to the screen.
+          </para>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry><term>-ls --line-separator</term>
+        <listitem>
+          <para>
+            Projects are separated by colored line.
+          </para>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry><term>-ns --no-summary</term>
+        <listitem>
+          <para>
+            Do not print execution summary.
+          </para>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry><term>-V --version</term>
+        <listitem>
+          <para>
+            Prints version to the screen and exits.
+          </para>
+        </listitem>
+      </varlistentry>
+
+    </variablelist>
+  </refsect1>
+
+  <refsect1>
+    <title>PROJECT_DIR</title>
+    <para>
+      Root directory with git clones. By default is used current directory.
+    </para>
+    <para>
+      All gr-scipts support subdirectory hierarchy &lt;my-dir&gt;/&lt;my-project-group&gt;/&lt;git-clone&gt;.
+    </para>
+  </refsect1>
+
+  <refsect1><title>SEE ALSO</title>
+    <para>
+      gr-scripts(8).
+      <ulink url="http://safrm.net/projects/gr-scripts/"/>
+    </para>
+  </refsect1>
+
+  <refsect1><title>AUTHOR</title>
+    Miroslav Šafr &lt;miroslav.safr@gmail.com&gt;
+  </refsect1>
+  <refsect1><title>LICENSE</title>
+   LGPL2
+  </refsect1>
+</refentry>

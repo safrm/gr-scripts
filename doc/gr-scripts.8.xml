@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<refentry id="gr-scripts.8">
+
+<refmeta>
+    <refentrytitle>gr-scripts</refentrytitle>
+	<manvolnum>8</manvolnum>
+</refmeta>
+
+
+<refnamediv>
+    <refname>gr-scripts </refname>
+    <refpurpose>
+     git recursive directories scripts
+    <para>
+    Let monkey work to be done by monkies :)
+    All gr-scipts support subdirectory hierarchy &lt;my-dir&gt;/&lt;my-project-group&gt;/&lt;git-clone&gt;.
+    </para>
+    </refpurpose>
+</refnamediv>
+<refsect1><title>gr-scripts commands</title>
+    <para>
+    <screen format="linespecific">
+     gr-authorcheck(8) ..... search for inappropriate commits
+     gr-branches(8) ........ shows branches in subdirectories
+     gr-clean(8) ........... cleans up git clones in subdirectories
+     gr-commits2tag(8) ..... show commits from last tag divided to head,local,remote
+     gr-gr(8) .............. general recussive script
+     gr-initbare(8) ........ initialize git bare repo, makes first commit and tag 0.0.0
+     gr-pull(8) ............ pulls all and keeps local chanegs in  subdirectories
+     gr-pullreset(8) ....... pulls all and resets local changes in subdirectories
+     gr-remotes(8) ......... shows remote branches in subdirectories
+     gr-show(8) ............ shows local tags versus current remote situation in subdirectories
+     gr-showlocal(8) ....... shows local tags and if it was edited in subdirectories
+     gr-tags(8) ............ shows tags
+     </screen>
+    </para>
+  </refsect1>
+
+
+  <refsect1><title>EXAMPLES</title>
+    <para>
+      Current release contents:
+      <screen format="linespecific">
+          gr-tags &lt;PROJ_DIR&gt; -v -ns -d 2 -c -hm "these changes are in last release:"
+      </screen>
+      Next release contents:
+      <screen format="linespecific">
+          gr-commits2tag &lt;PROJ_DIR&gt; -or -ns -mc 50 -hm "these changes will be in next release:"
+      </screen>
+    </para>
+  </refsect1>
+
+  <refsect1><title>SEE ALSO</title>
+    <para>
+       gr-authorcheck(8), gr-branches(8), gr-clean(8), gr-commits2tag(8), gr-gr(8)
+       gr-initbare(8), gr-pull(8), gr-pullreset(8), gr-remotes(8), gr-show(8), gr-showlocal(8), gr-tags(8).
+       <ulink url="http://safrm.net/projects/gr-scripts/"/>
+    </para>
+  </refsect1>
+
+  <refsect1><title>AUTHOR</title>
+    Miroslav Šafr &lt;miroslav.safr@gmail.com&gt;
+  </refsect1>
+  <refsect1><title>LICENSE</title>
+   LGPL2
+  </refsect1>
+</refentry>

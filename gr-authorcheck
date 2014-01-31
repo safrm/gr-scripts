@@ -19,7 +19,7 @@ usage() {
     echo " -h, --help .......................... shows command line help"
     echo " -cs, --case-sensitive ............... case sensitive search (by default it is insensitive)"
     echo " -a, --all  .......................... search in all branches(commits)"
-    echo " -ls, --line-separator ............... project separated by colored line"
+    echo " -ls, --line-separator ............... project are separated by colored line"
     echo " -ns, --no-summary ................... do not print execution summary"
     echo " -V, --version  ...................... prints version of scripts"
     echo " "

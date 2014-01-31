@@ -9,11 +9,11 @@ alias echo="/bin/echo -e"
 
 usage() {
     echo "$BASENAME ${VERSION}"
-    echo "Usage:$BASENAME [OPTIONS]... PATTERN [PROJECT_DIR]"
+    echo "Usage:$BASENAME [OPTIONS]... [PROJECT_DIR]"
     echo "Shows branches in subdirectories ./ or PROJECT_DIR/"
     echo " PATTERN ............................  shows branches in subdirectories"
     echo " options: "
-    echo " --help .............................. shows command line help"
+    echo " -h, --help .......................... shows command line help"
     echo " -a, --all  .......................... show all branches"
     echo " -ls, --line-separator ............... project separated by colored line"
     echo " -ns, --no-summary ................... do not print execution summary"
