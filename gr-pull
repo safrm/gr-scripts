@@ -11,7 +11,7 @@ BASENAME=`basename $0`
 START_TIME=`date +'%s'`
 usage() {
     echo "$BASENAME ${VERSION}"
-    echo "Pulls all and keeps local chanegs in  subdirectories ./ or PROJECT_DIR/"
+    echo "Pulls all and keeps local changes in  subdirectories ./ or PROJECT_DIR/"
     echo "Usage:$BASENAME [OPTIONS]... [PROJECT_DIR]"
     echo " options: "
     echo " -h, --help .......................... shows command line help"

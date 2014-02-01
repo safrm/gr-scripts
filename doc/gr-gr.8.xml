@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<refentry id="gr-gr.8">
+
+<refmeta>
+    <refentrytitle>gr-gr</refentrytitle>
+	<manvolnum>8</manvolnum>
+</refmeta>
+
+
+<refnamediv>
+    <refname>gr-gr</refname>
+    <refpurpose>generic recurse script</refpurpose>
+</refnamediv>
+
+<refsynopsisdiv>
+	<cmdsynopsis>
+        <command>gr-gr COMMAND [ARGUMENTS]</command>
+	</cmdsynopsis>
+</refsynopsisdiv>
+
+  <refsect1><title>DESCRIPTION</title>
+    <para>
+      Generic recurse script, command execution wrapper.
+    </para>
+  </refsect1>
+
+  <refsect1>
+    <title>COMMAND</title>
+    <para>
+       Command (with arguments is executed in projects containing git directories. 
+       Current directory is used as root directory with git clones. 
+    </para>
+    <para>
+      All gr-scipts support subdirectory hierarchy &lt;my-dir&gt;/&lt;my-project-group&gt;/&lt;git-clone&gt;.
+    </para>
+  </refsect1>
+
+  <refsect1><title>EXAMPLES</title>
+    <para>
+      See sizes of cloned directories:
+      <screen format="linespecific">
+         gr-gr du -hs
+      </screen>
+    </para>
+  </refsect1>
+
+  <refsect1><title>SEE ALSO</title>
+    <para>
+      gr-scripts(8).
+      <ulink url="http://safrm.net/projects/gr-scripts/"/>
+    </para>
+  </refsect1>
+
+  <refsect1><title>AUTHOR</title>
+    Miroslav Šafr &lt;miroslav.safr@gmail.com&gt;
+  </refsect1>
+  <refsect1><title>LICENSE</title>
+   LGPL2
+  </refsect1>
+</refentry>

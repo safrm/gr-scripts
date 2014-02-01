@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<refentry id="gr-branches.8">
+
+<refmeta>
+    <refentrytitle>gr-initbare</refentrytitle>
+	<manvolnum>8</manvolnum>
+</refmeta>
+
+
+<refnamediv>
+    <refname>gr-initbare</refname>
+    <refpurpose>Git helper to create new inited local git bare repo</refpurpose>
+</refnamediv>
+
+<refsynopsisdiv>
+	<cmdsynopsis>
+        <command>gr-initbare [NEW_REPO_NAME] [OPTIONS] </command>
+        <arg choice="opt">-h, --help</arg>
+        <arg choice="opt">-d --description &lt;description&gt;</arg>
+        <arg choice="opt">-V --version</arg>
+	</cmdsynopsis>
+</refsynopsisdiv>
+
+  <refsect1><title>DESCRIPTION</title>
+    <para>
+      Git helper to create new inited local git bare repo with description and initial 0.0.0 tag.
+      Creates bare repo &lt;NEW_REPO_NAME&gt; and &lt;NEW_REPO_NAME&gt;-clone directories.  
+    </para>
+  </refsect1>
+
+  <refsect1>
+    <title>OPTIONS</title>
+
+    <variablelist>
+
+      <varlistentry><term>-h --help</term>
+        <listitem>
+          <para>
+            Print help text to the screen.
+          </para>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry><term>-d --description &lt;description&gt;</term>
+        <listitem>
+          <para>
+             Few words about project, otherwise is used project name. 
+          </para>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry><term>-V --version</term>
+        <listitem>
+          <para>
+            Prints version to the screen and exits.
+          </para>
+        </listitem>
+      </varlistentry>
+
+    </variablelist>
+  </refsect1>
+
+  <refsect1>
+    <title>NEW_REPO_NAME</title>
+    <para>
+      New git bare repo name which must not exists in current directory.
+    </para>
+  </refsect1>
+
+  <refsect1><title>SEE ALSO</title>
+    <para>
+      gr-scripts(8).
+      <ulink url="http://safrm.net/projects/gr-scripts/"/>
+    </para>
+  </refsect1>
+
+  <refsect1><title>AUTHOR</title>
+    Miroslav Šafr &lt;miroslav.safr@gmail.com&gt;
+  </refsect1>
+  <refsect1><title>LICENSE</title>
+   LGPL2
+  </refsect1>
+</refentry>

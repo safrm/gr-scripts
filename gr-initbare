@@ -10,7 +10,7 @@ alias echo="/bin/echo -e"
 BASENAME=`basename $0`
 usage() {
     echo "$BASENAME ${VERSION}"
-    echo "Usage: $BASENAME <new_repo_name> "
+    echo "Usage: $BASENAME <new_repo_name> [OPTIONS] "
     echo "git helper to create new inited local git bare repo "
     echo "args:"
     echo "  <new_repo_name> ..................... new git repo name (mandatory) e.g. my_project "

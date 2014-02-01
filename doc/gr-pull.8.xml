@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<refentry id="gr-pull.8">
+
+<refmeta>
+    <refentrytitle>gr-pull</refentrytitle>
+	<manvolnum>8</manvolnum>
+</refmeta>
+
+
+<refnamediv>
+    <refname>gr-pull</refname>
+    <refpurpose>Fetches and pulls all and keeps local changes.</refpurpose>
+</refnamediv>
+
+<refsynopsisdiv>
+	<cmdsynopsis>
+        <command>gr-pull  [OPTIONS] ... [PROJECT_DIR]</command>
+        <arg choice="opt">-h --help</arg>
+        <arg choice="opt">-ls --line-separator</arg>
+        <arg choice="opt">-ns --no-summary</arg>
+        <arg choice="opt">-V --version</arg>
+	</cmdsynopsis>
+</refsynopsisdiv>
+
+  <refsect1><title>DESCRIPTION</title>
+    <para>
+      Fetches and pulls all and keeps local changes. In case of conflict stays the modified changes.
+    </para>
+  </refsect1>
+
+  <refsect1>
+    <title>OPTIONS</title>
+
+    <variablelist>
+      <varlistentry><term>-h --help</term>
+        <listitem>
+          <para>
+            Print help text to the screen.
+          </para>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry><term>-ls --line-separator</term>
+        <listitem>
+          <para>
+            Projects are separated by colored line
+          </para>
+        </listitem>
+      </varlistentry>
+      
+      <varlistentry><term>-ns --no-summary</term>
+        <listitem>
+          <para>
+            Does not print execution summary.
+          </para>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry><term>-V --version</term>
+        <listitem>
+          <para>
+            Prints version to the screen and exits.
+          </para>
+        </listitem>
+      </varlistentry>
+
+    </variablelist>
+  </refsect1>
+
+  <refsect1>
+    <title>PROJECT_DIR</title>
+    <para>
+      Root directory with git clones. By default is used current directory.
+    </para>
+    <para>
+      All gr-scipts support subdirectory hierarchy &lt;my-dir&gt;/&lt;my-project-group&gt;/&lt;git-clone&gt;.
+      Project update can be skiped by creating file skip in .git directory.
+      <screen format="linespecific">
+        touch &lt;my-project&gt;/.git/skip
+      </screen>
+    </para>
+  </refsect1>
+
+  <refsect1><title>SEE ALSO</title>
+    <para>
+      gr-scripts(8).
+      <ulink url="http://safrm.net/projects/gr-scripts/"/>
+    </para>
+  </refsect1>
+
+  <refsect1><title>AUTHOR</title>
+    Miroslav Šafr &lt;miroslav.safr@gmail.com&gt;
+  </refsect1>
+  <refsect1><title>LICENSE</title>
+   LGPL2
+  </refsect1>
+</refentry>
