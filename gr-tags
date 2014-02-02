@@ -11,14 +11,13 @@ BASENAME=`basename $0`
 START_TIME=`date +'%s'`
 usage() {
     echo "$BASENAME ${VERSION} "
-    echo "Shows local tags versus current remote situation in subdirectories ./ or PROJECT_DIR/"
-    echo "Usage:$BASENAME [OPTIONS]... PATTERN [PROJECT_DIR]"
-    echo " PATTERN ............................. name or email of author or part of it "
+    echo "Shows local tags versus current remote situation in git subdirectories ./ or PROJECT_DIR/"
+    echo "Usage:$BASENAME [OPTIONS] ... [PROJECT_DIR]"
     echo " options: "
     echo " -d, --depth <N> ..................... historical depth N tags"
     echo " -c, --commits ....................... show commits"
     echo " -ls, --line-separator ............... project separated by colored line"
-    echo " -hm, --header-message ............... prints header message"
+    echo " -hm, --header-message <message> ..... prints header message"
     echo " -v, --verbose ....................... prints more output"
     echo " -h, --help .......................... shows command line help"
     echo " -ns, --no-summary ................... do not print execution summary"
@@ -30,7 +29,6 @@ usage() {
 DEPTH=1
 while [ $# -gt 0 ]; do
   case "$1" in
-    -V | --version) echo "`basename $0` ${VERSION} ${VERSION_DATE}"; exit 0 ;;  
     -v | --verbose) 
                VERBOSE=1
                ;;
@@ -50,7 +48,8 @@ while [ $# -gt 0 ]; do
     -hm | --header-message) shift;
                HEADER_MESSAGE=$1;
                            ;;
-        * )    PROJECT_DIR=$1;
+    -V | --version) echo "`basename $0` ${VERSION} ${VERSION_DATE}"; exit 0 ;;                           
+    * )    PROJECT_DIR=$1;
                ;; 
   esac
   shift

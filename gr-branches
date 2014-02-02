@@ -7,11 +7,12 @@ VERSION_DATE=NA
 #support color escape characters on different terminals
 alias echo="/bin/echo -e"
 
+BASENAME=`basename $0`
+START_TIME=`date +'%s'`
 usage() {
     echo "$BASENAME ${VERSION}"
     echo "Usage:$BASENAME [OPTIONS]... [PROJECT_DIR]"
     echo "Shows branches in subdirectories ./ or PROJECT_DIR/"
-    echo " PATTERN ............................  shows branches in subdirectories"
     echo " options: "
     echo " -h, --help .......................... shows command line help"
     echo " -a, --all  .......................... show all branches"
