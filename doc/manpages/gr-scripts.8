@@ -1,0 +1,94 @@
+'\" t
+.\"     Title: gr-scripts
+.\"    Author: [see the "AUTHOR" section]
+.\" Generator: DocBook XSL Stylesheets v1.78.1 <http://docbook.sf.net/>
+.\"      Date: 02/02/2014
+.\"    Manual: [FIXME: manual]
+.\"    Source: [FIXME: source]
+.\"  Language: English
+.\"
+.TH "GR\-SCRIPTS" "8" "02/02/2014" "[FIXME: source]" "[FIXME: manual]"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+gr-scripts_ \- git recursive directories scripts .PP Let monkey work to be done by monkies :) All gr\-scipts support subdirectory hierarchy <my\-dir>/<my\-project\-group>/<git\-clone>\&.
+.SH "GR-SCRIPTS COMMANDS"
+.PP
+.if n \{\
+.RS 4
+.\}
+.nf
+     gr\-authorcheck(8) \&.\&.\&.\&.\&. search for inappropriate commits
+     gr\-branches(8) \&.\&.\&.\&.\&.\&.\&.\&. shows branches in subdirectories
+     gr\-clean(8) \&.\&.\&.\&.\&.\&.\&.\&.\&.\&.\&. cleans up git clones in subdirectories
+     gr\-commits2tag(8) \&.\&.\&.\&.\&. show commits from last tag divided to head,local,remote
+     gr\-gr(8) \&.\&.\&.\&.\&.\&.\&.\&.\&.\&.\&.\&.\&.\&. general recussive script
+     gr\-initbare(8) \&.\&.\&.\&.\&.\&.\&.\&. initialize git bare repo, makes first commit and tag 0\&.0\&.0
+     gr\-pull(8) \&.\&.\&.\&.\&.\&.\&.\&.\&.\&.\&.\&. pulls all and keeps local chanegs in  subdirectories
+     gr\-pullreset(8) \&.\&.\&.\&.\&.\&.\&. pulls all and resets local changes in subdirectories
+     gr\-remotes(8) \&.\&.\&.\&.\&.\&.\&.\&.\&. shows remote branches in subdirectories
+     gr\-show(8) \&.\&.\&.\&.\&.\&.\&.\&.\&.\&.\&.\&. shows local tags versus current remote situation in subdirectories
+     gr\-showlocal(8) \&.\&.\&.\&.\&.\&.\&. shows local tags and if it was edited in subdirectories
+     gr\-tags(8) \&.\&.\&.\&.\&.\&.\&.\&.\&.\&.\&.\&. shows tags
+     
+.fi
+.if n \{\
+.RE
+.\}
+.sp
+.SH "EXAMPLES"
+.PP
+Current release contents:
+.sp
+.if n \{\
+.RS 4
+.\}
+.nf
+          gr\-tags <PROJ_DIR> \-v \-ns \-d 2 \-c \-hm "these changes are in last release:"
+      
+.fi
+.if n \{\
+.RE
+.\}
+.sp
+Next release contents:
+.sp
+.if n \{\
+.RS 4
+.\}
+.nf
+          gr\-commits2tag <PROJ_DIR> \-or \-ns \-mc 50 \-hm "these changes will be in next release:"
+      
+.fi
+.if n \{\
+.RE
+.\}
+.sp
+.SH "SEE ALSO"
+.PP
+gr\-authorcheck(8), gr\-branches(8), gr\-clean(8), gr\-commits2tag(8), gr\-gr(8) gr\-initbare(8), gr\-pull(8), gr\-pullreset(8), gr\-remotes(8), gr\-show(8), gr\-showlocal(8), gr\-tags(8)\&.
+\m[blue]\fB\%http://safrm.net/projects/gr-scripts/\fR\m[]
+.SH "AUTHOR"
+
+    Miroslav Å\ \&afr <miroslav\&.safr@gmail\&.com>
+  .SH "LICENSE"
+
+   LGPL2
+  

@@ -1,0 +1,106 @@
+'\" t
+.\"     Title: gr-tags
+.\"    Author: [see the "AUTHOR" section]
+.\" Generator: DocBook XSL Stylesheets v1.78.1 <http://docbook.sf.net/>
+.\"      Date: 02/02/2014
+.\"    Manual: [FIXME: manual]
+.\"    Source: [FIXME: source]
+.\"  Language: English
+.\"
+.TH "GR\-TAGS" "8" "02/02/2014" "[FIXME: source]" "[FIXME: manual]"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+gr-tags \- Shows local tags versus current remote situation in git subdirectories
+.SH "SYNOPSIS"
+.HP \w'\fBgr\-tags\ [OPTIONS]\ \&.\&.\&.\ [PROJECT_DIR]\fR\ 'u
+\fBgr\-tags  [OPTIONS] \&.\&.\&. [PROJECT_DIR]\fR [\-d\ \-\-depth\ <tags_number>] [\-c\ \-\-commits] [\-ls\ \-\-line\-separator] [\-hm\ \-\-header\-message\ <message>] [\-v\ \-\-verbose] [\-h\ \-\-help] [\-ns\ \-\-no\-summary] [\-V\ \-\-version]
+.SH "DESCRIPTION"
+.PP
+Shows local tags versus current remote situation in git subdirectories\&. Can also generate commit backlogs for current or for previous tags\&.
+.SH "OPTIONS"
+.PP
+\-d \-\-depth <tags_number>
+.RS 4
+Shows number of historical tags till specified depth\&.
+.RE
+.PP
+\-c \-\-commits
+.RS 4
+Print commits in tags\&.
+.RE
+.PP
+\-ls \-\-line\-separator
+.RS 4
+Projects are separated by colored line
+.RE
+.PP
+\-hm \-\-header\-message <message>
+.RS 4
+Prints extra header message\&.
+.RE
+.PP
+\-v \-\-verbose
+.RS 4
+Prints more output\&.
+.RE
+.PP
+\-h \-\-help
+.RS 4
+Print help text to the screen\&.
+.RE
+.PP
+\-ns \-\-no\-summary
+.RS 4
+Does not print execution summary\&.
+.RE
+.PP
+\-V \-\-version
+.RS 4
+Prints version to the screen and exits\&.
+.RE
+.SH "PROJECT_DIR"
+.PP
+Root directory with git clones\&. By default is used current directory\&.
+.PP
+All gr\-scipts support subdirectory hierarchy <my\-dir>/<my\-project\-group>/<git\-clone>\&. Project can be skiped by creating file skip in \&.git directory\&.
+.sp
+.if n \{\
+.RS 4
+.\}
+.nf
+        touch <my\-project>/\&.git/skip
+      
+.fi
+.if n \{\
+.RE
+.\}
+.sp
+.SH "SEE ALSO"
+.PP
+gr\-scripts(8)\&.
+\m[blue]\fB\%http://safrm.net/projects/gr-scripts/\fR\m[]
+.SH "AUTHOR"
+
+    Miroslav Å\ \&afr <miroslav\&.safr@gmail\&.com>
+  .SH "LICENSE"
+
+   LGPL2
+  

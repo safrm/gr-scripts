@@ -1,0 +1,67 @@
+'\" t
+.\"     Title: gr-initbare
+.\"    Author: [see the "AUTHOR" section]
+.\" Generator: DocBook XSL Stylesheets v1.78.1 <http://docbook.sf.net/>
+.\"      Date: 02/02/2014
+.\"    Manual: [FIXME: manual]
+.\"    Source: [FIXME: source]
+.\"  Language: English
+.\"
+.TH "GR\-INITBARE" "8" "02/02/2014" "[FIXME: source]" "[FIXME: manual]"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+gr-initbare \- Git helper to create new inited local git bare repo
+.SH "SYNOPSIS"
+.HP \w'\fBgr\-initbare\ [NEW_REPO_NAME]\ [OPTIONS]\ \fR\ 'u
+\fBgr\-initbare [NEW_REPO_NAME] [OPTIONS] \fR [\-h,\ \-\-help] [\-d\ \-\-description\ <description>] [\-V\ \-\-version]
+.SH "DESCRIPTION"
+.PP
+Git helper to create new inited local git bare repo with description and initial 0\&.0\&.0 tag\&. Creates bare repo <NEW_REPO_NAME> and <NEW_REPO_NAME>\-clone directories\&.
+.SH "OPTIONS"
+.PP
+\-h \-\-help
+.RS 4
+Print help text to the screen\&.
+.RE
+.PP
+\-d \-\-description <description>
+.RS 4
+Few words about project, otherwise is used project name\&.
+.RE
+.PP
+\-V \-\-version
+.RS 4
+Prints version to the screen and exits\&.
+.RE
+.SH "NEW_REPO_NAME"
+.PP
+New git bare repo name which must not exists in current directory\&.
+.SH "SEE ALSO"
+.PP
+gr\-scripts(8)\&.
+\m[blue]\fB\%http://safrm.net/projects/gr-scripts/\fR\m[]
+.SH "AUTHOR"
+
+    Miroslav Å\ \&afr <miroslav\&.safr@gmail\&.com>
+  .SH "LICENSE"
+
+   LGPL2
+  

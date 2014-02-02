@@ -1,0 +1,101 @@
+'\" t
+.\"     Title: gr-branches
+.\"    Author: [see the "AUTHOR" section]
+.\" Generator: DocBook XSL Stylesheets v1.78.1 <http://docbook.sf.net/>
+.\"      Date: 02/02/2014
+.\"    Manual: [FIXME: manual]
+.\"    Source: [FIXME: source]
+.\"  Language: English
+.\"
+.TH "GR\-BRANCHES" "8" "02/02/2014" "[FIXME: source]" "[FIXME: manual]"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+gr-clean \- Cleans up git clones in all subdirectories except those which are marked by: .sp .if n \{\ .RS 4 .\} .nf touch <dir>/\&.git/no_updates .fi .if n \{\ .RE .\} .sp
+.SH "SYNOPSIS"
+.HP \w'\fBgr\-clean\ [OPTIONS]\ \&.\&.\&.\ [PROJECT_DIR]\fR\ 'u
+\fBgr\-clean  [OPTIONS] \&.\&.\&. [PROJECT_DIR]\fR [\-h,\ \-\-help] [\-ls\ \-\-line\-separator] [\-ns\ \-\-no\-summary] [\-V\ \-\-version]
+.SH "DESCRIPTION"
+.PP
+Cleans up git clones in all subdirectories except those which are marked by:
+.sp
+.if n \{\
+.RS 4
+.\}
+.nf
+        touch  <dir>/\&.git/no_updates
+        
+.fi
+.if n \{\
+.RE
+.\}
+.sp
+Cleaning pattern consists from:
+.sp
+.if n \{\
+.RS 4
+.\}
+.nf
+            git reset \-\-hard
+            git gc
+            git clean \-dfx
+         
+.fi
+.if n \{\
+.RE
+.\}
+.sp
+.SH "OPTIONS"
+.PP
+\-h \-\-help
+.RS 4
+Print help text to the screen\&.
+.RE
+.PP
+\-ls \-\-line\-separator
+.RS 4
+Projects are separated by colored line\&.
+.RE
+.PP
+\-ns \-\-no\-summary
+.RS 4
+Do not print execution summary\&.
+.RE
+.PP
+\-V \-\-version
+.RS 4
+Prints version to the screen and exits\&.
+.RE
+.SH "PROJECT_DIR"
+.PP
+Root directory with git clones\&. By default is used current directory\&.
+.PP
+All gr\-scipts support subdirectory hierarchy <my\-dir>/<my\-project\-group>/<git\-clone>\&.
+.SH "SEE ALSO"
+.PP
+gr\-scripts(8)\&.
+\m[blue]\fB\%http://safrm.net/projects/gr-scripts/\fR\m[]
+.SH "AUTHOR"
+
+    Miroslav Å\ \&afr <miroslav\&.safr@gmail\&.com>
+  .SH "LICENSE"
+
+   LGPL2
+  

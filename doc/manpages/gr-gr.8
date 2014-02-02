@@ -1,0 +1,68 @@
+'\" t
+.\"     Title: gr-gr
+.\"    Author: [see the "AUTHOR" section]
+.\" Generator: DocBook XSL Stylesheets v1.78.1 <http://docbook.sf.net/>
+.\"      Date: 02/02/2014
+.\"    Manual: [FIXME: manual]
+.\"    Source: [FIXME: source]
+.\"  Language: English
+.\"
+.TH "GR\-GR" "8" "02/02/2014" "[FIXME: source]" "[FIXME: manual]"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+gr-gr \- generic recurse script
+.SH "SYNOPSIS"
+.HP \w'\fBgr\-gr\ COMMAND\ [ARGUMENTS]\fR\ 'u
+\fBgr\-gr COMMAND [ARGUMENTS]\fR
+.SH "DESCRIPTION"
+.PP
+Generic recurse script, command execution wrapper\&.
+.SH "COMMAND"
+.PP
+Command (with arguments is executed in projects containing git directories\&. Current directory is used as root directory with git clones\&.
+.PP
+All gr\-scipts support subdirectory hierarchy <my\-dir>/<my\-project\-group>/<git\-clone>\&.
+.SH "EXAMPLES"
+.PP
+See sizes of cloned directories:
+.sp
+.if n \{\
+.RS 4
+.\}
+.nf
+         gr\-gr du \-hs
+      
+.fi
+.if n \{\
+.RE
+.\}
+.sp
+.SH "SEE ALSO"
+.PP
+gr\-scripts(8)\&.
+\m[blue]\fB\%http://safrm.net/projects/gr-scripts/\fR\m[]
+.SH "AUTHOR"
+
+    Miroslav Å\ \&afr <miroslav\&.safr@gmail\&.com>
+  .SH "LICENSE"
+
+   LGPL2
+  
