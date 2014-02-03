@@ -6,3 +6,4 @@ debian/gr-scripts.substvars
 debian/gr-scripts/
 *.changes
 *~
+doc/tmp/*
