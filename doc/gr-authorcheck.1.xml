@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<refentry id="gr-tags.8">
+<refentry id="gr-authorcheck.1">
 
 <refentryinfo>
     <title>Git recursive directories scripts</title>
@@ -14,69 +14,36 @@
 </refentryinfo>
 
 <refmeta>
-    <refentrytitle>gr-tags</refentrytitle>
-	<manvolnum>8</manvolnum>
+    <refentrytitle>gr-authorcheck</refentrytitle>
+	<manvolnum>1</manvolnum>
 </refmeta>
 
 
 <refnamediv>
-    <refname>gr-tags</refname>
-    <refpurpose>Shows local tags versus current remote situation in git subdirectories</refpurpose>
+    <refname>gr-authorcheck</refname>
+    <refpurpose>Search for inappropriate commits</refpurpose>
 </refnamediv>
 
 <refsynopsisdiv>
 	<cmdsynopsis>
-        <command>gr-tags  [OPTIONS] ... [PROJECT_DIR]</command>
-        <arg choice="opt">-d --depth &lt;tags_number&gt;</arg>
-        <arg choice="opt">-c --commits</arg>
-        <arg choice="opt">-ls --line-separator</arg>
-        <arg choice="opt">-hm --header-message &lt;message&gt;</arg>
+        <command>gr-authorcheck  [OPTIONS]... PATTERN [PROJECT_DIR]</command>
         <arg choice="opt">-v --verbose</arg>
         <arg choice="opt">-h --help</arg>
-        <arg choice="opt">-ns --no-summary</arg>
+        <arg choice="opt">-cs --case-sensitive</arg>
+        <arg choice="opt">-a --all</arg>
+        <arg choice="opt">-ls --line-separator</arg>
         <arg choice="opt">-V --version</arg>
-    </cmdsynopsis>
+	</cmdsynopsis>
 </refsynopsisdiv>
 
   <refsect1><title>DESCRIPTION</title>
     <para>
-      Shows local tags versus current remote situation in git subdirectories. Can also generate commit backlogs for current or for previous tags.
+      Search for inappropriate commits by git recursive directories scripts.
     </para>
   </refsect1>
 
   <refsect1>
     <title>OPTIONS</title>
-      <varlistentry><term>-d --depth &lt;tags_number&gt;</term>
-        <listitem>
-          <para>
-            Shows number of historical tags till specified depth. 
-          </para>
-        </listitem>
-      </varlistentry>
-
-      <varlistentry><term>-c --commits</term>
-        <listitem>
-          <para>
-            Print commits in tags.
-          </para>
-        </listitem>
-      </varlistentry>
-
-      <varlistentry><term>-ls --line-separator</term>
-        <listitem>
-          <para>
-            Projects are separated by colored line
-          </para>
-        </listitem>
-      </varlistentry>
-
-      <varlistentry><term>-hm --header-message &lt;message&gt;</term>
-        <listitem>
-          <para>
-           Prints extra header message.
-          </para>
-        </listitem>
-      </varlistentry>
 
     <variablelist>
       <varlistentry><term>-v --verbose</term>
@@ -95,10 +62,26 @@
         </listitem>
       </varlistentry>
 
-      <varlistentry><term>-ns --no-summary</term>
+      <varlistentry><term>-cs --case-sensitive</term>
         <listitem>
           <para>
-            Does not print execution summary.
+            Case sensitive search (by default it is insensitive)
+          </para>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry><term>-a --all</term>
+        <listitem>
+          <para>
+            Search in all branches (commits) for deeper searching.
+          </para>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry><term>-ls --line-separator</term>
+        <listitem>
+          <para>
+            Projects are separated by colored line
           </para>
         </listitem>
       </varlistentry>
@@ -114,6 +97,17 @@
     </variablelist>
   </refsect1>
 
+
+  <refsect1>
+    <title>PATTERN</title>
+    <para>
+      Author's string used for searching.
+    </para>
+    <para>
+      Needs quoted format when spaces or special characters are used. "\@something "
+    </para>
+  </refsect1>
+
   <refsect1>
     <title>PROJECT_DIR</title>
     <para>
@@ -121,16 +115,12 @@
     </para>
     <para>
       All gr-scipts support subdirectory hierarchy &lt;my-dir&gt;/&lt;my-project-group&gt;/&lt;git-clone&gt;.
-      Project can be skiped by creating file skip in .git directory.
-      <screen format="linespecific">
-        touch &lt;my-project&gt;/.git/skip
-      </screen>
     </para>
   </refsect1>
 
   <refsect1><title>SEE ALSO</title>
     <para>
-      gr-scripts(8).
+      gr-scripts(1).
       <ulink url="http://safrm.net/projects/gr-scripts/"/>
     </para>
   </refsect1>

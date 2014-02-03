@@ -1,13 +1,13 @@
 '\" t
-.\"     Title: gr-branches
+.\"     Title: gr-tags
 .\"    Author: Miroslav Safr <miroslav.safr@gmail.com>
 .\" Generator: DocBook XSL Stylesheets v1.76.1 <http://docbook.sf.net/>
-.\"      Date: 20140203_1058
+.\"      Date: 20140203_1126
 .\"    Manual: Git recursive directories scripts
 .\"    Source: gr-scripts 1.1.0
 .\"  Language: English
 .\"
-.TH "GR\-BRANCHES" "8" "20140203_1058" "gr-scripts 1.1.0" "Git recursive directories scri"
+.TH "GR\-TAGS" "1" "20140203_1126" "gr-scripts 1.1.0" "Git recursive directories scri"
 .\" -----------------------------------------------------------------
 .\" * Define some portability stuff
 .\" -----------------------------------------------------------------
@@ -28,55 +28,48 @@
 .\" * MAIN CONTENT STARTS HERE *
 .\" -----------------------------------------------------------------
 .SH "NAME"
-gr-clean \- Cleans up git clones in all subdirectories except those which are marked by: .sp .if n \{\ .RS 4 .\} .nf touch <dir>/\&.git/no_updates .fi .if n \{\ .RE .\} .sp
+gr-tags \- Shows local tags versus current remote situation in git subdirectories
 .SH "SYNOPSIS"
-.HP \w'\fBgr\-clean\ [OPTIONS]\ \&.\&.\&.\ [PROJECT_DIR]\fR\ 'u
-\fBgr\-clean  [OPTIONS] \&.\&.\&. [PROJECT_DIR]\fR [\-h,\ \-\-help] [\-ls\ \-\-line\-separator] [\-ns\ \-\-no\-summary] [\-V\ \-\-version]
+.HP \w'\fBgr\-tags\ [OPTIONS]\ \&.\&.\&.\ [PROJECT_DIR]\fR\ 'u
+\fBgr\-tags  [OPTIONS] \&.\&.\&. [PROJECT_DIR]\fR [\-d\ \-\-depth\ <tags_number>] [\-c\ \-\-commits] [\-ls\ \-\-line\-separator] [\-hm\ \-\-header\-message\ <message>] [\-v\ \-\-verbose] [\-h\ \-\-help] [\-ns\ \-\-no\-summary] [\-V\ \-\-version]
 .SH "DESCRIPTION"
 .PP
-Cleans up git clones in all subdirectories except those which are marked by:
-.sp
-.if n \{\
-.RS 4
-.\}
-.nf
-        touch  <dir>/\&.git/no_updates
-        
-.fi
-.if n \{\
-.RE
-.\}
-.sp
-Cleaning pattern consists from:
-.sp
-.if n \{\
-.RS 4
-.\}
-.nf
-            git reset \-\-hard
-            git gc
-            git clean \-dfx
-         
-.fi
-.if n \{\
-.RE
-.\}
-.sp
+Shows local tags versus current remote situation in git subdirectories\&. Can also generate commit backlogs for current or for previous tags\&.
 .SH "OPTIONS"
+.PP
+\-d \-\-depth <tags_number>
+.RS 4
+Shows number of historical tags till specified depth\&.
+.RE
+.PP
+\-c \-\-commits
+.RS 4
+Print commits in tags\&.
+.RE
+.PP
+\-ls \-\-line\-separator
+.RS 4
+Projects are separated by colored line
+.RE
+.PP
+\-hm \-\-header\-message <message>
+.RS 4
+Prints extra header message\&.
+.RE
+.PP
+\-v \-\-verbose
+.RS 4
+Prints more output\&.
+.RE
 .PP
 \-h \-\-help
 .RS 4
 Print help text to the screen\&.
 .RE
 .PP
-\-ls \-\-line\-separator
-.RS 4
-Projects are separated by colored line\&.
-.RE
-.PP
 \-ns \-\-no\-summary
 .RS 4
-Do not print execution summary\&.
+Does not print execution summary\&.
 .RE
 .PP
 \-V \-\-version
@@ -87,10 +80,22 @@ Prints version to the screen and exits\&.
 .PP
 Root directory with git clones\&. By default is used current directory\&.
 .PP
-All gr\-scipts support subdirectory hierarchy <my\-dir>/<my\-project\-group>/<git\-clone>\&.
+All gr\-scipts support subdirectory hierarchy <my\-dir>/<my\-project\-group>/<git\-clone>\&. Project can be skiped by creating file skip in \&.git directory\&.
+.sp
+.if n \{\
+.RS 4
+.\}
+.nf
+        touch <my\-project>/\&.git/skip
+      
+.fi
+.if n \{\
+.RE
+.\}
+.sp
 .SH "SEE ALSO"
 .PP
-gr\-scripts(8)\&.
+gr\-scripts(1)\&.
 \m[blue]\fB\%http://safrm.net/projects/gr-scripts/\fR\m[]
 .SH "AUTHOR"
 

@@ -1,13 +1,13 @@
 '\" t
-.\"     Title: gr-authorcheck
+.\"     Title: gr-initbare
 .\"    Author: Miroslav Safr <miroslav.safr@gmail.com>
 .\" Generator: DocBook XSL Stylesheets v1.76.1 <http://docbook.sf.net/>
-.\"      Date: 20140203_1058
+.\"      Date: 20140203_1126
 .\"    Manual: Git recursive directories scripts
 .\"    Source: gr-scripts 1.1.0
 .\"  Language: English
 .\"
-.TH "GR\-AUTHORCHECK" "8" "20140203_1058" "gr-scripts 1.1.0" "Git recursive directories scri"
+.TH "GR\-INITBARE" "1" "20140203_1126" "gr-scripts 1.1.0" "Git recursive directories scri"
 .\" -----------------------------------------------------------------
 .\" * Define some portability stuff
 .\" -----------------------------------------------------------------
@@ -28,57 +28,35 @@
 .\" * MAIN CONTENT STARTS HERE *
 .\" -----------------------------------------------------------------
 .SH "NAME"
-gr-authorcheck \- Search for inappropriate commits
+gr-initbare \- Git helper to create new inited local git bare repo
 .SH "SYNOPSIS"
-.HP \w'\fBgr\-authorcheck\ [OPTIONS]\&.\&.\&.\ PATTERN\ [PROJECT_DIR]\fR\ 'u
-\fBgr\-authorcheck  [OPTIONS]\&.\&.\&. PATTERN [PROJECT_DIR]\fR [\-v\ \-\-verbose] [\-h\ \-\-help] [\-cs\ \-\-case\-sensitive] [\-a\ \-\-all] [\-ls\ \-\-line\-separator] [\-V\ \-\-version]
+.HP \w'\fBgr\-initbare\ [NEW_REPO_NAME]\ [OPTIONS]\ \fR\ 'u
+\fBgr\-initbare [NEW_REPO_NAME] [OPTIONS] \fR [\-h,\ \-\-help] [\-d\ \-\-description\ <description>] [\-V\ \-\-version]
 .SH "DESCRIPTION"
 .PP
-Search for inappropriate commits by git recursive directories scripts\&.
+Git helper to create new inited local git bare repo with description and initial 0\&.0\&.0 tag\&. Creates bare repo <NEW_REPO_NAME> and <NEW_REPO_NAME>\-clone directories\&.
 .SH "OPTIONS"
-.PP
-\-v \-\-verbose
-.RS 4
-Prints more output\&.
-.RE
 .PP
 \-h \-\-help
 .RS 4
 Print help text to the screen\&.
 .RE
 .PP
-\-cs \-\-case\-sensitive
+\-d \-\-description <description>
 .RS 4
-Case sensitive search (by default it is insensitive)
-.RE
-.PP
-\-a \-\-all
-.RS 4
-Search in all branches (commits) for deeper searching\&.
-.RE
-.PP
-\-ls \-\-line\-separator
-.RS 4
-Projects are separated by colored line
+Few words about project, otherwise is used project name\&.
 .RE
 .PP
 \-V \-\-version
 .RS 4
 Prints version to the screen and exits\&.
 .RE
-.SH "PATTERN"
+.SH "NEW_REPO_NAME"
 .PP
-Author\*(Aqs string used for searching\&.
-.PP
-Needs quoted format when spaces or special characters are used\&. "\e@something "
-.SH "PROJECT_DIR"
-.PP
-Root directory with git clones\&. By default is used current directory\&.
-.PP
-All gr\-scipts support subdirectory hierarchy <my\-dir>/<my\-project\-group>/<git\-clone>\&.
+New git bare repo name which must not exists in current directory\&.
 .SH "SEE ALSO"
 .PP
-gr\-scripts(8)\&.
+gr\-scripts(1)\&.
 \m[blue]\fB\%http://safrm.net/projects/gr-scripts/\fR\m[]
 .SH "AUTHOR"
 

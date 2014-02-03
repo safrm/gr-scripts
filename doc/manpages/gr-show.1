@@ -1,13 +1,13 @@
 '\" t
-.\"     Title: gr-gr
+.\"     Title: gr-show
 .\"    Author: Miroslav Safr <miroslav.safr@gmail.com>
 .\" Generator: DocBook XSL Stylesheets v1.76.1 <http://docbook.sf.net/>
-.\"      Date: 20140203_1058
+.\"      Date: 20140203_1126
 .\"    Manual: Git recursive directories scripts
 .\"    Source: gr-scripts 1.1.0
 .\"  Language: English
 .\"
-.TH "GR\-GR" "8" "20140203_1058" "gr-scripts 1.1.0" "Git recursive directories scri"
+.TH "GR\-SHOW" "1" "20140203_1126" "gr-scripts 1.1.0" "Git recursive directories scri"
 .\" -----------------------------------------------------------------
 .\" * Define some portability stuff
 .\" -----------------------------------------------------------------
@@ -28,27 +28,50 @@
 .\" * MAIN CONTENT STARTS HERE *
 .\" -----------------------------------------------------------------
 .SH "NAME"
-gr-gr \- Generic recurse script
+gr-show \- Shows local tags versus current remote situation in git subdirectories\&.
 .SH "SYNOPSIS"
-.HP \w'\fBgr\-gr\ COMMAND\ [ARGUMENTS]\fR\ 'u
-\fBgr\-gr COMMAND [ARGUMENTS]\fR
+.HP \w'\fBgr\-show\ [OPTIONS]\ \&.\&.\&.\ [PROJECT_DIR]\fR\ 'u
+\fBgr\-show  [OPTIONS] \&.\&.\&. [PROJECT_DIR]\fR [\-v\ \-\-verbose] [\-h\ \-\-help] [\-ls\ \-\-line\-separator] [\-ns\ \-\-no\-summary] [\-V\ \-\-version]
 .SH "DESCRIPTION"
 .PP
-Generic recurse script, command execution wrapper\&.
-.SH "COMMAND"
+Shows local tags versus current remote situation (fetches changes) in git subdirectories\&. Verbose mode shows more details about local changes\&.
+.SH "OPTIONS"
 .PP
-Command (with arguments is executed in projects containing git directories\&. Current directory is used as root directory with git clones\&.
+\-v \-\-verbose
+.RS 4
+Shows more details as local changes\&.
+.RE
 .PP
-All gr\-scipts support subdirectory hierarchy <my\-dir>/<my\-project\-group>/<git\-clone>\&.
-.SH "EXAMPLES"
+\-h \-\-help
+.RS 4
+Print help text to the screen\&.
+.RE
 .PP
-See sizes of cloned directories:
+\-ls \-\-line\-separator
+.RS 4
+Projects are separated by colored line
+.RE
+.PP
+\-ns \-\-no\-summary
+.RS 4
+Does not print execution summary\&.
+.RE
+.PP
+\-V \-\-version
+.RS 4
+Prints version to the screen and exits\&.
+.RE
+.SH "PROJECT_DIR"
+.PP
+Root directory with git clones\&. By default is used current directory\&.
+.PP
+All gr\-scipts support subdirectory hierarchy <my\-dir>/<my\-project\-group>/<git\-clone>\&. Project can be skiped by creating file skip in \&.git directory\&.
 .sp
 .if n \{\
 .RS 4
 .\}
 .nf
-         gr\-gr du \-hs
+        touch <my\-project>/\&.git/skip
       
 .fi
 .if n \{\
@@ -57,7 +80,7 @@ See sizes of cloned directories:
 .sp
 .SH "SEE ALSO"
 .PP
-gr\-scripts(8)\&.
+gr\-scripts(1)\&.
 \m[blue]\fB\%http://safrm.net/projects/gr-scripts/\fR\m[]
 .SH "AUTHOR"
 

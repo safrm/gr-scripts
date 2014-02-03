@@ -1,13 +1,13 @@
 '\" t
-.\"     Title: gr-initbare
+.\"     Title: gr-remotes
 .\"    Author: Miroslav Safr <miroslav.safr@gmail.com>
 .\" Generator: DocBook XSL Stylesheets v1.76.1 <http://docbook.sf.net/>
-.\"      Date: 20140203_1058
+.\"      Date: 20140203_1126
 .\"    Manual: Git recursive directories scripts
 .\"    Source: gr-scripts 1.1.0
 .\"  Language: English
 .\"
-.TH "GR\-INITBARE" "8" "20140203_1058" "gr-scripts 1.1.0" "Git recursive directories scri"
+.TH "GR\-REMOTES" "1" "20140203_1126" "gr-scripts 1.1.0" "Git recursive directories scri"
 .\" -----------------------------------------------------------------
 .\" * Define some portability stuff
 .\" -----------------------------------------------------------------
@@ -28,13 +28,13 @@
 .\" * MAIN CONTENT STARTS HERE *
 .\" -----------------------------------------------------------------
 .SH "NAME"
-gr-initbare \- Git helper to create new inited local git bare repo
+gr-remotes \- Shows remotes in git subdirectories
 .SH "SYNOPSIS"
-.HP \w'\fBgr\-initbare\ [NEW_REPO_NAME]\ [OPTIONS]\ \fR\ 'u
-\fBgr\-initbare [NEW_REPO_NAME] [OPTIONS] \fR [\-h,\ \-\-help] [\-d\ \-\-description\ <description>] [\-V\ \-\-version]
+.HP \w'\fBgr\-remotes\ [OPTIONS]\&.\&.\&.\ [PROJECT_DIR]\fR\ 'u
+\fBgr\-remotes  [OPTIONS]\&.\&.\&. [PROJECT_DIR]\fR [\-h,\ \-\-help] [\-ls\ \-\-line\-separator] [\-ns\ \-\-no\-summary] [\-V\ \-\-version]
 .SH "DESCRIPTION"
 .PP
-Git helper to create new inited local git bare repo with description and initial 0\&.0\&.0 tag\&. Creates bare repo <NEW_REPO_NAME> and <NEW_REPO_NAME>\-clone directories\&.
+Shows remotes in git cloned subdirectories\&.
 .SH "OPTIONS"
 .PP
 \-h \-\-help
@@ -42,21 +42,28 @@ Git helper to create new inited local git bare repo with description and initial
 Print help text to the screen\&.
 .RE
 .PP
-\-d \-\-description <description>
+\-ls \-\-line\-separator
 .RS 4
-Few words about project, otherwise is used project name\&.
+Projects are separated by colored line\&.
+.RE
+.PP
+\-ns \-\-no\-summary
+.RS 4
+Do not print execution summary\&.
 .RE
 .PP
 \-V \-\-version
 .RS 4
 Prints version to the screen and exits\&.
 .RE
-.SH "NEW_REPO_NAME"
+.SH "PROJECT_DIR"
 .PP
-New git bare repo name which must not exists in current directory\&.
+Root directory with git clones\&. By default is used current directory\&.
+.PP
+All gr\-scipts support subdirectory hierarchy <my\-dir>/<my\-project\-group>/<git\-clone>\&.
 .SH "SEE ALSO"
 .PP
-gr\-scripts(8)\&.
+gr\-scripts(1)\&.
 \m[blue]\fB\%http://safrm.net/projects/gr-scripts/\fR\m[]
 .SH "AUTHOR"
 

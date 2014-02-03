@@ -25,7 +25,7 @@ if command -v appver &>/dev/null; then . appver; else APP_SHORT_VERSION=NA ; APP
 TEMP_DIR=./tmp
 rm -fr $TEMP_DIR && mkdir $TEMP_DIR
 #update version and date
-for PAGEXML in $(  find . -type f -name "*8.xml" )
+for PAGEXML in $(  find . -type f -name "*1.xml" )
 do
     cp $PAGEXML $TEMP_DIR/
     sed -i".bkp" "1,/<productnumber>/s/<productnumber>.*/<productnumber>$APP_SHORT_VERSION_TAG<\/productnumber>/" $TEMP_DIR/$PAGEXML  && rm -f $TEMP_DIR/$PAGEXML.bkp
@@ -33,10 +33,10 @@ do
 done
 
 #generate man and html pages
-for PAGEXML in $(  find ./tmp -type f -name "*8.xml" )
+for PAGEXML in $(  find ./tmp -type f -name "*1.xml" )
 do
 #	PAGENAME=`basename -s.8.xml $PAGEXML`
-	PAGENAME=`basename $PAGEXML .8.xml`
+	PAGENAME=`basename $PAGEXML .1.xml`
 	$XSLTPROC -o ./htmlpages/$PAGENAME.html $HTMLXSL $PAGEXML
-	$XSLTPROC -o ./manpages/$PAGENAME.8 $MANXSL $PAGEXML
+	$XSLTPROC -o ./manpages/$PAGENAME.1 $MANXSL $PAGEXML
 done

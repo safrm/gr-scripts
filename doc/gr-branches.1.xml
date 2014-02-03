@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<refentry id="gr-remotes.8">
+<refentry id="gr-branches.1">
 
 <refentryinfo>
     <title>Git recursive directories scripts</title>
@@ -14,20 +14,21 @@
 </refentryinfo>
 
 <refmeta>
-    <refentrytitle>gr-remotes</refentrytitle>
-	<manvolnum>8</manvolnum>
+    <refentrytitle>gr-branches</refentrytitle>
+	<manvolnum>1</manvolnum>
 </refmeta>
 
 
 <refnamediv>
-    <refname>gr-remotes</refname>
-    <refpurpose>Shows remotes in git subdirectories</refpurpose>
+    <refname>gr-branches</refname>
+    <refpurpose>Shows branches in subdirectories</refpurpose>
 </refnamediv>
 
 <refsynopsisdiv>
 	<cmdsynopsis>
-        <command>gr-remotes  [OPTIONS]... [PROJECT_DIR]</command>
+        <command>gr-branches  [OPTIONS]... [PROJECT_DIR]</command>
         <arg choice="opt">-h, --help</arg>
+        <arg choice="opt">-a --all</arg>
         <arg choice="opt">-ls --line-separator</arg>
         <arg choice="opt">-ns --no-summary</arg>
         <arg choice="opt">-V --version</arg>
@@ -36,7 +37,7 @@
 
   <refsect1><title>DESCRIPTION</title>
     <para>
-      Shows remotes in git cloned subdirectories.
+      Shows branches in git cloned subdirectories.
     </para>
   </refsect1>
 
@@ -49,6 +50,14 @@
         <listitem>
           <para>
             Print help text to the screen.
+          </para>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry><term>-a --all</term>
+        <listitem>
+          <para>
+            Search in all branches (commits) for deeper searching.
           </para>
         </listitem>
       </varlistentry>
@@ -92,7 +101,7 @@
 
   <refsect1><title>SEE ALSO</title>
     <para>
-      gr-scripts(8).
+      gr-scripts(1).
       <ulink url="http://safrm.net/projects/gr-scripts/"/>
     </para>
   </refsect1>

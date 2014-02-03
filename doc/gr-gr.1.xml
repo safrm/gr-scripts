@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<refentry id="gr-gr.8">
+<refentry id="gr-gr.1">
 <refentryinfo>
     <title>Git recursive directories scripts</title>
     <author>
@@ -14,7 +14,7 @@
 
 <refmeta>
     <refentrytitle>gr-gr</refentrytitle>
-	<manvolnum>8</manvolnum>
+	<manvolnum>1</manvolnum>
 </refmeta>
 
 
@@ -57,7 +57,7 @@
 
   <refsect1><title>SEE ALSO</title>
     <para>
-      gr-scripts(8).
+      gr-scripts(1).
       <ulink url="http://safrm.net/projects/gr-scripts/"/>
     </para>
   </refsect1>

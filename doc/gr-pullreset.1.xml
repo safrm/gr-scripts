@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<refentry id="gr-commits2tag.8">
+<refentry id="gr-pullreset.1">
 
 <refentryinfo>
     <title>Git recursive directories scripts</title>
@@ -14,33 +14,29 @@
 </refentryinfo>
 
 <refmeta>
-    <refentrytitle>gr-commits2tag</refentrytitle>
-	<manvolnum>8</manvolnum>
+    <refentrytitle>gr-pullreset</refentrytitle>
+	<manvolnum>1</manvolnum>
 </refmeta>
 
 
 <refnamediv>
-    <refname>gr-commits2tag</refname>
-    <refpurpose>Shows untagged commits on head/local/remote </refpurpose>
+    <refname>gr-pullreset</refname>
+    <refpurpose>Fetches and pulls all and resets local changes in git subdirectories.</refpurpose>
 </refnamediv>
 
 <refsynopsisdiv>
 	<cmdsynopsis>
-        <command>gr-commits2tag  [OPTIONS] ... [PROJECT_DIR]</command>
-        <arg choice="opt">-v --verbose</arg>
-        <arg choice="opt">-or --only-remote</arg>
-        <arg choice="opt">-hm --header-message</arg>
+        <command>gr-pullreset  [OPTIONS] ... [PROJECT_DIR]</command>
         <arg choice="opt">-h --help</arg>
-        <arg choice="opt">-cs --case-sensitive</arg>
-        <arg choice="opt">-a --all</arg>
         <arg choice="opt">-ls --line-separator</arg>
+        <arg choice="opt">-ns --no-summary</arg>
         <arg choice="opt">-V --version</arg>
 	</cmdsynopsis>
 </refsynopsisdiv>
 
   <refsect1><title>DESCRIPTION</title>
     <para>
-      Search for inappropriate commits by git recursive directories scripts.
+      Fetches and pulls all and resets local changes in git subdirectories. In case of conflict are local chanegs overwritten by upstream.
     </para>
   </refsect1>
 
@@ -48,14 +44,6 @@
     <title>OPTIONS</title>
 
     <variablelist>
-      <varlistentry><term>-v --verbose</term>
-        <listitem>
-          <para>
-            Prints more output.
-          </para>
-        </listitem>
-      </varlistentry>
-
       <varlistentry><term>-h --help</term>
         <listitem>
           <para>
@@ -64,26 +52,18 @@
         </listitem>
       </varlistentry>
 
-      <varlistentry><term>-cs --case-sensitive</term>
-        <listitem>
-          <para>
-            Case sensitive search (by default it is insensitive)
-          </para>
-        </listitem>
-      </varlistentry>
-
-      <varlistentry><term>-a --all</term>
-        <listitem>
-          <para>
-            Search in all branches (commits) for deeper searching.
-          </para>
-        </listitem>
-      </varlistentry>
-
       <varlistentry><term>-ls --line-separator</term>
         <listitem>
           <para>
             Projects are separated by colored line
+          </para>
+        </listitem>
+      </varlistentry>
+      
+      <varlistentry><term>-ns --no-summary</term>
+        <listitem>
+          <para>
+            Does not print execution summary.
           </para>
         </listitem>
       </varlistentry>
@@ -99,17 +79,6 @@
     </variablelist>
   </refsect1>
 
-
-  <refsect1>
-    <title>PATTERN</title>
-    <para>
-      Author's string used for searching.
-    </para>
-    <para>
-      Needs quoted format when spaces or special characters are used. "\@something "
-    </para>
-  </refsect1>
-
   <refsect1>
     <title>PROJECT_DIR</title>
     <para>
@@ -117,12 +86,16 @@
     </para>
     <para>
       All gr-scipts support subdirectory hierarchy &lt;my-dir&gt;/&lt;my-project-group&gt;/&lt;git-clone&gt;.
+      Project update can be skiped by creating file skip in .git directory.
+      <screen format="linespecific">
+        touch &lt;my-project&gt;/.git/skip
+      </screen>
     </para>
   </refsect1>
 
   <refsect1><title>SEE ALSO</title>
     <para>
-      gr-scripts(8).
+      gr-scripts(1).
       <ulink url="http://safrm.net/projects/gr-scripts/"/>
     </para>
   </refsect1>

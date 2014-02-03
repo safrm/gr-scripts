@@ -1,13 +1,13 @@
 '\" t
-.\"     Title: gr-remotes
+.\"     Title: gr-pull
 .\"    Author: Miroslav Safr <miroslav.safr@gmail.com>
 .\" Generator: DocBook XSL Stylesheets v1.76.1 <http://docbook.sf.net/>
-.\"      Date: 20140203_1058
+.\"      Date: 20140203_1126
 .\"    Manual: Git recursive directories scripts
 .\"    Source: gr-scripts 1.1.0
 .\"  Language: English
 .\"
-.TH "GR\-REMOTES" "8" "20140203_1058" "gr-scripts 1.1.0" "Git recursive directories scri"
+.TH "GR\-PULL" "1" "20140203_1126" "gr-scripts 1.1.0" "Git recursive directories scri"
 .\" -----------------------------------------------------------------
 .\" * Define some portability stuff
 .\" -----------------------------------------------------------------
@@ -28,13 +28,13 @@
 .\" * MAIN CONTENT STARTS HERE *
 .\" -----------------------------------------------------------------
 .SH "NAME"
-gr-remotes \- Shows remotes in git subdirectories
+gr-pull \- Fetches and pulls all and keeps local changes\&.
 .SH "SYNOPSIS"
-.HP \w'\fBgr\-remotes\ [OPTIONS]\&.\&.\&.\ [PROJECT_DIR]\fR\ 'u
-\fBgr\-remotes  [OPTIONS]\&.\&.\&. [PROJECT_DIR]\fR [\-h,\ \-\-help] [\-ls\ \-\-line\-separator] [\-ns\ \-\-no\-summary] [\-V\ \-\-version]
+.HP \w'\fBgr\-pull\ [OPTIONS]\ \&.\&.\&.\ [PROJECT_DIR]\fR\ 'u
+\fBgr\-pull  [OPTIONS] \&.\&.\&. [PROJECT_DIR]\fR [\-h\ \-\-help] [\-ls\ \-\-line\-separator] [\-ns\ \-\-no\-summary] [\-V\ \-\-version]
 .SH "DESCRIPTION"
 .PP
-Shows remotes in git cloned subdirectories\&.
+Fetches and pulls all and keeps local changes\&. In case of conflict stays the modified changes\&.
 .SH "OPTIONS"
 .PP
 \-h \-\-help
@@ -44,12 +44,12 @@ Print help text to the screen\&.
 .PP
 \-ls \-\-line\-separator
 .RS 4
-Projects are separated by colored line\&.
+Projects are separated by colored line
 .RE
 .PP
 \-ns \-\-no\-summary
 .RS 4
-Do not print execution summary\&.
+Does not print execution summary\&.
 .RE
 .PP
 \-V \-\-version
@@ -60,10 +60,22 @@ Prints version to the screen and exits\&.
 .PP
 Root directory with git clones\&. By default is used current directory\&.
 .PP
-All gr\-scipts support subdirectory hierarchy <my\-dir>/<my\-project\-group>/<git\-clone>\&.
+All gr\-scipts support subdirectory hierarchy <my\-dir>/<my\-project\-group>/<git\-clone>\&. Project update can be skiped by creating file skip in \&.git directory\&.
+.sp
+.if n \{\
+.RS 4
+.\}
+.nf
+        touch <my\-project>/\&.git/skip
+      
+.fi
+.if n \{\
+.RE
+.\}
+.sp
 .SH "SEE ALSO"
 .PP
-gr\-scripts(8)\&.
+gr\-scripts(1)\&.
 \m[blue]\fB\%http://safrm.net/projects/gr-scripts/\fR\m[]
 .SH "AUTHOR"
 

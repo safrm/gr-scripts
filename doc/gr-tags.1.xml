@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<refentry id="gr-showlocal.8">
+<refentry id="gr-tags.1">
 
 <refentryinfo>
     <title>Git recursive directories scripts</title>
@@ -14,49 +14,50 @@
 </refentryinfo>
 
 <refmeta>
-    <refentrytitle>gr-showlocal</refentrytitle>
-	<manvolnum>8</manvolnum>
+    <refentrytitle>gr-tags</refentrytitle>
+	<manvolnum>1</manvolnum>
 </refmeta>
 
 
 <refnamediv>
-    <refname>gr-showlocal</refname>
-    <refpurpose>Shows local tags and status in git subdirectories.</refpurpose>
+    <refname>gr-tags</refname>
+    <refpurpose>Shows local tags versus current remote situation in git subdirectories</refpurpose>
 </refnamediv>
 
 <refsynopsisdiv>
 	<cmdsynopsis>
-        <command>gr-showlocal  [OPTIONS] ... [PROJECT_DIR]</command>
+        <command>gr-tags  [OPTIONS] ... [PROJECT_DIR]</command>
+        <arg choice="opt">-d --depth &lt;tags_number&gt;</arg>
+        <arg choice="opt">-c --commits</arg>
+        <arg choice="opt">-ls --line-separator</arg>
+        <arg choice="opt">-hm --header-message &lt;message&gt;</arg>
         <arg choice="opt">-v --verbose</arg>
         <arg choice="opt">-h --help</arg>
-        <arg choice="opt">-ls --line-separator</arg>
         <arg choice="opt">-ns --no-summary</arg>
         <arg choice="opt">-V --version</arg>
-	</cmdsynopsis>
+    </cmdsynopsis>
 </refsynopsisdiv>
 
   <refsect1><title>DESCRIPTION</title>
     <para>
-      Shows local tags and status (does not fetch anything) in git subdirectories. Verbose mode shows more details about local changes.
+      Shows local tags versus current remote situation in git subdirectories. Can also generate commit backlogs for current or for previous tags.
     </para>
   </refsect1>
 
   <refsect1>
     <title>OPTIONS</title>
-
-    <variablelist>
-      <varlistentry><term>-v --verbose</term>
+      <varlistentry><term>-d --depth &lt;tags_number&gt;</term>
         <listitem>
           <para>
-            Shows more details as local changes.
+            Shows number of historical tags till specified depth. 
           </para>
         </listitem>
       </varlistentry>
-      
-      <varlistentry><term>-h --help</term>
+
+      <varlistentry><term>-c --commits</term>
         <listitem>
           <para>
-            Print help text to the screen.
+            Print commits in tags.
           </para>
         </listitem>
       </varlistentry>
@@ -68,7 +69,32 @@
           </para>
         </listitem>
       </varlistentry>
-      
+
+      <varlistentry><term>-hm --header-message &lt;message&gt;</term>
+        <listitem>
+          <para>
+           Prints extra header message.
+          </para>
+        </listitem>
+      </varlistentry>
+
+    <variablelist>
+      <varlistentry><term>-v --verbose</term>
+        <listitem>
+          <para>
+            Prints more output.
+          </para>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry><term>-h --help</term>
+        <listitem>
+          <para>
+            Print help text to the screen.
+          </para>
+        </listitem>
+      </varlistentry>
+
       <varlistentry><term>-ns --no-summary</term>
         <listitem>
           <para>
@@ -95,12 +121,16 @@
     </para>
     <para>
       All gr-scipts support subdirectory hierarchy &lt;my-dir&gt;/&lt;my-project-group&gt;/&lt;git-clone&gt;.
+      Project can be skiped by creating file skip in .git directory.
+      <screen format="linespecific">
+        touch &lt;my-project&gt;/.git/skip
+      </screen>
     </para>
   </refsect1>
 
   <refsect1><title>SEE ALSO</title>
     <para>
-      gr-scripts(8).
+      gr-scripts(1).
       <ulink url="http://safrm.net/projects/gr-scripts/"/>
     </para>
   </refsect1>

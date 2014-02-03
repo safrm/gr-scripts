@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<refentry id="gr-branches.8">
+<refentry id="gr-remotes.1">
 
 <refentryinfo>
     <title>Git recursive directories scripts</title>
@@ -14,29 +14,29 @@
 </refentryinfo>
 
 <refmeta>
-    <refentrytitle>gr-initbare</refentrytitle>
-	<manvolnum>8</manvolnum>
+    <refentrytitle>gr-remotes</refentrytitle>
+	<manvolnum>1</manvolnum>
 </refmeta>
 
 
 <refnamediv>
-    <refname>gr-initbare</refname>
-    <refpurpose>Git helper to create new inited local git bare repo</refpurpose>
+    <refname>gr-remotes</refname>
+    <refpurpose>Shows remotes in git subdirectories</refpurpose>
 </refnamediv>
 
 <refsynopsisdiv>
 	<cmdsynopsis>
-        <command>gr-initbare [NEW_REPO_NAME] [OPTIONS] </command>
+        <command>gr-remotes  [OPTIONS]... [PROJECT_DIR]</command>
         <arg choice="opt">-h, --help</arg>
-        <arg choice="opt">-d --description &lt;description&gt;</arg>
+        <arg choice="opt">-ls --line-separator</arg>
+        <arg choice="opt">-ns --no-summary</arg>
         <arg choice="opt">-V --version</arg>
 	</cmdsynopsis>
 </refsynopsisdiv>
 
   <refsect1><title>DESCRIPTION</title>
     <para>
-      Git helper to create new inited local git bare repo with description and initial 0.0.0 tag.
-      Creates bare repo &lt;NEW_REPO_NAME&gt; and &lt;NEW_REPO_NAME&gt;-clone directories.  
+      Shows remotes in git cloned subdirectories.
     </para>
   </refsect1>
 
@@ -53,10 +53,18 @@
         </listitem>
       </varlistentry>
 
-      <varlistentry><term>-d --description &lt;description&gt;</term>
+      <varlistentry><term>-ls --line-separator</term>
         <listitem>
           <para>
-             Few words about project, otherwise is used project name. 
+            Projects are separated by colored line.
+          </para>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry><term>-ns --no-summary</term>
+        <listitem>
+          <para>
+            Do not print execution summary.
           </para>
         </listitem>
       </varlistentry>
@@ -73,15 +81,18 @@
   </refsect1>
 
   <refsect1>
-    <title>NEW_REPO_NAME</title>
+    <title>PROJECT_DIR</title>
     <para>
-      New git bare repo name which must not exists in current directory.
+      Root directory with git clones. By default is used current directory.
+    </para>
+    <para>
+      All gr-scipts support subdirectory hierarchy &lt;my-dir&gt;/&lt;my-project-group&gt;/&lt;git-clone&gt;.
     </para>
   </refsect1>
 
   <refsect1><title>SEE ALSO</title>
     <para>
-      gr-scripts(8).
+      gr-scripts(1).
       <ulink url="http://safrm.net/projects/gr-scripts/"/>
     </para>
   </refsect1>

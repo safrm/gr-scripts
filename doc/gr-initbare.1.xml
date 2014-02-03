@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<refentry id="gr-show.8">
+<refentry id="gr-branches.1">
 
 <refentryinfo>
     <title>Git recursive directories scripts</title>
@@ -14,30 +14,29 @@
 </refentryinfo>
 
 <refmeta>
-    <refentrytitle>gr-show</refentrytitle>
-	<manvolnum>8</manvolnum>
+    <refentrytitle>gr-initbare</refentrytitle>
+	<manvolnum>1</manvolnum>
 </refmeta>
 
 
 <refnamediv>
-    <refname>gr-show</refname>
-    <refpurpose>Shows local tags versus current remote situation in git subdirectories.</refpurpose>
+    <refname>gr-initbare</refname>
+    <refpurpose>Git helper to create new inited local git bare repo</refpurpose>
 </refnamediv>
 
 <refsynopsisdiv>
 	<cmdsynopsis>
-        <command>gr-show  [OPTIONS] ... [PROJECT_DIR]</command>
-        <arg choice="opt">-v --verbose</arg>
-        <arg choice="opt">-h --help</arg>
-        <arg choice="opt">-ls --line-separator</arg>
-        <arg choice="opt">-ns --no-summary</arg>
+        <command>gr-initbare [NEW_REPO_NAME] [OPTIONS] </command>
+        <arg choice="opt">-h, --help</arg>
+        <arg choice="opt">-d --description &lt;description&gt;</arg>
         <arg choice="opt">-V --version</arg>
 	</cmdsynopsis>
 </refsynopsisdiv>
 
   <refsect1><title>DESCRIPTION</title>
     <para>
-      Shows local tags versus current remote situation (fetches changes) in git subdirectories. Verbose mode shows more details about local changes.
+      Git helper to create new inited local git bare repo with description and initial 0.0.0 tag.
+      Creates bare repo &lt;NEW_REPO_NAME&gt; and &lt;NEW_REPO_NAME&gt;-clone directories.  
     </para>
   </refsect1>
 
@@ -45,14 +44,7 @@
     <title>OPTIONS</title>
 
     <variablelist>
-      <varlistentry><term>-v --verbose</term>
-        <listitem>
-          <para>
-            Shows more details as local changes.
-          </para>
-        </listitem>
-      </varlistentry>
-      
+
       <varlistentry><term>-h --help</term>
         <listitem>
           <para>
@@ -61,18 +53,10 @@
         </listitem>
       </varlistentry>
 
-      <varlistentry><term>-ls --line-separator</term>
+      <varlistentry><term>-d --description &lt;description&gt;</term>
         <listitem>
           <para>
-            Projects are separated by colored line
-          </para>
-        </listitem>
-      </varlistentry>
-      
-      <varlistentry><term>-ns --no-summary</term>
-        <listitem>
-          <para>
-            Does not print execution summary.
+             Few words about project, otherwise is used project name. 
           </para>
         </listitem>
       </varlistentry>
@@ -89,22 +73,15 @@
   </refsect1>
 
   <refsect1>
-    <title>PROJECT_DIR</title>
+    <title>NEW_REPO_NAME</title>
     <para>
-      Root directory with git clones. By default is used current directory.
-    </para>
-    <para>
-      All gr-scipts support subdirectory hierarchy &lt;my-dir&gt;/&lt;my-project-group&gt;/&lt;git-clone&gt;.
-      Project can be skiped by creating file skip in .git directory.
-      <screen format="linespecific">
-        touch &lt;my-project&gt;/.git/skip
-      </screen>
+      New git bare repo name which must not exists in current directory.
     </para>
   </refsect1>
 
   <refsect1><title>SEE ALSO</title>
     <para>
-      gr-scripts(8).
+      gr-scripts(1).
       <ulink url="http://safrm.net/projects/gr-scripts/"/>
     </para>
   </refsect1>

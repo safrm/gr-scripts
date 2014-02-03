@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<refentry id="gr-scripts.8">
+<refentry id="gr-scripts.1">
 
 <refentryinfo>
     <title>Git recursive directories scripts</title>
@@ -15,7 +15,7 @@
 
 <refmeta>
     <refentrytitle>gr-scripts</refentrytitle>
-	<manvolnum>8</manvolnum>
+	<manvolnum>1</manvolnum>
 </refmeta>
 
 
@@ -32,18 +32,18 @@
 <refsect1><title>gr-scripts commands</title>
     <para>
     <screen format="linespecific">
-     gr-authorcheck(8) ..... search for inappropriate commits
-     gr-branches(8) ........ shows branches in subdirectories
-     gr-clean(8) ........... cleans up git clones in subdirectories
-     gr-commits2tag(8) ..... show commits from last tag divided to head,local,remote
-     gr-gr(8) .............. general recussive script
-     gr-initbare(8) ........ initialize git bare repo, makes first commit and tag 0.0.0
-     gr-pull(8) ............ pulls all and keeps local chanegs in  subdirectories
-     gr-pullreset(8) ....... pulls all and resets local changes in subdirectories
-     gr-remotes(8) ......... shows remote branches in subdirectories
-     gr-show(8) ............ shows local tags versus current remote situation in subdirectories
-     gr-showlocal(8) ....... shows local tags and if it was edited in subdirectories
-     gr-tags(8) ............ shows tags
+     gr-authorcheck(1) ..... search for inappropriate commits
+     gr-branches(1) ........ shows branches in subdirectories
+     gr-clean(1) ........... cleans up git clones in subdirectories
+     gr-commits2tag(1) ..... show commits from last tag divided to head,local,remote
+     gr-gr(1) .............. general recussive script
+     gr-initbare(1) ........ initialize git bare repo, makes first commit and tag 0.0.0
+     gr-pull(1) ............ pulls all and keeps local chanegs in  subdirectories
+     gr-pullreset(1) ....... pulls all and resets local changes in subdirectories
+     gr-remotes(1) ......... shows remote branches in subdirectories
+     gr-show(1) ............ shows local tags versus current remote situation in subdirectories
+     gr-showlocal(1) ....... shows local tags and if it was edited in subdirectories
+     gr-tags(1) ............ shows tags
      </screen>
     </para>
   </refsect1>

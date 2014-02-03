@@ -1,13 +1,13 @@
 '\" t
-.\"     Title: gr-commits2tag
+.\"     Title: gr-pullreset
 .\"    Author: Miroslav Safr <miroslav.safr@gmail.com>
 .\" Generator: DocBook XSL Stylesheets v1.76.1 <http://docbook.sf.net/>
-.\"      Date: 20140203_1058
+.\"      Date: 20140203_1126
 .\"    Manual: Git recursive directories scripts
 .\"    Source: gr-scripts 1.1.0
 .\"  Language: English
 .\"
-.TH "GR\-COMMITS2TAG" "8" "20140203_1058" "gr-scripts 1.1.0" "Git recursive directories scri"
+.TH "GR\-PULLRESET" "1" "20140203_1126" "gr-scripts 1.1.0" "Git recursive directories scri"
 .\" -----------------------------------------------------------------
 .\" * Define some portability stuff
 .\" -----------------------------------------------------------------
@@ -28,33 +28,18 @@
 .\" * MAIN CONTENT STARTS HERE *
 .\" -----------------------------------------------------------------
 .SH "NAME"
-gr-commits2tag \- Shows untagged commits on head/local/remote
+gr-pullreset \- Fetches and pulls all and resets local changes in git subdirectories\&.
 .SH "SYNOPSIS"
-.HP \w'\fBgr\-commits2tag\ [OPTIONS]\ \&.\&.\&.\ [PROJECT_DIR]\fR\ 'u
-\fBgr\-commits2tag  [OPTIONS] \&.\&.\&. [PROJECT_DIR]\fR [\-v\ \-\-verbose] [\-or\ \-\-only\-remote] [\-hm\ \-\-header\-message] [\-h\ \-\-help] [\-cs\ \-\-case\-sensitive] [\-a\ \-\-all] [\-ls\ \-\-line\-separator] [\-V\ \-\-version]
+.HP \w'\fBgr\-pullreset\ [OPTIONS]\ \&.\&.\&.\ [PROJECT_DIR]\fR\ 'u
+\fBgr\-pullreset  [OPTIONS] \&.\&.\&. [PROJECT_DIR]\fR [\-h\ \-\-help] [\-ls\ \-\-line\-separator] [\-ns\ \-\-no\-summary] [\-V\ \-\-version]
 .SH "DESCRIPTION"
 .PP
-Search for inappropriate commits by git recursive directories scripts\&.
+Fetches and pulls all and resets local changes in git subdirectories\&. In case of conflict are local chanegs overwritten by upstream\&.
 .SH "OPTIONS"
-.PP
-\-v \-\-verbose
-.RS 4
-Prints more output\&.
-.RE
 .PP
 \-h \-\-help
 .RS 4
 Print help text to the screen\&.
-.RE
-.PP
-\-cs \-\-case\-sensitive
-.RS 4
-Case sensitive search (by default it is insensitive)
-.RE
-.PP
-\-a \-\-all
-.RS 4
-Search in all branches (commits) for deeper searching\&.
 .RE
 .PP
 \-ls \-\-line\-separator
@@ -62,23 +47,35 @@ Search in all branches (commits) for deeper searching\&.
 Projects are separated by colored line
 .RE
 .PP
+\-ns \-\-no\-summary
+.RS 4
+Does not print execution summary\&.
+.RE
+.PP
 \-V \-\-version
 .RS 4
 Prints version to the screen and exits\&.
 .RE
-.SH "PATTERN"
-.PP
-Author\*(Aqs string used for searching\&.
-.PP
-Needs quoted format when spaces or special characters are used\&. "\e@something "
 .SH "PROJECT_DIR"
 .PP
 Root directory with git clones\&. By default is used current directory\&.
 .PP
-All gr\-scipts support subdirectory hierarchy <my\-dir>/<my\-project\-group>/<git\-clone>\&.
+All gr\-scipts support subdirectory hierarchy <my\-dir>/<my\-project\-group>/<git\-clone>\&. Project update can be skiped by creating file skip in \&.git directory\&.
+.sp
+.if n \{\
+.RS 4
+.\}
+.nf
+        touch <my\-project>/\&.git/skip
+      
+.fi
+.if n \{\
+.RE
+.\}
+.sp
 .SH "SEE ALSO"
 .PP
-gr\-scripts(8)\&.
+gr\-scripts(1)\&.
 \m[blue]\fB\%http://safrm.net/projects/gr-scripts/\fR\m[]
 .SH "AUTHOR"
 
