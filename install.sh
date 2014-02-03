@@ -3,6 +3,8 @@
 #version: 1.0
 #author:  Miroslav Safr miroslav.safr@gmail.com
 BINDIR=/usr/bin/
+DOCDIR=/usr/share/doc
+MANDIR=/usr/share/man
 
 #root check
 USERID=`id -u`
@@ -22,6 +24,12 @@ do
 			exit 1
 		fi
 done
+
+#update documentation
+cd doc
+./update_docs.sh
+cd -
+
 
 mkdir -p -m 0755 $BINDIR
 install -m 0777 -v ./gr-authorcheck $BINDIR
@@ -59,6 +67,16 @@ sed -i".bkp" "1,/^VERSION=/s/^VERSION=.*/VERSION=$APP_FULL_VERSION_TAG/" $BINDIR
 sed -i".bkp" "1,/^VERSION_DATE=/s/^VERSION_DATE=.*/VERSION_DATE=$APP_BUILD_DATE/" $BINDIR/gr-tags  && rm -f $BINDIR/gr-tags.bkp
 
 
+MANPAGES=`find ./doc/manpages -type f`
+install -d -m 755 $MANDIR/man1
+install -m 644 $MANPAGES $MANDIR/man1
 
+DOCS="./README ./LICENSE.LGPL"
+install -d -m 755 $DOCDIR/gr-scripts
+install -m 644 $DOCS $DOCDIR/gr-scripts
+
+HTMLPAGES=`find ./doc/htmlpages -type f`
+install -d -m 755 $DOCDIR/gr-scripts/html
+install -m 644 $HTMLPAGES $DOCDIR/gr-scripts/html
 
 

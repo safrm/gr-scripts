@@ -27,7 +27,7 @@
 <refsynopsisdiv>
 	<cmdsynopsis>
         <command>gr-initbare [NEW_REPO_NAME] [OPTIONS] </command>
-        <arg choice="opt">-h, --help</arg>
+        <arg choice="opt">-h --help</arg>
         <arg choice="opt">-d --description &lt;description&gt;</arg>
         <arg choice="opt">-V --version</arg>
 	</cmdsynopsis>

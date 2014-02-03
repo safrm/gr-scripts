@@ -31,7 +31,7 @@
 <refsynopsisdiv>
 	<cmdsynopsis>
         <command>gr-clean  [OPTIONS] ... [PROJECT_DIR]</command>
-        <arg choice="opt">-h, --help</arg>
+        <arg choice="opt">-h --help</arg>
         <arg choice="opt">-ls --line-separator</arg>
         <arg choice="opt">-ns --no-summary</arg>
         <arg choice="opt">-V --version</arg>

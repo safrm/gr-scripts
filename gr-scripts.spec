@@ -22,6 +22,9 @@ fast script to create rpm package inside the git repo without beeing root
 %setup -c -n ./%{name}-%{version}
 
 %build
+cd doc
+./update_docs.sh
+cd -
 
 %install
 rm -fr %{buildroot}
@@ -63,6 +66,15 @@ install -m 755 ./gr-tags  %{buildroot}%{_bindir}/
 sed -i".bkp" "1,/^VERSION=/s/^VERSION=.*/VERSION=%{version}/" %{buildroot}%{_bindir}/gr-tags && rm -f %{buildroot}%{_bindir}/gr-tags.bkp
 sed -i".bkp" "1,/^VERSION_DATE=/s/^VERSION_DATE=.*/VERSION_DATE=%{APP_BUILD_DATE}/" %{buildroot}%{_bindir}/gr-tags && rm -f %{buildroot}%{_bindir}/gr-tags.bkp
 
+#documentation
+MANPAGES=`find ./doc/manpages -type f`
+install -d -m 755 %{buildroot}%{_mandir}/man1
+install -m 644 $MANPAGES %{buildroot}%{_mandir}/man1
+
+DOCS="./README ./LICENSE.LGPL"
+install -d -m 755 %{buildroot}%{_docdir}/gr-scripts
+install -m 644 $DOCS %{buildroot}%{_docdir}/gr-scripts
+
 %check
 for TEST in $(  grep -r -l -h "#\!/bin/sh" . )
 do
@@ -88,5 +100,25 @@ done
 %{_bindir}/gr-show
 %{_bindir}/gr-showlocal
 %{_bindir}/gr-tags
+
+#man pages
+%{_mandir}/man1/gr-authorcheck.1*
+%{_mandir}/man1/gr-branches.1*
+%{_mandir}/man1/gr-clean.1*
+%{_mandir}/man1/gr-commits2tag.1*
+%{_mandir}/man1/gr-gr.1*
+%{_mandir}/man1/gr-initbare.1*
+%{_mandir}/man1/gr-pull.1*
+%{_mandir}/man1/gr-pullreset.1*
+%{_mandir}/man1/gr-remotes.1*
+%{_mandir}/man1/gr-scripts.1*
+%{_mandir}/man1/gr-show.1*
+%{_mandir}/man1/gr-showlocal.1*
+%{_mandir}/man1/gr-tags.1*
+
+#other docs
+%{_docdir}/gr-scripts/README
+%{_docdir}/gr-scripts/LICENSE.LGPL
+
 
 
