@@ -22,9 +22,7 @@ fast script to create rpm package inside the git repo without beeing root
 %setup -c -n ./%{name}-%{version}
 
 %build
-cd doc
-./update_docs.sh
-cd -
+cd doc && ./update_docs.sh && cd -
 
 %install
 rm -fr %{buildroot}

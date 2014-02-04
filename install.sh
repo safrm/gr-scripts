@@ -75,8 +75,8 @@ DOCS="./README ./LICENSE.LGPL"
 install -d -m 755 $DOCDIR/gr-scripts
 install -m 644 $DOCS $DOCDIR/gr-scripts
 
-HTMLPAGES=`find ./doc/htmlpages -type f`
-install -d -m 755 $DOCDIR/gr-scripts/html
-install -m 644 $HTMLPAGES $DOCDIR/gr-scripts/html
+#HTMLPAGES=`find ./doc/htmlpages -type f`
+#install -d -m 755 $DOCDIR/gr-scripts/html
+#install -m 644 $HTMLPAGES $DOCDIR/gr-scripts/html
 
 
