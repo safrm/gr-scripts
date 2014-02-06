@@ -11,7 +11,7 @@ BASENAME=`basename $0`
 START_TIME=`date +'%s'`
 usage() {
     echo "$BASENAME ${VERSION}"
-    echo "Pulls all and keeps local changes in  subdirectories ./ or PROJECT_DIR/"
+    echo "Pulls all and keeps local chanegs in  subdirectories ./ or PROJECT_DIR/"
     echo "Usage:$BASENAME [OPTIONS]... [PROJECT_DIR]"
     echo " options: "
     echo " -h, --help .......................... shows command line help"
@@ -71,6 +71,9 @@ do
                      git fetch origin --tags
                      git gc --quiet
                      git pull
+                     if [ $? != 0 ]; then
+                         echo "\033[43m NEEDS MANUAL UPDATE OR COMMIT LOCAL CHANGES TO PULL\033[0m"  
+                     fi
                      TO=`git describe --tags --dirty=* --always 2> /dev/null`
                      if [ "$LASTTAG" != "$TO" ]; then
                             echo " \033[33mupdated to:\033[0m \033[01;34m $TO \033[0m  "

@@ -73,6 +73,9 @@ do
                     git reset --hard origin/$BRANCH
                     git gc --quiet
                     git pull
+                    if [ $? != 0 ]; then
+                         echo "\033[41mPULL FAILED, FIX CONFLICT MANUALLY\033[0m"  
+                    fi
                 fi
     
                 TO=`git describe --tags --dirty=* --always 2> /dev/null`
