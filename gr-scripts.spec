@@ -12,6 +12,8 @@ Vendor:     Miroslav Safr <miroslav.safr@gmail.com>
 Source0:    %{name}-%{version}.tar.bz2
 Autoreq: on
 Autoreqprov: on
+BuildRequires:  xsltproc
+BuildRequires:  docbook-xsl
 
 %description
 fast script to create rpm package inside the git repo without beeing root 
