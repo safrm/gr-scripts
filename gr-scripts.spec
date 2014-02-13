@@ -78,6 +78,7 @@ install -m 644 $MANPAGES %{buildroot}%{_mandir}/man1
 DOCS="./README ./LICENSE.LGPL"
 install -d -m 755 %{buildroot}%{_docdir}/gr-scripts
 install -m 644 $DOCS %{buildroot}%{_docdir}/gr-scripts
+sed -i".bkp" "1,/Version: /s/Version:   */Version:   %{version} %{APP_BUILD_DATE}/"  %{buildroot}%{_docdir}/gr-scripts/README && rm -f %{buildroot}%{_docdir}/gr-scripts/README.bkp
 
 %check
 for TEST in $(  grep -r -l -h "#\!/bin/sh" . )
@@ -121,6 +122,7 @@ done
 %{_mandir}/man1/gr-tags.1*
 
 #other docs
+%dir %{_docdir}/gr-scripts
 %{_docdir}/gr-scripts/README
 %{_docdir}/gr-scripts/LICENSE.LGPL
 
