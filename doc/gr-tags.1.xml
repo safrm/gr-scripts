@@ -46,6 +46,7 @@
 
   <refsect1>
     <title>OPTIONS</title>
+      <variablelist>
       <varlistentry><term>-d --depth &lt;tags_number&gt;</term>
         <listitem>
           <para>
@@ -77,8 +78,7 @@
           </para>
         </listitem>
       </varlistentry>
-
-    <variablelist>
+      
       <varlistentry><term>-v --verbose</term>
         <listitem>
           <para>
@@ -110,7 +110,6 @@
           </para>
         </listitem>
       </varlistentry>
-
     </variablelist>
   </refsect1>
 
@@ -135,10 +134,16 @@
     </para>
   </refsect1>
 
-  <refsect1><title>AUTHOR</title>
-    Miroslav Šafr &lt;miroslav.safr@gmail.com&gt;
+  <refsect1>
+    <title>AUTHOR</title>
+    <para>
+        Miroslav Šafr &lt;miroslav.safr@gmail.com&gt;
+    </para>
   </refsect1>
-  <refsect1><title>LICENSE</title>
-   LGPL2
+  <refsect1>
+  <title>LICENSE</title>
+      <para>
+       LGPL2
+    </para>       
   </refsect1>
 </refentry>

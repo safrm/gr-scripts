@@ -22,9 +22,7 @@
 <refnamediv>
     <refname>gr-clean</refname>
     <refpurpose>Cleans up git clones in all subdirectories except those which are marked by:
-    <screen format="linespecific">
-    touch  &lt;dir&gt;/.git/no_updates
-    </screen>
+     touch  &lt;dir&gt;/.git/no_updates
     </refpurpose>
 </refnamediv>
 
@@ -110,10 +108,16 @@
     </para>
   </refsect1>
 
-  <refsect1><title>AUTHOR</title>
-    Miroslav Šafr &lt;miroslav.safr@gmail.com&gt;
+  <refsect1>
+    <title>AUTHOR</title>
+    <para>
+        Miroslav Šafr &lt;miroslav.safr@gmail.com&gt;
+    </para>
   </refsect1>
-  <refsect1><title>LICENSE</title>
-   LGPL2
+  <refsect1>
+  <title>LICENSE</title>
+      <para>
+       LGPL2
+    </para>       
   </refsect1>
 </refentry>

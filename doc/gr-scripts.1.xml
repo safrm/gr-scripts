@@ -22,11 +22,8 @@
 <refnamediv>
     <refname>gr-scripts </refname>
     <refpurpose>
-     Git recursive directories scripts
-    <para>
-    Let monkey work to be done by monkies :)
-    All gr-scipts support subdirectory hierarchy &lt;my-dir&gt;/&lt;my-project-group&gt;/&lt;git-clone&gt;.
-    </para>
+     Git recursive directories scripts, let monkey work to be done by monkies :)
+     All gr-scipts support subdirectory hierarchy &lt;my-dir&gt;/&lt;my-project-group&gt;/&lt;git-clone&gt;.
     </refpurpose>
 </refnamediv>
 <refsect1><title>gr-scripts commands</title>
@@ -70,10 +67,16 @@
     </para>
   </refsect1>
 
-  <refsect1><title>AUTHOR</title>
-    Miroslav Šafr &lt;miroslav.safr@gmail.com&gt;
+  <refsect1>
+    <title>AUTHOR</title>
+    <para>
+        Miroslav Šafr &lt;miroslav.safr@gmail.com&gt;
+    </para>
   </refsect1>
-  <refsect1><title>LICENSE</title>
-   LGPL2
+  <refsect1>
+  <title>LICENSE</title>
+      <para>
+       LGPL2
+    </para>       
   </refsect1>
 </refentry>
