@@ -12,12 +12,8 @@ Vendor:     Miroslav Safr <miroslav.safr@gmail.com>
 Source0:    %{name}-%{version}.tar.bz2
 Autoreq: on
 Autoreqprov: on
-#BuildRequires:  xsltproc
-BuildRequires:  libxslt
-#BuildRequires:  docbook-xsl
-BuildRequires: docbook-xsl-stylesheets
 BuildRequires:  appver >= 1.1.1
-
+BuildRequires: jenkins-support-scripts >= 1.2.3
 
 %description
 fast script to create rpm package inside the git repo without beeing root 
@@ -28,7 +24,7 @@ fast script to create rpm package inside the git repo without beeing root
 %setup -c -n ./%{name}-%{version}
 
 %build
-cd doc && ./update_docs.sh %{version} && cd -
+jss-docs-update ./doc -sv %{version} 
 
 %install
 rm -fr %{buildroot}
@@ -75,21 +71,15 @@ MANPAGES=`find ./doc/manpages -type f`
 install -d -m 755 %{buildroot}%{_mandir}/man1
 install -m 644 $MANPAGES %{buildroot}%{_mandir}/man1
 
-DOCS="./README ./LICENSE.LGPL"
-install -d -m 755 %{buildroot}%{_docdir}/gr-scripts
-install -m 644 $DOCS %{buildroot}%{_docdir}/gr-scripts
-sed -i".bkp" "1,/Version: /s/Version:   */Version:   %{version} %{APP_BUILD_DATE}/"  %{buildroot}%{_docdir}/gr-scripts/README && rm -f %{buildroot}%{_docdir}/gr-scripts/README.bkp
-
 %check
 for TEST in $(  grep -r -l -h "#\!/bin/sh" . )
 do
-		sh -n $TEST
+		sh -n "$TEST"
 		if  [ $? != 0 ]; then
 			echo "syntax error in $TEST, exiting.." 
 			exit 1
 		fi
 done
-
 
 %files
 %defattr(-,root,root,-)
@@ -121,10 +111,6 @@ done
 %{_mandir}/man1/gr-showlocal.1*
 %{_mandir}/man1/gr-tags.1*
 
-#other docs
-%dir %{_docdir}/gr-scripts
-%{_docdir}/gr-scripts/README
-%{_docdir}/gr-scripts/LICENSE.LGPL
 
 
 

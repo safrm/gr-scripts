@@ -1,15 +1,15 @@
 Source: gr-scripts
-Section: libs
+Section: utils
 Priority: optional
 Maintainer: Miroslav Safr <miroslav.safr@gmail.com>
-Build-Depends: debhelper (>= 5), appver, xsltproc, docbook-xsl
-Suggest: appver
-Standards-Version: 1.0.0
+Build-Depends: debhelper (>= 5), appver, jenkins-support-scripts (>=1.2.3)
+Standards-Version: 3.8.1
+Homepage: http://safrm.net/projects/gr-scripts
 
 Package: gr-scripts
 Architecture: all
 Depends: git-core, sed, ${misc:Depends}, ${launcher:Depends}, ${shlibs:Depends}
-Description:  git recursive directories scripts 
+Description:  git recursive directories scripts \
 	let monkey work to be done by monkies  
 
 
