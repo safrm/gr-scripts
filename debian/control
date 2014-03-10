@@ -8,7 +8,7 @@ Homepage: http://safrm.net/projects/gr-scripts
 
 Package: gr-scripts
 Architecture: all
-Depends: git-core, sed, ${misc:Depends}, ${launcher:Depends}, ${shlibs:Depends}
+Depends: git-core, ${misc:Depends}, ${launcher:Depends}, ${shlibs:Depends}
 Description:  git recursive directories scripts \
 	let monkey work to be done by monkies  
 

@@ -12,8 +12,9 @@ Vendor:     Miroslav Safr <miroslav.safr@gmail.com>
 Source0:    %{name}-%{version}.tar.bz2
 Autoreq: on
 Autoreqprov: on
+Requires:	git-core
 BuildRequires:  appver >= 1.1.1
-BuildRequires: jenkins-support-scripts >= 1.2.3
+BuildRequires:  jenkins-support-scripts >= 1.2.3
 
 %description
 fast script to create rpm package inside the git repo without beeing root 

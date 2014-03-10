@@ -13,5 +13,3 @@ gr-tags /usr/bin/
 
 doc/manpages/* /usr/share/man/man1/
 
-README /usr/share/doc/gr-scripts
-LICENSE.LGPL /usr/share/doc/gr-scripts
