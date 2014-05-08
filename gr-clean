@@ -15,9 +15,10 @@ usage() {
     echo "  touch <dir>/.git/no_updates"
     echo "Usage:$BASENAME [OPTIONS] ... [PROJECT_DIR]"
     echo " options: "
-    echo " -h, --help ............................. shows command line help"
+    echo " -h, --help .......................... shows command line help"
     echo " -ls, --line-separator ............... project separated by colored line"
     echo " -ns, --no-summary ................... do not print execution summary"
+    echo " -p, --prune ......................... use --prune --agressive flags for git gc"
     echo " -V, --version  ...................... prints version of scripts"
     echo " "
 }
@@ -31,6 +32,9 @@ while [ $# -gt 0 ]; do
 		;;
     -ns|--no-summary) 
                NO_SUMMARY=1
+               ;;
+	-p|--prune) 
+               PRUNE_FLAGS="--prune --agressive"
                ;;
     * )    PROJECT_DIR=$1;
                ;; 
@@ -67,7 +71,7 @@ do
                         echo "\033[32m $ENTRY\033[0m cleaning.." 
                         BRANCH=`git branch | egrep "^\*" | cut -d' ' -f2`
                         git reset --hard origin/$BRANCH
-                        git gc --quiet
+                        git gc --quiet $PRUNE_FLAGS
                         git clean -dfx
                         cd $PROJECT_DIR
                 else
