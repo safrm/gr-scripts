@@ -30,6 +30,7 @@
         <command>gr-initbare [NEW_REPO_NAME] [OPTIONS] </command>
         <arg choice="opt">-h --help</arg>
         <arg choice="opt">-d --description &lt;description&gt;</arg>
+        <arg choice="opt">-kc --keep-clone </arg>
         <arg choice="opt">-V --version</arg>
 	</cmdsynopsis>
 </refsynopsisdiv>
@@ -37,7 +38,7 @@
   <refsect1><title>DESCRIPTION</title>
     <para>
       Git helper to create new inited local git bare repo with description and initial 0.0.0 tag.
-      Creates bare repo &lt;NEW_REPO_NAME&gt; and &lt;NEW_REPO_NAME&gt;-clone directories.  
+      Creates bare repo &lt;NEW_REPO_NAME&gt;.git and &lt;NEW_REPO_NAME&gt;-clone directories.  
     </para>
   </refsect1>
 
@@ -58,6 +59,14 @@
         <listitem>
           <para>
              Few words about project, otherwise is used project name. 
+          </para>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry><term>-kc --keep-clone</term>
+        <listitem>
+          <para>
+             Keeps cloned directory &lt;project-name&gt;-cloned. 
           </para>
         </listitem>
       </varlistentry>

@@ -2,7 +2,7 @@
 #git recursive directories scripts - http://safrm.net/projects/gr-scripts
 #author: Miroslav Safr <miroslav.safr@gmail.com>
 #
-VERSION=NA                                                                   
+VERSION=NA
 VERSION_DATE=NA
 #support color escape characters on different terminals
 alias echo="/bin/echo -e"
@@ -15,6 +15,7 @@ usage() {
     echo "args:"
     echo "  <new_repo_name> ..................... new git repo name (mandatory) e.g. my_project "
     echo "  -d, --description <project_descr> ... few words about project (optional)"
+    echo "  -kc, --keep-clone ................... keep cloned directory"
     echo "  -h, --help     ...................... prints this help"
     echo "  -V, --version  ...................... prints version of scripts"
     echo ""
@@ -34,6 +35,9 @@ while [ $# -gt 0 ]; do
     -d | --description) shift
                DESCRIPTION=$1 
                ;;
+    -kc | --keep-clone) 
+               KEEP_CLONE=1 
+               ;;
     -h | --help ) usage 
                   exit 0 
                ;;
@@ -51,8 +55,8 @@ fi
 #echo "REPONAME: $REPO_NAME"
 
 #check params 
-mkdir $REPO_NAME
-cd $REPO_NAME
+mkdir $REPO_NAME.git
+cd $REPO_NAME.git
 REPO_PATH=`pwd`
 echo "$REPO_PATH"
 git init --bare
@@ -65,17 +69,22 @@ fi
         
 #make root checkout 
 cd ..
-git clone $REPO_NAME $REPO_NAME-clone
+git clone $REPO_NAME.git $REPO_NAME-clone
 cd $REPO_NAME-clone
 
 #set up directory structure
-cp -f ../$REPO_NAME/description .git/
+cp -f ../$REPO_NAME.git/description .git/
 git commit --allow-empty -m "init" 
 git tag 0.0.0 -m "init tag"
 git push origin master
 git push --tags
 echo "new reposistory: $REPO_PATH"
-echo "cloned to:       `pwd`"
+if [ ! -z "$KEEP_CLONE" ]; then 
+	echo "cloned to:       `pwd`"
+else
+    cd ..
+	rm -fr $REPO_NAME-clone
+fi
 
 
 
