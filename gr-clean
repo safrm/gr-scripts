@@ -16,9 +16,11 @@ usage() {
     echo "Usage:$BASENAME [OPTIONS] ... [PROJECT_DIR]"
     echo " options: "
     echo " -h, --help .......................... shows command line help"
+    echo " -ss, --show-size .................... show size of repo before and after cleaning"
+    echo " -p, --prune ......................... use --prune --agressive flags for git gc"
+    echo " -n, --dry-run ....................... show cleaned files and do not any changes"
     echo " -ls, --line-separator ............... project separated by colored line"
     echo " -ns, --no-summary ................... do not print execution summary"
-    echo " -p, --prune ......................... use --prune --agressive flags for git gc"
     echo " -V, --version  ...................... prints version of scripts"
     echo " "
 }
@@ -32,6 +34,12 @@ while [ $# -gt 0 ]; do
 		;;
     -ns|--no-summary) 
                NO_SUMMARY=1
+               ;;
+    -n|--dry-run) 
+               DRY_RUN=1
+               ;;
+    -ss|--show-size) 
+               SHOW_SIZE=1
                ;;
 	-p|--prune) 
                PRUNE_FLAGS="--prune --agressive"
@@ -70,9 +78,19 @@ do
                         PROJECT20=`printf '%-20s' $PROJECT20`
                         echo "\033[32m $ENTRY\033[0m cleaning.." 
                         BRANCH=`git branch | egrep "^\*" | cut -d' ' -f2`
-                        git reset --hard origin/$BRANCH
-                        git gc --quiet $PRUNE_FLAGS
-                        git clean -dfx
+						if [ ! -z "$SHOW_SIZE" ];  then						
+							git count-objects
+						fi
+						if [ ! -z "$DRY_RUN" ];  then
+							git prune -n
+						else
+	                        git reset --hard origin/$BRANCH
+    	                    git gc --quiet $PRUNE_FLAGS
+    	                    git clean -dfx
+							if [ ! -z "$SHOW_SIZE" ];  then						
+								git count-objects
+							fi
+						fi
                         cd $PROJECT_DIR
                 else
                         echo "\033[32m $ENTRY\033[0m \033[35m skipped clean \033[0m" 

@@ -31,6 +31,9 @@
 	<cmdsynopsis>
         <command>gr-clean  [OPTIONS] ... [PROJECT_DIR]</command>
         <arg choice="opt">-h --help</arg>
+        <arg choice="opt">-ss --show-size</arg>
+		<arg choice="opt">-p, --prune</arg>
+        <arg choice="opt">-n --dry-run</arg>
         <arg choice="opt">-ls --line-separator</arg>
         <arg choice="opt">-ns --no-summary</arg>
         <arg choice="opt">-V --version</arg>
@@ -64,7 +67,27 @@
           </para>
         </listitem>
       </varlistentry>
-
+      <varlistentry><term>-ss --show-size</term>
+        <listitem>
+          <para>
+            Executes git count-object before cleaning (and after - if not dry run).
+          </para>
+        </listitem>
+      </varlistentry>
+      <varlistentry><term>-p, --prune</term>
+        <listitem>
+          <para>
+			Uses --prune --agressive flags for git gc.
+          </para>
+        </listitem>
+      </varlistentry>
+    <varlistentry><term>-n --dry-run</term>
+        <listitem>
+          <para>
+			Shows cleaned files and do not any changes (deleting or git reset).
+          </para>
+        </listitem>
+      </varlistentry>
       <varlistentry><term>-ls --line-separator</term>
         <listitem>
           <para>
@@ -76,7 +99,7 @@
       <varlistentry><term>-ns --no-summary</term>
         <listitem>
           <para>
-            Do not print execution summary.
+            Does not print execution summary.
           </para>
         </listitem>
       </varlistentry>
