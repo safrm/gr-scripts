@@ -32,7 +32,9 @@
         <command>gr-clean  [OPTIONS] ... [PROJECT_DIR]</command>
         <arg choice="opt">-h --help</arg>
         <arg choice="opt">-ss --show-size</arg>
-		<arg choice="opt">-p, --prune</arg>
+		<arg choice="opt">-p --prune</arg>
+		<arg choice="opt">-a --aggressive</arg>
+		<arg choice="opt">-v --verbose</arg>
         <arg choice="opt">-n --dry-run</arg>
         <arg choice="opt">-ls --line-separator</arg>
         <arg choice="opt">-ns --no-summary</arg>
@@ -74,10 +76,24 @@
           </para>
         </listitem>
       </varlistentry>
-      <varlistentry><term>-p, --prune</term>
+      <varlistentry><term>-p --prune</term>
         <listitem>
           <para>
-			Uses --prune --agressive flags for git gc.
+			Uses --prune flag for git gc.
+          </para>
+        </listitem>
+      </varlistentry>
+      <varlistentry><term>-a --aggressive</term>
+        <listitem>
+          <para>
+			Uses --agressive flag for git gc.
+          </para>
+        </listitem>
+      </varlistentry>
+      <varlistentry><term>-v --verbose</term>
+        <listitem>
+          <para>
+			Uses --vebose flags for git count-objects and git prune.
           </para>
         </listitem>
       </varlistentry>

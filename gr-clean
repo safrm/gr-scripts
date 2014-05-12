@@ -17,7 +17,9 @@ usage() {
     echo " options: "
     echo " -h, --help .......................... shows command line help"
     echo " -ss, --show-size .................... show size of repo before and after cleaning"
-    echo " -p, --prune ......................... use --prune --agressive flags for git gc"
+    echo " -p, --prune ......................... use --prune flag for git gc"
+    echo " -a, --aggressive .................... use --aggressive flag for git gc"
+    echo " -v, --verbose ....................... use more verbose output"
     echo " -n, --dry-run ....................... show cleaned files and do not any changes"
     echo " -ls, --line-separator ............... project separated by colored line"
     echo " -ns, --no-summary ................... do not print execution summary"
@@ -42,7 +44,13 @@ while [ $# -gt 0 ]; do
                SHOW_SIZE=1
                ;;
 	-p|--prune) 
-               PRUNE_FLAGS="--prune --agressive"
+               PRUNE_FLAG=" --prune"
+               ;;
+	-a|--aggressive) 
+               AGGRESSIVE_FLAG=" --agressive"
+               ;;
+	-v|--verbose) 
+               VERBOSE_FLAG=" --verbose"
                ;;
     * )    PROJECT_DIR=$1;
                ;; 
@@ -79,13 +87,13 @@ do
                         echo "\033[32m $ENTRY\033[0m cleaning.." 
                         BRANCH=`git branch | egrep "^\*" | cut -d' ' -f2`
 						if [ ! -z "$SHOW_SIZE" ];  then						
-							git count-objects
+							git count-objects $VERBOSE_FLAG
 						fi
 						if [ ! -z "$DRY_RUN" ];  then
-							git prune -n
+							git prune -n $VERBOSE_FLAG
 						else
 	                        git reset --hard origin/$BRANCH
-    	                    git gc --quiet $PRUNE_FLAGS
+    	                    git gc --quiet $PRUNE_FLAG $AGGRESSIVE_FLAG
     	                    git clean -dfx
 							if [ ! -z "$SHOW_SIZE" ];  then						
 								git count-objects
