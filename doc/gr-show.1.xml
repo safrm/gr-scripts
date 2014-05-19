@@ -29,6 +29,7 @@
 	<cmdsynopsis>
         <command>gr-show  [OPTIONS] ... [PROJECT_DIR]</command>
         <arg choice="opt">-v --verbose</arg>
+        <arg choice="opt">-s --stashes</arg>
         <arg choice="opt">-h --help</arg>
         <arg choice="opt">-ls --line-separator</arg>
         <arg choice="opt">-ns --no-summary</arg>
@@ -53,7 +54,15 @@
           </para>
         </listitem>
       </varlistentry>
-      
+
+      <varlistentry><term>-s --stashes</term>
+        <listitem>
+          <para>
+            Shows info about stashes. (number of them and in combination with -v list of them)
+          </para>
+        </listitem>
+      </varlistentry>
+
       <varlistentry><term>-h --help</term>
         <listitem>
           <para>

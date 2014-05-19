@@ -15,11 +15,12 @@ usage() {
     echo "Usage:$BASENAME [OPTIONS]... [PROJECT_DIR]"
     echo " options: "
     echo " -hm, --header-message ............... prints header message"
-    echo " -v, --verbose ....................... prints more output"
-    echo " -h, --help .......................... shows command line help"
+    echo " -v,  --verbose ...................... prints more output"
+    echo " -s,  --stashes ...................... shows info about stashes"
+    echo " -h,  --help ......................... shows command line help"
     echo " -ls, --line-separator ............... project separated by colored line"
     echo " -ns, --no-summary ................... do not print execution summary"
-    echo " -V, --version  ...................... prints version of scripts"
+    echo " -V,  --version  ..................... prints version of scripts"
     echo "Note: touch <dir>/.git/skip skips selected repo"
     echo " "
 }
@@ -31,6 +32,9 @@ while [ $# -gt 0 ]; do
     -h | --help) usage; exit ;;
     -v|--verbose) 
                VERBOSE=1
+               ;;
+    -s|--stashes) 
+               STASHES=1
                ;;
     -ls | --line-separator)
 		LINE_SEPARATOR=1
@@ -96,14 +100,24 @@ do
                         COMMITCOUNT_PULL=`git shortlog HEAD..origin/$BRANCH | grep -E '^[ ]+\w+' | wc -l`
                         COMMITCOUNT_PUSH=`git shortlog origin/$BRANCH..$BRANCH | grep -E '^[ ]+\w+' | wc -l`
                 fi
+                LOCAL_STASHES_COUNT=0
+		if [ ! -z "$STASHES" ]; then
+	                LOCAL_STASHES=`git stash list`
+        	        LOCAL_STASHES_COUNT=`echo "$LOCAL_STASHES" | grep -v '^$'| wc -l`
+			STASHINFO="/stashes:$LOCAL_STASHES_COUNT"
+		fi
 
-                if [ "x$LOCAL_CHANGES_COUNT" != "x0" ] || [ "x$COMMITCOUNT_PULL" != "x0" ] || [ "x$COMMITCOUNT_PUSH" != "x0" ] 
+                if [ "x$LOCAL_CHANGES_COUNT" != "x0" ] || [ "x$COMMITCOUNT_PULL" != "x0" ] || [ "x$COMMITCOUNT_PUSH" != "x0" ] || [ "x$LOCAL_STASHES_COUNT" != "x0" ]
                 then
-                    echo "\033[43m NEEDS UPDATE OR COMMIT (pull:$COMMITCOUNT_PULL/push:$COMMITCOUNT_PUSH/local-files:$LOCAL_CHANGES_COUNT)\033[0m"    
+                    echo "\033[43m NEEDS UPDATE OR COMMIT (pull:$COMMITCOUNT_PULL/push:$COMMITCOUNT_PUSH/local-files:$LOCAL_CHANGES_COUNT$STASHINFO)\033[0m"    
                 fi
 
-                if [ ! -z "$VERBOSE" ] && [ "x$LOCAL_CHANGES" != "x" ] ; then
+                if [ ! -z "$VERBOSE" ] && [ "x$LOCAL_CHANGES_COUNT" != "x0" ] ; then
                     echo "$LOCAL_CHANGES"
+                fi
+
+                if [ ! -z "$VERBOSE" ] && [ "x$LOCAL_STASHES_COUNT" != "x0" ] ; then
+                    echo "$LOCAL_STASHES"
                 fi
                 cd $PROJECT_DIR
         fi
