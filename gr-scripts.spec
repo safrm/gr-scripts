@@ -67,6 +67,9 @@ install -m 755 ./gr-tags  %{buildroot}%{_bindir}/
 sed -i".bkp" "1,/^VERSION=/s/^VERSION=.*/VERSION=%{version}/" %{buildroot}%{_bindir}/gr-tags && rm -f %{buildroot}%{_bindir}/gr-tags.bkp
 sed -i".bkp" "1,/^VERSION_DATE=/s/^VERSION_DATE=.*/VERSION_DATE=%{APP_BUILD_DATE}/" %{buildroot}%{_bindir}/gr-tags && rm -f %{buildroot}%{_bindir}/gr-tags.bkp
 
+mkdir -p -m 0755  %{buildroot}%{_sysconfdir}/bash_completion.d
+install -m 0777 -v ./gr-scripts_completion  %{buildroot}%{_sysconfdir}/bash_completion.d
+
 #documentation
 MANPAGES=`find ./doc/manpages -type f`
 install -d -m 755 %{buildroot}%{_mandir}/man1
@@ -100,6 +103,8 @@ done
 %{_bindir}/gr-showlocal
 %{_bindir}/gr-tags
 
+%{_sysconfdir}/bash_completion.d/gr-scripts_completion
+
 #man pages
 %{_mandir}/man1/gr-authorcheck.1*
 %{_mandir}/man1/gr-branches.1*
@@ -114,7 +119,4 @@ done
 %{_mandir}/man1/gr-show.1*
 %{_mandir}/man1/gr-showlocal.1*
 %{_mandir}/man1/gr-tags.1*
-
-
-
 

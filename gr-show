@@ -14,7 +14,6 @@ usage() {
     echo "Shows local tags versus current remote situation in subdirectories ./ or PROJECT_DIR/"
     echo "Usage:$BASENAME [OPTIONS]... [PROJECT_DIR]"
     echo " options: "
-    echo " -hm, --header-message ............... prints header message"
     echo " -v,  --verbose ...................... prints more output"
     echo " -s,  --stashes ...................... shows info about stashes"
     echo " -h,  --help ......................... shows command line help"

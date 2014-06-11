@@ -1,0 +1,150 @@
+# efind completion                                        -*- shell-script -*-
+
+_gr_authorcheck()
+{
+    local cur 
+    _init_completion || return
+
+    if [[ "$cur" == -* ]]; then
+        COMPREPLY=( $( compgen -W '-v -h -cs -a -ls -ns -V
+            --verbose --help --case-sensitive --all --line-separator --no-summary --version' -- "$cur" ) )
+    fi
+
+} &&
+complete -F _gr_authorcheck -o dirnames -o filenames  gr-authorcheck
+
+_gr_branches()
+{
+    local cur 
+    _init_completion || return
+
+    if [[ "$cur" == -* ]]; then
+        COMPREPLY=( $( compgen -W '-h -a -ls -ns -V
+            --help --all --line-separator --no-summary --version' -- "$cur" ) )
+    fi
+
+} &&
+complete -F _gr_branches -o dirnames -o filenames  gr-branches
+
+_gr_clean()
+{
+    local cur 
+    _init_completion || return
+
+    if [[ "$cur" == -* ]]; then
+        COMPREPLY=( $( compgen -W '-h -ss -p -a -v -n -ls -ns -V
+            --help --show-size --prune --aggressive --verbose --dry-run --line-separator --no-summary 
+            --version' -- "$cur" ) )
+    fi
+
+} &&
+complete -F _gr_clean -o dirnames -o filenames  gr-clean
+
+_gr_commits2tag()
+{
+    local cur 
+    _init_completion || return
+
+    if [[ "$cur" == -* ]]; then
+        COMPREPLY=( $( compgen -W '-v -or -hm -mc -ti -tr -h -ls -ns -V
+          --verbose --only-remote --header-message --max-commits --time-iso --time-relative --help 
+          --line-separator --no-summary --version' -- "$cur" ) )
+    fi
+
+} &&
+complete -F _gr_commits2tag -o dirnames -o filenames  gr-commits2tag
+
+_gr_initbare()
+{
+    local cur 
+    _init_completion || return
+
+    if [[ "$cur" == -* ]]; then
+        COMPREPLY=( $( compgen -W '-d -kc -h -V
+            --description --keep-clone --help --version' -- "$cur" ) )
+    fi
+
+} &&
+complete -F _gr_initbare -o dirnames -o filenames  gr-initbare
+
+_gr_pull()
+{
+    local cur 
+    _init_completion || return
+
+    if [[ "$cur" == -* ]]; then
+        COMPREPLY=( $( compgen -W '-h -ls -ns -V
+            --help --line-separator --no-summary --version' -- "$cur" ) )
+    fi
+
+} &&
+complete -F _gr_pull -o dirnames -o filenames  gr-pull
+
+_gr_pullreset()
+{
+    local cur 
+    _init_completion || return
+
+    if [[ "$cur" == -* ]]; then
+        COMPREPLY=( $( compgen -W '-h -ls -ns -V
+            --help --line-separator --no-summary --version' -- "$cur" ) )
+    fi
+
+} &&
+complete -F _gr_pullreset -o dirnames -o filenames  gr-pullreset
+
+_gr_remotes()
+{
+    local cur 
+    _init_completion || return
+
+    if [[ "$cur" == -* ]]; then
+        COMPREPLY=( $( compgen -W '-h -ls -ns -V
+            --help --line-separator --no-summary --version' -- "$cur" ) )
+    fi
+
+} &&
+complete -F _gr_remotes -o dirnames -o filenames  gr-remotes
+
+_gr_show()
+{
+    local cur 
+    _init_completion || return
+
+    if [[ "$cur" == -* ]]; then
+        COMPREPLY=( $( compgen -W '-v -s -h -ls -ns -V
+            --verbose --stashes --help --line-separator --no-summary --version' -- "$cur" ) )
+    fi
+
+} &&
+complete -F _gr_show -o dirnames -o filenames  gr-show
+
+_gr_showlocal()
+{
+    local cur 
+    _init_completion || return
+
+    if [[ "$cur" == -* ]]; then
+        COMPREPLY=( $( compgen -W '-v -s -h -ls -ns -V
+            --verbose --stashes --help --line-separator --no-summary --version' -- "$cur" ) )
+    fi
+
+} &&
+complete -F _gr_showlocal -o dirnames -o filenames  gr-showlocal
+
+_gr_tags()
+{
+    local cur 
+    _init_completion || return
+
+    if [[ "$cur" == -* ]]; then
+        COMPREPLY=( $( compgen -W '-d -c -ls -hm -v -h -ns -V
+            --depth --commits --line-separator --header-message --verbose --help
+            --no-summary --version' -- "$cur" ) )
+    fi
+
+} &&
+complete -F _gr_tags -o dirnames -o filenames  gr-tags
+
+
+# ex: ts=4 sw=4 et filetype=sh
