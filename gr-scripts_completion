@@ -1,4 +1,4 @@
-# efind completion                                        -*- shell-script -*-
+# gr-scripts completion                                        -*- shell-script -*-
 
 _gr_authorcheck()
 {

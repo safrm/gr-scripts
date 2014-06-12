@@ -65,7 +65,7 @@ sed -i".bkp" "1,/^VERSION=/s/^VERSION=.*/VERSION=$APP_FULL_VERSION_TAG/" $BINDIR
 sed -i".bkp" "1,/^VERSION_DATE=/s/^VERSION_DATE=.*/VERSION_DATE=$APP_BUILD_DATE/" $BINDIR/gr-tags  && rm -f $BINDIR/gr-tags.bkp
 
 mkdir -p -m 0755 $COMPLETION_DIR
-install -m 0777 -v ./gr-scritps_completion  $COMPLETION_DIR/
+install -m 0777 -v ./gr-scripts_completion  $COMPLETION_DIR/
 
 MANPAGES=`find ./doc/manpages -type f`
 install -d -m 755 $MANDIR/man1
