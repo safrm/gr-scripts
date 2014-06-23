@@ -7,6 +7,7 @@ all scipts support subdirectory hierarchy <my-dir>/<my-project-group>/<git-clone
 content: 
  gr-authorcheck ..... search for inappropriate commits
  gr-branches ........ shows branches in subdirectories
+ gr-changes ......... combined changelog view between more components
  gr-clean ........... cleans up git clones in subdirectories
  gr-commits2tag ..... show commits from last tag divided to head,local,remote
  gr-gr .............. general recussive script

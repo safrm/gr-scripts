@@ -66,6 +66,9 @@ sed -i".bkp" "1,/^VERSION_DATE=/s/^VERSION_DATE=.*/VERSION_DATE=%{APP_BUILD_DATE
 install -m 755 ./gr-tags  %{buildroot}%{_bindir}/
 sed -i".bkp" "1,/^VERSION=/s/^VERSION=.*/VERSION=%{version}/" %{buildroot}%{_bindir}/gr-tags && rm -f %{buildroot}%{_bindir}/gr-tags.bkp
 sed -i".bkp" "1,/^VERSION_DATE=/s/^VERSION_DATE=.*/VERSION_DATE=%{APP_BUILD_DATE}/" %{buildroot}%{_bindir}/gr-tags && rm -f %{buildroot}%{_bindir}/gr-tags.bkp
+install -m 755 ./gr-changes  %{buildroot}%{_bindir}/
+sed -i".bkp" "1,/^VERSION=/s/^VERSION=.*/VERSION=%{version}/" %{buildroot}%{_bindir}/gr-changes && rm -f %{buildroot}%{_bindir}/gr-changes.bkp
+sed -i".bkp" "1,/^VERSION_DATE=/s/^VERSION_DATE=.*/VERSION_DATE=%{APP_BUILD_DATE}/" %{buildroot}%{_bindir}/gr-changes && rm -f %{buildroot}%{_bindir}/gr-changes.bkp
 
 mkdir -p -m 0755  %{buildroot}%{_sysconfdir}/bash_completion.d
 install -m 0777 -v ./gr-scripts_completion  %{buildroot}%{_sysconfdir}/bash_completion.d
@@ -93,6 +96,7 @@ done
 %{_bindir}/gr-authorcheck
 %{_bindir}/gr-branches
 %{_bindir}/gr-clean
+%{_bindir}/gr-changes
 %{_bindir}/gr-commits2tag
 %{_bindir}/gr-gr
 %{_bindir}/gr-initbare

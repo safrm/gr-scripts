@@ -63,6 +63,9 @@ sed -i".bkp" "1,/^VERSION_DATE=/s/^VERSION_DATE=.*/VERSION_DATE=$APP_BUILD_DATE/
 install -m 0777 -v ./gr-tags $BINDIR
 sed -i".bkp" "1,/^VERSION=/s/^VERSION=.*/VERSION=$APP_FULL_VERSION_TAG/" $BINDIR/gr-tags  && rm -f $BINDIR/gr-tags.bkp
 sed -i".bkp" "1,/^VERSION_DATE=/s/^VERSION_DATE=.*/VERSION_DATE=$APP_BUILD_DATE/" $BINDIR/gr-tags  && rm -f $BINDIR/gr-tags.bkp
+install -m 0777 -v ./gr-changes $BINDIR
+sed -i".bkp" "1,/^VERSION=/s/^VERSION=.*/VERSION=$APP_FULL_VERSION_TAG/" $BINDIR/gr-changes  && rm -f $BINDIR/gr-changes.bkp
+sed -i".bkp" "1,/^VERSION_DATE=/s/^VERSION_DATE=.*/VERSION_DATE=$APP_BUILD_DATE/" $BINDIR/gr-changes  && rm -f $BINDIR/gr-changes.bkp
 
 mkdir -p -m 0755 $COMPLETION_DIR
 install -m 0777 -v ./gr-scripts_completion  $COMPLETION_DIR/

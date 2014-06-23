@@ -1,6 +1,7 @@
 gr-authorcheck /usr/bin/
 gr-commits2tag /usr/bin/
 gr-branches /usr/bin/
+gr-changes /usr/bin/
 gr-clean /usr/bin/
 gr-gr /usr/bin/
 gr-initbare /usr/bin/
