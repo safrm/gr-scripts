@@ -1,0 +1,136 @@
+#!/bin/sh
+#git recursive directories scripts - http://safrm.net/projects/gr-scripts
+#author: Miroslav Safr <miroslav.safr@gmail.com>
+#
+VERSION=NA                                                                 
+VERSION_DATE=NA
+#support color escape characters on different terminals
+alias echo="/bin/echo -e"
+debug(){ [ ${DEBUG_FLAG:-0} -eq 0 ] || echo "Running($#): $*"; }
+verbose(){ [ ${VERBOSE_FLAG:-0} -eq 0 ] || echo "\033[36m$*\033[00m"; }
+fail() { printf "\n\033[01;31mERROR: $*\033[00m\n" ; exit 1 ; }
+
+BASENAME=`basename $0`
+START_TIME=`date +'%s'`
+usage() {
+    echo "$BASENAME ${VERSION} "
+    echo "Shows composed changes for selected packages or full git subdirectories ./ or PROJECT_DIR/"
+    echo "Usage:$BASENAME [OPTIONS] ... [PROJECT_DIR]"
+    echo " options: "
+    echo " -s, --selected <N,M> ............... comma separated list of selected repo names from the PROJECT_DIR"
+    echo " -b, --branch <BranchName> .......... different name for comparation branch (default master)"
+    echo " -mc, --max-commits <N> ............. limits maximum commit count per component (default 10)"
+    echo " -r, --reverse  ..................... sort from oldest to newest (default newest on top)"
+#    echo " -a, --author <name> ................ filter selected author's commits"
+#    echo " -t, --time <N> ..................... historical depth in time"
+#    echo " -d, --depth <N> .................... historical depth in N tags"
+    
+    echo " -hm, --header-message <message> ..... prints header message"
+    echo " -v, --verbose ....................... prints more output"
+    echo " -vv, --debug ........................ prints also debug output"
+    echo " -h, --help .......................... shows command line help"
+    echo " -ns, --no-summary ................... do not print execution summary"
+    echo " -V, --version  ...................... prints version of scripts"
+    echo "Note: touch <dir>/.git/skip skips selected repo"
+    echo " "
+}
+
+TAGS_DEPTH=6 #default to limit size
+MAX_COMMITS=10
+MASTER_BRANCH=master
+REVERSE_FLAG=-r
+while [ $# -gt 0 ]; do
+  case "$1" in
+	-s  | --selection) shift ; SELECTED_PROJECTS=`echo $1 | tr "," "\n"` ;;
+	-mc | --max-commits) shift ; MAX_COMMITS=$1 ;;
+	-b  | --branch) shift ; MASTER_BRANCH=$1 ;;
+    -vv | --debug) VERBOSE_FLAG=1 ; DEBUG_FLAG=1 ;;
+    -v  | --verbose) VERBOSE_FLAG=1 ;;
+    -d  | --depth) shift ; TAGS_DEPTH=$1 ;;
+    -r  | --reverse)  REVERSE_FLAG= ;;
+    -h  | --help) usage; exit ;;
+    -ns | --no-summary) NO_SUMMARY=1 ;;
+    -hm | --header-message) shift; HEADER_MESSAGE=$1 ;;
+    -V  | --version) echo "`basename $0` ${VERSION} ${VERSION_DATE}"; exit 0 ;;                           
+    * )    PROJECT_DIR=$1 ;; 
+  esac
+  shift
+done
+
+if [ -z "$PROJECT_DIR" ]
+then
+        PROJECT_DIR="./"
+fi
+
+if [ ! -d "$PROJECT_DIR" ] 
+then
+        echo "directory $PROJECT_DIR does not exist";
+        exit 1
+fi
+
+CWD=`pwd`
+cd $PROJECT_DIR
+PROJECT_DIR=`pwd`
+
+if [ ! -z "$HEADER_MESSAGE" ]; then
+        echo "$HEADER_MESSAGE"
+fi
+
+ALLPROJECTS=`find "$PROJECT_DIR" -type d -name ".git*" |  sed 's/\/.git//g' | sort `
+for ENTRY in $ALLPROJECTS
+do 
+    if [ -f $ENTRY/.git/skip ]; then	
+		verbose "skipped: $ENTRY "
+		continue
+	fi
+	#filter only selected
+	if [ -n "$SELECTED_PROJECTS" ]; then
+		for SELECTED_PROJECT in $SELECTED_PROJECTS
+		do
+			BASENAME=`basename $ENTRY`
+			if [ "x$BASENAME" = "x$SELECTED_PROJECT" ]; then 
+					PROJECTS="$PROJECTS$ENTRY "
+					PROJECTS_LIST="$PROJECTS_LIST$BASENAME "
+			fi
+		done
+	#or take all
+	else
+		PROJECTS="$PROJECTS$ENTRY "
+		PROJECTS_LIST="$PROJECTS_LIST`basename $ENTRY` "
+	fi
+done
+echo "\033[32m$PROJECTS_LIST:\033[0m \033[31m[$MASTER_BRANCH]\033[0m $TAGMESSAGE_COLOR $NC" ;
+
+#Set the field separator to new line
+
+for ENTRY in $PROJECTS
+do
+	cd $ENTRY 
+	#all components have to be from same brach (default master)		
+	BRANCH=`git branch | egrep "^\*" | cut -d' ' -f2`
+	if [ "x$BRANCH" != "x$MASTER_BRANCH" ]; then 
+		verbose "skipped: $ENTRY $BRANCH "
+		continue
+	fi
+	
+	LOG=$( git --no-pager log --pretty=tformat:'%C(yellow)%ci - %Cred%h%Creset - %s  %C(bold blue)<%an>%Creset %n'  -$MAX_COMMITS )
+	export BASENAME=`basename $ENTRY` 
+	LOG=$(  echo "$LOG" | awk -v "basename=$BASENAME" '{ if(length($0) > 0 ) print $0 " \033[32m"basename"\033[0m" }' )
+	LOGS="$LOGS\n$LOG"
+
+    cd "$PROJECT_DIR"
+done
+
+IFS="" 
+printf $LOGS | sort -u -t '/' $REVERSE_FLAG
+
+if [ -z "$NO_SUMMARY" ]; then
+        if [ ! -z "$LINE_SEPARATOR" ]; then 
+             echo "\033[44m $(tput el) $(tput sgr0)"
+        fi
+        TIME=`date +%H:%M:%S`
+        ELAPSED_TIME=$((`date +'%s'` - $START_TIME))
+        echo "$BASENAME finished:$TIME took:$(($ELAPSED_TIME/60)) min $(($ELAPSED_TIME%60)) s"
+fi
+
+
