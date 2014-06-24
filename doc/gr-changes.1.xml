@@ -32,6 +32,7 @@
         <arg choice="opt">-b --branch &lt;BranchName&gt;</arg>
         <arg choice="opt">-mc --max-commits &lt;N&gt;</arg>
         <arg choice="opt">-r --reverse</arg>
+        <arg choice="opt">-a --author &lt;name&gt;</arg>
         <arg choice="opt">-hm --header-message &lt;message&gt;</arg>
         <arg choice="opt">-v --verbose</arg>
         <arg choice="opt">-vv --debug</arg>
@@ -69,7 +70,7 @@
       <varlistentry><term>-mc --max-commits &lt;N&gt;</term>
         <listitem>
           <para>
-            Limits maximum commit count per component (default 10).
+            Limits maximum commit count (default 20).
           </para>
         </listitem>
       </varlistentry>
@@ -78,6 +79,14 @@
         <listitem>
           <para>
             Sort from oldest to newest (default newest on top)
+          </para>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry><term>-a --author &lt;name&gt;</term>
+        <listitem>
+          <para>
+			Filters selected author's and commiter's commits. Name is case senistive.
           </para>
         </listitem>
       </varlistentry>

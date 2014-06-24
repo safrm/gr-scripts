@@ -19,9 +19,9 @@ usage() {
     echo " options: "
     echo " -s, --selected <N,M> ............... comma separated list of selected repo names from the PROJECT_DIR"
     echo " -b, --branch <BranchName> .......... different name for comparation branch (default master)"
-    echo " -mc, --max-commits <N> ............. limits maximum commit count (default 10)"
+    echo " -mc, --max-commits <N> ............. limits maximum commit count (default 20)"
     echo " -r, --reverse  ..................... sort from oldest to newest (default newest on top)"
-#    echo " -a, --author <name> ................ filter selected author's commits"
+    echo " -a, --author <name> ................ filter selected author's/commiter's commits (case sensitive)"
 #    echo " -t, --time <N> ..................... historical depth in time"
 #    echo " -d, --depth <N> .................... historical depth in N tags"
     
@@ -36,7 +36,7 @@ usage() {
 }
 
 TAGS_DEPTH=6 #default to limit size
-MAX_COMMITS=10
+MAX_COMMITS=20
 MASTER_BRANCH=master
 REVERSE_FLAG=-r
 CUT_COMMAND=head
@@ -49,6 +49,7 @@ while [ $# -gt 0 ]; do
     -v  | --verbose) VERBOSE_FLAG=1 ;;
     -d  | --depth) shift ; TAGS_DEPTH=$1 ;;
     -r  | --reverse)  REVERSE_FLAG= ; CUT_COMMAND=tail ;;
+    -a  | --author) shift ; AUTHOR_FLAG="--author=$1 --committer=$1" ;;
     -h  | --help) usage; exit ;;
     -ns | --no-summary) NO_SUMMARY=1 ;;
     -hm | --header-message) shift; HEADER_MESSAGE=$1 ;;
@@ -114,7 +115,7 @@ do
 		continue
 	fi
 	
-	LOG=$( git --no-pager log --pretty=tformat:'%C(yellow)%ci - %Cred%h%Creset - %s  %C(bold blue)<%an>%Creset %n'  -$MAX_COMMITS )
+	LOG=$( git --no-pager log --pretty=tformat:'%C(yellow)%ci - %Cred%h%Creset - %s  %C(bold blue)<%an>%Creset %n'  -$MAX_COMMITS $AUTHOR_FLAG)
 	export BASENAME=`basename $ENTRY` 
 	LOG=$(  echo "$LOG" | awk -v "basename=$BASENAME" '{ if(length($0) > 0 ) print $0 " \033[32m"basename"\033[0m" }' )
 	LOGS="$LOGS\n$LOG"
@@ -123,8 +124,7 @@ do
     cd "$PROJECT_DIR"
 done
 
-IFS="" 
-printf "$LOGS"
+echo "$LOGS"
 
 if [ -z "$NO_SUMMARY" ]; then
         if [ ! -z "$LINE_SEPARATOR" ]; then 
