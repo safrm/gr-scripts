@@ -1,0 +1,121 @@
+'\" t
+.\"     Title: gr-changes
+.\"    Author: Miroslav Safr <miroslav.safr@gmail.com>
+.\" Generator: DocBook XSL Stylesheets v1.78.1 <http://docbook.sf.net/>
+.\"      Date: 20140623_1733
+.\"    Manual: Git recursive directories scripts
+.\"    Source: gr-scripts 1.1.8
+.\"  Language: English
+.\"
+.TH "GR\-CHANGES" "1" "20140623_1733" "gr-scripts 1.1.8" "Git recursive directories scri"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+gr-changes \- Shows combined changelog view between more components
+.SH "SYNOPSIS"
+.HP \w'\fBgr\-changes\ [OPTIONS]\ \&.\&.\&.\ [PROJECT_DIR]\fR\ 'u
+\fBgr\-changes  [OPTIONS] \&.\&.\&. [PROJECT_DIR]\fR [\-s\ \-\-selected\ <N,M>] [\-b\ \-\-branch\ <BranchName>] [\-mc\ \-\-max\-commits\ <N>] [\-r\ \-\-reverse] [\-hm\ \-\-header\-message\ <message>] [\-v\ \-\-verbose] [\-vv\ \-\-debug] [\-h\ \-\-help] [\-ns\ \-\-no\-summary] [\-V\ \-\-version]
+.SH "DESCRIPTION"
+.PP
+Shows combined changelog view between more components\&.
+.SH "OPTIONS"
+.PP
+\-s \-\-selected <N,M>
+.RS 4
+Comma separated list of selected repo names from the PROJECT_DIR
+.RE
+.PP
+\-b \-\-branch <BranchName>
+.RS 4
+Different name for comparation branch (default master)
+.RE
+.PP
+\-mc \-\-max\-commits <N>
+.RS 4
+Limits maximum commit count per component (default 10)\&.
+.RE
+.PP
+\-r \-\-reverse
+.RS 4
+Sort from oldest to newest (default newest on top)
+.RE
+.PP
+\-hm \-\-header\-message <message>
+.RS 4
+Prints extra header message\&.
+.RE
+.PP
+\-v \-\-verbose
+.RS 4
+Prints more output\&.
+.RE
+.PP
+\-vv \-\-debug
+.RS 4
+Prints debug output\&.
+.RE
+.PP
+\-h \-\-help
+.RS 4
+Print help text to the screen\&.
+.RE
+.PP
+\-ns \-\-no\-summary
+.RS 4
+Does not print execution summary\&.
+.RE
+.PP
+\-V \-\-version
+.RS 4
+Prints version to the screen and exits\&.
+.RE
+.SH "PROJECT_DIR"
+.PP
+Root directory with git clones\&. By default is used current directory\&.
+.PP
+All gr\-scipts support subdirectory hierarchy <my\-dir>/<my\-project\-group>/<git\-clone>\&. Project can be skiped by creating file skip in \&.git directory\&.
+.sp
+.if n \{\
+.RS 4
+.\}
+.nf
+        touch <my\-project>/\&.git/skip
+      
+.fi
+.if n \{\
+.RE
+.\}
+.sp
+.SH "SEE ALSO"
+.PP
+gr\-scripts(1)\&.
+\m[blue]\fB\%http://safrm.net/projects/gr-scripts/\fR\m[]
+.SH "AUTHOR"
+.PP
+Miroslav Šafr <miroslav\&.safr@gmail\&.com>
+.SH "LICENSE"
+.PP
+LGPL2
+.SH "AUTHOR"
+.PP
+\fBMiroslav Safr\fR <\&miroslav\&.safr@gmail\&.com\&>
+.RS 4
+Author and maintainer
+.RE

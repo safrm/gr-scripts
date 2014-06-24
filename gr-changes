@@ -19,7 +19,7 @@ usage() {
     echo " options: "
     echo " -s, --selected <N,M> ............... comma separated list of selected repo names from the PROJECT_DIR"
     echo " -b, --branch <BranchName> .......... different name for comparation branch (default master)"
-    echo " -mc, --max-commits <N> ............. limits maximum commit count per component (default 10)"
+    echo " -mc, --max-commits <N> ............. limits maximum commit count (default 10)"
     echo " -r, --reverse  ..................... sort from oldest to newest (default newest on top)"
 #    echo " -a, --author <name> ................ filter selected author's commits"
 #    echo " -t, --time <N> ..................... historical depth in time"
@@ -39,6 +39,7 @@ TAGS_DEPTH=6 #default to limit size
 MAX_COMMITS=10
 MASTER_BRANCH=master
 REVERSE_FLAG=-r
+CUT_COMMAND=head
 while [ $# -gt 0 ]; do
   case "$1" in
 	-s  | --selection) shift ; SELECTED_PROJECTS=`echo $1 | tr "," "\n"` ;;
@@ -47,7 +48,7 @@ while [ $# -gt 0 ]; do
     -vv | --debug) VERBOSE_FLAG=1 ; DEBUG_FLAG=1 ;;
     -v  | --verbose) VERBOSE_FLAG=1 ;;
     -d  | --depth) shift ; TAGS_DEPTH=$1 ;;
-    -r  | --reverse)  REVERSE_FLAG= ;;
+    -r  | --reverse)  REVERSE_FLAG= ; CUT_COMMAND=tail ;;
     -h  | --help) usage; exit ;;
     -ns | --no-summary) NO_SUMMARY=1 ;;
     -hm | --header-message) shift; HEADER_MESSAGE=$1 ;;
@@ -117,12 +118,13 @@ do
 	export BASENAME=`basename $ENTRY` 
 	LOG=$(  echo "$LOG" | awk -v "basename=$BASENAME" '{ if(length($0) > 0 ) print $0 " \033[32m"basename"\033[0m" }' )
 	LOGS="$LOGS\n$LOG"
+	LOGS=$( echo "$LOGS" | sort -u -t '/' $REVERSE_FLAG | $CUT_COMMAND -$MAX_COMMITS)
 
     cd "$PROJECT_DIR"
 done
 
 IFS="" 
-printf $LOGS | sort -u -t '/' $REVERSE_FLAG
+printf "$LOGS"
 
 if [ -z "$NO_SUMMARY" ]; then
         if [ ! -z "$LINE_SEPARATOR" ]; then 
