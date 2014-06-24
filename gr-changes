@@ -22,15 +22,14 @@ usage() {
     echo " -mc, --max-commits <N> ............. limits maximum commit count (default 20)"
     echo " -r, --reverse  ..................... sort from oldest to newest (default newest on top)"
     echo " -a, --author <name> ................ filter selected author's/commiter's commits (case sensitive)"
-#    echo " -t, --time <N> ..................... historical depth in time"
-#    echo " -d, --depth <N> .................... historical depth in N tags"
-    
-    echo " -hm, --header-message <message> ..... prints header message"
-    echo " -v, --verbose ....................... prints more output"
-    echo " -vv, --debug ........................ prints also debug output"
-    echo " -h, --help .......................... shows command line help"
-    echo " -ns, --no-summary ................... do not print execution summary"
-    echo " -V, --version  ...................... prints version of scripts"
+	echo " --after <date> ..................... show commits more recent than a specific date (git syntax)"
+	echo " --before <date> .................... show commits older than a specific date (git syntax)"
+    echo " -hm, --header-message <message> .... prints header message"
+    echo " -v, --verbose ...................... prints more output"
+    echo " -vv, --debug ....................... prints also debug output"
+    echo " -h, --help ......................... shows command line help"
+    echo " -ns, --no-summary .................. do not print execution summary"
+    echo " -V, --version  ..................... prints version of scripts"
     echo "Note: touch <dir>/.git/skip skips selected repo"
     echo " "
 }
@@ -43,13 +42,15 @@ CUT_COMMAND=head
 while [ $# -gt 0 ]; do
   case "$1" in
 	-s  | --selection) shift ; SELECTED_PROJECTS=`echo $1 | tr "," "\n"` ;;
-	-mc | --max-commits) shift ; MAX_COMMITS=$1 ;;
+	-m  | --max-commits) shift ; MAX_COMMITS=$1 ;;
 	-b  | --branch) shift ; MASTER_BRANCH=$1 ;;
     -vv | --debug) VERBOSE_FLAG=1 ; DEBUG_FLAG=1 ;;
     -v  | --verbose) VERBOSE_FLAG=1 ;;
     -d  | --depth) shift ; TAGS_DEPTH=$1 ;;
     -r  | --reverse)  REVERSE_FLAG= ; CUT_COMMAND=tail ;;
     -a  | --author) shift ; AUTHOR_FLAG="--author=$1 --committer=$1" ;;
+    --after) shift ; AFTER_FLAG="--after=$1" ;;
+    --before) shift ; AFTER_FLAG="--before=$1" ;;
     -h  | --help) usage; exit ;;
     -ns | --no-summary) NO_SUMMARY=1 ;;
     -hm | --header-message) shift; HEADER_MESSAGE=$1 ;;
@@ -77,6 +78,7 @@ PROJECT_DIR=`pwd`
 if [ ! -z "$HEADER_MESSAGE" ]; then
         echo "$HEADER_MESSAGE"
 fi
+verbose "MAX_COMMITS=$MAX_COMMITS, REVERSE_FLAG=$REVERSE_FLAG, $BEFORE_FLAG $AFTER_FLAG " ;
 
 ALLPROJECTS=`find "$PROJECT_DIR" -type d -name ".git*" |  sed 's/\/.git//g' | sort `
 for ENTRY in $ALLPROJECTS
@@ -101,7 +103,7 @@ do
 		PROJECTS_LIST="$PROJECTS_LIST`basename $ENTRY` "
 	fi
 done
-echo "\033[32m$PROJECTS_LIST:\033[0m \033[31m[$MASTER_BRANCH]\033[0m $TAGMESSAGE_COLOR $NC" ;
+echo "\033[32m$PROJECTS_LIST:\033[0m \033[31m[$MASTER_BRANCH]\033[0m" ;
 
 #Set the field separator to new line
 
@@ -115,7 +117,7 @@ do
 		continue
 	fi
 	
-	LOG=$( git --no-pager log --pretty=tformat:'%C(yellow)%ci - %Cred%h%Creset - %s  %C(bold blue)<%an>%Creset %n'  -$MAX_COMMITS $AUTHOR_FLAG)
+	LOG=$( git --no-pager log --pretty=tformat:'%C(yellow)%ci - %Cred%h%Creset - %s  %C(bold blue)<%an>%Creset %n'  -$MAX_COMMITS $AUTHOR_FLAG $AFTER_FLAG $BEFORE_FLAG )
 	export BASENAME=`basename $ENTRY` 
 	LOG=$(  echo "$LOG" | awk -v "basename=$BASENAME" '{ if(length($0) > 0 ) print $0 " \033[32m"basename"\033[0m" }' )
 	LOGS="$LOGS\n$LOG"

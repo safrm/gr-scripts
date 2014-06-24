@@ -113,6 +113,7 @@ done
 %{_mandir}/man1/gr-authorcheck.1*
 %{_mandir}/man1/gr-branches.1*
 %{_mandir}/man1/gr-clean.1*
+%{_mandir}/man1/gr-changes.1*
 %{_mandir}/man1/gr-commits2tag.1*
 %{_mandir}/man1/gr-gr.1*
 %{_mandir}/man1/gr-initbare.1*

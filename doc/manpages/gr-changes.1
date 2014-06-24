@@ -2,12 +2,12 @@
 .\"     Title: gr-changes
 .\"    Author: Miroslav Safr <miroslav.safr@gmail.com>
 .\" Generator: DocBook XSL Stylesheets v1.78.1 <http://docbook.sf.net/>
-.\"      Date: 20140624_0803
+.\"      Date: 20140624_0835
 .\"    Manual: Git recursive directories scripts
 .\"    Source: gr-scripts 1.1.8
 .\"  Language: English
 .\"
-.TH "GR\-CHANGES" "1" "20140624_0803" "gr-scripts 1.1.8" "Git recursive directories scri"
+.TH "GR\-CHANGES" "1" "20140624_0835" "gr-scripts 1.1.8" "Git recursive directories scri"
 .\" -----------------------------------------------------------------
 .\" * Define some portability stuff
 .\" -----------------------------------------------------------------
@@ -31,7 +31,7 @@
 gr-changes \- Shows combined changelog view between more components
 .SH "SYNOPSIS"
 .HP \w'\fBgr\-changes\ [OPTIONS]\ \&.\&.\&.\ [PROJECT_DIR]\fR\ 'u
-\fBgr\-changes  [OPTIONS] \&.\&.\&. [PROJECT_DIR]\fR [\-s\ \-\-selected\ <N,M>] [\-b\ \-\-branch\ <BranchName>] [\-mc\ \-\-max\-commits\ <N>] [\-r\ \-\-reverse] [\-hm\ \-\-header\-message\ <message>] [\-v\ \-\-verbose] [\-vv\ \-\-debug] [\-h\ \-\-help] [\-ns\ \-\-no\-summary] [\-V\ \-\-version]
+\fBgr\-changes  [OPTIONS] \&.\&.\&. [PROJECT_DIR]\fR [\-s\ \-\-selected\ <N,M>] [\-b\ \-\-branch\ <BranchName>] [\-m\ \-\-max\-commits\ <N>] [\-r\ \-\-reverse] [\-a\ \-\-author\ <name>] [\-\-after\ <date>] [\-\-before\ <date>] [\-hm\ \-\-header\-message\ <message>] [\-v\ \-\-verbose] [\-vv\ \-\-debug] [\-h\ \-\-help] [\-ns\ \-\-no\-summary] [\-V\ \-\-version]
 .SH "DESCRIPTION"
 .PP
 Shows combined changelog view between more components\&.
@@ -47,14 +47,29 @@ Comma separated list of selected repo names from the PROJECT_DIR
 Different name for comparation branch (default master)
 .RE
 .PP
-\-mc \-\-max\-commits <N>
+\-m \-\-max\-commits <N>
 .RS 4
-Limits maximum commit count per component (default 10)\&.
+Limits maximum commit count (default 20)\&.
 .RE
 .PP
 \-r \-\-reverse
 .RS 4
 Sort from oldest to newest (default newest on top)
+.RE
+.PP
+\-a \-\-author <name>
+.RS 4
+Filters selected author\*(Aqs and commiter\*(Aqs commits\&. Name is case senistive\&.
+.RE
+.PP
+\-\-after <date>
+.RS 4
+Show commits more recent than a specific date (git syntax)\&.
+.RE
+.PP
+\-\-before <date>
+.RS 4
+Show commits older than a specific date (git syntax)\&.
 .RE
 .PP
 \-hm \-\-header\-message <message>

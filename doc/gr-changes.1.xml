@@ -30,9 +30,11 @@
         <command>gr-changes  [OPTIONS] ... [PROJECT_DIR]</command>
         <arg choice="opt">-s --selected &lt;N,M&gt;</arg>
         <arg choice="opt">-b --branch &lt;BranchName&gt;</arg>
-        <arg choice="opt">-mc --max-commits &lt;N&gt;</arg>
+        <arg choice="opt">-m --max-commits &lt;N&gt;</arg>
         <arg choice="opt">-r --reverse</arg>
         <arg choice="opt">-a --author &lt;name&gt;</arg>
+        <arg choice="opt">--after &lt;date&gt;</arg>
+        <arg choice="opt">--before &lt;date&gt;</arg>
         <arg choice="opt">-hm --header-message &lt;message&gt;</arg>
         <arg choice="opt">-v --verbose</arg>
         <arg choice="opt">-vv --debug</arg>
@@ -67,7 +69,7 @@
         </listitem>
       </varlistentry>
 
-      <varlistentry><term>-mc --max-commits &lt;N&gt;</term>
+      <varlistentry><term>-m --max-commits &lt;N&gt;</term>
         <listitem>
           <para>
             Limits maximum commit count (default 20).
@@ -87,6 +89,22 @@
         <listitem>
           <para>
 			Filters selected author's and commiter's commits. Name is case senistive.
+          </para>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry><term>--after &lt;date&gt;</term>
+        <listitem>
+          <para>
+			Show commits more recent than a specific date (git syntax).
+          </para>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry><term>--before &lt;date&gt;</term>
+        <listitem>
+          <para>
+			Show commits older than a specific date (git syntax).
           </para>
         </listitem>
       </varlistentry>

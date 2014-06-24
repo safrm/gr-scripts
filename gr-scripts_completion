@@ -152,8 +152,8 @@ _gr_changes()
     _init_completion || return
 
     if [[ "$cur" == -* ]]; then
-        COMPREPLY=( $( compgen -W '-s -b -mc -r -a -hm -v -vv -h -ns -V
-            --selected --branch --max-commits --reverse --author --header-message --verbose 
+        COMPREPLY=( $( compgen -W '-s -b -m -r -a -hm -v -vv -h -ns -V
+            --selected --branch --max-commits --reverse --author --after --before --header-message --verbose 
             --debug --help --no-summary --version' -- "$cur" ) )
     fi
 

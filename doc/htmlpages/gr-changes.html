@@ -1,13 +1,19 @@
-<html><head><meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><title>gr-changes</title><meta name="generator" content="DocBook XSL Stylesheets V1.78.1"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="refentry"><a name="gr-changes.1"></a><div class="titlepage"></div><div class="refnamediv"><h2>Name</h2><p>gr-changes &#8212; Shows combined changelog view between more components</p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="cmdsynopsis"><p><code class="command">gr-changes  [OPTIONS] ... [PROJECT_DIR]</code>  [-s --selected &lt;N,M&gt;] [-b --branch &lt;BranchName&gt;] [-mc --max-commits &lt;N&gt;] [-r --reverse] [-hm --header-message &lt;message&gt;] [-v --verbose] [-vv --debug] [-h --help] [-ns --no-summary] [-V --version]</p></div></div><div class="refsect1"><a name="idp54922592"></a><h2>DESCRIPTION</h2><p>
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><title>gr-changes</title><meta name="generator" content="DocBook XSL Stylesheets V1.78.1"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="refentry"><a name="gr-changes.1"></a><div class="titlepage"></div><div class="refnamediv"><h2>Name</h2><p>gr-changes &#8212; Shows combined changelog view between more components</p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="cmdsynopsis"><p><code class="command">gr-changes  [OPTIONS] ... [PROJECT_DIR]</code>  [-s --selected &lt;N,M&gt;] [-b --branch &lt;BranchName&gt;] [-m --max-commits &lt;N&gt;] [-r --reverse] [-a --author &lt;name&gt;] [--after &lt;date&gt;] [--before &lt;date&gt;] [-hm --header-message &lt;message&gt;] [-v --verbose] [-vv --debug] [-h --help] [-ns --no-summary] [-V --version]</p></div></div><div class="refsect1"><a name="idp59211120"></a><h2>DESCRIPTION</h2><p>
       Shows combined changelog view between more components.
-    </p></div><div class="refsect1"><a name="idp54923696"></a><h2>OPTIONS</h2><div class="variablelist"><dl class="variablelist"><dt><span class="term">-s --selected &lt;N,M&gt;</span></dt><dd><p>
+    </p></div><div class="refsect1"><a name="idp54740992"></a><h2>OPTIONS</h2><div class="variablelist"><dl class="variablelist"><dt><span class="term">-s --selected &lt;N,M&gt;</span></dt><dd><p>
             Comma separated list of selected repo names from the PROJECT_DIR
           </p></dd><dt><span class="term">-b --branch &lt;BranchName&gt;</span></dt><dd><p>
             Different name for comparation branch (default master)
-          </p></dd><dt><span class="term">-mc --max-commits &lt;N&gt;</span></dt><dd><p>
-            Limits maximum commit count per component (default 10).
+          </p></dd><dt><span class="term">-m --max-commits &lt;N&gt;</span></dt><dd><p>
+            Limits maximum commit count (default 20).
           </p></dd><dt><span class="term">-r --reverse</span></dt><dd><p>
             Sort from oldest to newest (default newest on top)
+          </p></dd><dt><span class="term">-a --author &lt;name&gt;</span></dt><dd><p>
+			Filters selected author's and commiter's commits. Name is case senistive.
+          </p></dd><dt><span class="term">--after &lt;date&gt;</span></dt><dd><p>
+			Show commits more recent than a specific date (git syntax).
+          </p></dd><dt><span class="term">--before &lt;date&gt;</span></dt><dd><p>
+			Show commits older than a specific date (git syntax).
           </p></dd><dt><span class="term">-hm --header-message &lt;message&gt;</span></dt><dd><p>
            Prints extra header message.
           </p></dd><dt><span class="term">-v --verbose</span></dt><dd><p>
@@ -20,7 +26,7 @@
             Does not print execution summary.
           </p></dd><dt><span class="term">-V --version</span></dt><dd><p>
             Prints version to the screen and exits.
-          </p></dd></dl></div></div><div class="refsect1"><a name="idp54210368"></a><h2>PROJECT_DIR</h2><p>
+          </p></dd></dl></div></div><div class="refsect1"><a name="idp54843696"></a><h2>PROJECT_DIR</h2><p>
       Root directory with git clones. By default is used current directory.
     </p><p>
       All gr-scipts support subdirectory hierarchy &lt;my-dir&gt;/&lt;my-project-group&gt;/&lt;git-clone&gt;.
@@ -28,11 +34,11 @@
       </p><pre class="screen">
         touch &lt;my-project&gt;/.git/skip
       </pre><p>
-    </p></div><div class="refsect1"><a name="idp54213184"></a><h2>SEE ALSO</h2><p>
+    </p></div><div class="refsect1"><a name="idp54846416"></a><h2>SEE ALSO</h2><p>
       gr-scripts(1).
       <a class="ulink" href="http://safrm.net/projects/gr-scripts/" target="_top">http://safrm.net/projects/gr-scripts/</a>
-    </p></div><div class="refsect1"><a name="idp54214832"></a><h2>AUTHOR</h2><p>
+    </p></div><div class="refsect1"><a name="idp54641024"></a><h2>AUTHOR</h2><p>
         Miroslav &#352;afr &lt;miroslav.safr@gmail.com&gt;
-    </p></div><div class="refsect1"><a name="idp54009808"></a><h2>LICENSE</h2><p>
+    </p></div><div class="refsect1"><a name="idp54642336"></a><h2>LICENSE</h2><p>
        LGPL2
     </p></div></div></body></html>
