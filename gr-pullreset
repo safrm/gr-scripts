@@ -82,7 +82,7 @@ do
                 if [ "$LASTTAG" != "$TO" ]; then
                         echo " \033[33mupdated to:\033[0m \033[01;34m $TO \033[0m  "
                         LASTMSG=`git log -1 --pretty=tformat:'%h %s | %ad' --date=relative`
-                        echo " $LASTMSG"
+                        echo " \033[33m$LASTMSG\033[0m"
                 fi
                 cd $PROJECT_DIR
         else
