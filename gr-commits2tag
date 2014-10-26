@@ -84,7 +84,7 @@ if [ ! -z "$HEADER_MESSAGE" ]; then
         echo "$HEADER_MESSAGE"
 fi
 
-find "$PROJECT_DIR"  -type d -name ".git*"  |  sed 's/\/.git//g' | sort | while read ENTRY
+find "$PROJECT_DIR"  -type d -name ".git*"  |  sed 's/\/.git//g' | sort | ( while read ENTRY
 do
      if [ ! -f $ENTRY/.git/skip ]; then
         cd $ENTRY 
@@ -121,7 +121,7 @@ do
 
 
         REMOTE_COMMITS_FROM_LASTTAG_LOCAL=`git log -$MAX_COMMITS --pretty=tformat:"$TFORMAT" ${FROM_LASTTAG}origin/$BRANCH 2> /dev/null`
-        RCFT_COUNT=$( echo "$REMOTE_COMMITS_FROM_LASTTAG_LOCAL" | grep -v '^$' | wc -l) 
+        RCFT_COUNT=$( ( echo "$REMOTE_COMMITS_FROM_LASTTAG_LOCAL" | grep -v '^$' | wc -l) )
 
 
         if [ -z "$ONLY_REMOTE" ]; then
@@ -161,6 +161,8 @@ do
                 fi
                 cd $PROJECT_DIR
         fi
+        REMOTE_TOTAL_COUNT=$(($REMOTE_TOTAL_COUNT + $RCFT_COUNT )) ;
+        [ "x$RCFT_COUNT" != "x0" ] && COMPONENTSC=$(($COMPONENTSC + 1 )) 
 done
 
 if [ -z "$NO_SUMMARY" ]; then
@@ -169,7 +171,8 @@ if [ -z "$NO_SUMMARY" ]; then
         fi
         TIME=`date +%H:%M:%S`
         ELAPSED_TIME=$((`date +'%s'` - $START_TIME))
-        echo "$BASENAME found \033[42m$FOUND_COUNT\033[0m finished:$TIME took:$(($ELAPSED_TIME/60)) min $(($ELAPSED_TIME%60)) s"
+        echo "found untagged commits:\033[42m$REMOTE_TOTAL_COUNT\033[0m for $COMPONENTSC components, finished:$TIME took:$(($ELAPSED_TIME/60)) min $(($ELAPSED_TIME%60)) s"
 fi
+)
 
 
