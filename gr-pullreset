@@ -23,26 +23,20 @@ usage() {
 }
 while [ $# -gt 0 ]; do
   case "$1" in
-    -V | --version) echo "`basename $0` ${VERSION} ${VERSION_DATE}"; exit 0 ;;  
-    -h | --help) usage; exit ;;
-    -ls | --line-separator)
-		LINE_SEPARATOR=1
-		;;
-    -ns|--no-summary) 
-               NO_SUMMARY=1
-               ;;
-        * )    PROJECT_DIR=$1;
-               ;; 
+    -V|--version)         echo "`basename $0` ${VERSION} ${VERSION_DATE}" ; exit 0 ;;
+    -h|--help)            usage ; exit ;;
+    -ls|--line-separator) LINE_SEPARATOR=1 ;;
+    -ns|--no-summary)     NO_SUMMARY=1 ;;
+	-b|--branch)		  USER_BRANCH=$1 ;;
+    *)                    PROJECT_DIR=$1 ;;
   esac
   shift
 done
-if [ -z "$PROJECT_DIR" ]
-then
+if [ -z "$PROJECT_DIR" ]; then
         PROJECT_DIR="./"
 fi
 
-if [ ! -d "$PROJECT_DIR" ] 
-then
+if [ ! -d "$PROJECT_DIR" ]; then
   echo "directory $PROJECT_DIR does not exist";
   exit 1
 fi
@@ -61,9 +55,11 @@ do
                      echo "\033[44m $(tput el) $(tput sgr0)"
                 fi
                 LASTTAG=`git describe --tags --dirty=* --always 2> /dev/null`
-                BRANCH=`git branch | egrep "^\*" | cut -d' ' -f2`
+				BRANCH=`git branch | egrep "^\*" | cut -d' ' -f2`
                 BRANCH20=`printf '%-22.22s' [$BRANCH]`
                 echo "\033[32m$PROJECT20\033[0m \033[31m$BRANCH20\033[0m from: \033[01;34m $LASTTAG \033[0m \c" 
+                [ -n "$USER_BRANCH" -a "$USER_BRANCH" != "$BRANCH" ] && BRANCH=$USER_BRANCH && echo "Switching to user defined branch: $BRANCH"
+
                 git fetch origin 2> /dev/null
                 if [ $? = 128 ] ; then
                     echo "remote \033[41mNOT CONNECTED\033[0m "
