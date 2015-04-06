@@ -29,31 +29,16 @@ usage() {
 
 while [ $# -gt 0 ]; do
   case "$1" in
-    --help) usage; exit ;;
-    -V | --version) echo "`basename $0` ${VERSION} ${VERSION_DATE}"; exit 0 ;;  
-    -ls | --line-separator)
-		LINE_SEPARATOR=1
-		;;
-    -ns|--no-summary) 
-               NO_SUMMARY=1
-               ;;
-    -n|--dry-run) 
-               DRY_RUN=1
-               ;;
-    -ss|--show-size) 
-               SHOW_SIZE=1
-               ;;
-	-p|--prune) 
-               PRUNE_FLAG=" --prune"
-               ;;
-	-a|--aggressive) 
-               AGGRESSIVE_FLAG=" --aggressive"
-               ;;
-	-v|--verbose) 
-               VERBOSE_FLAG=" --verbose"
-               ;;
-    * )    PROJECT_DIR=$1;
-               ;; 
+    -h|--help) usage; exit ;;
+    -V|--version) echo "`basename $0` ${VERSION} ${VERSION_DATE}"; exit 0 ;;  
+    -ls|--line-separator) LINE_SEPARATOR=1 ;;
+    -ns|--no-summary)     NO_SUMMARY=1     ;;
+    -n|--dry-run)         DRY_RUN=1        ;;
+    -ss|--show-size)      SHOW_SIZE=1      ;;
+    -p|--prune)           PRUNE_FLAG=" --prune"  ;;
+    -a|--aggressive)      AGGRESSIVE_FLAG=" --aggressive" ;;
+    -v|--verbose)         VERBOSE_FLAG=" --verbose"       ;;
+    * )                   PROJECT_DIR=$1                  ;;
   esac
   shift
 done
@@ -63,7 +48,7 @@ then
         PROJECT_DIR="./"
 fi
 
-if [ ! -d "$PROJECT_DIR" ] 
+if [ ! -d "$PROJECT_DIR" ]
 then
         echo "directory $PROJECT_DIR does not exist";
         exit 1
@@ -77,25 +62,25 @@ find "$PROJECT_DIR" -type d -name ".git*"  |  sed 's/\/.git//g' | sort | while r
 do
         if [ -d $ENTRY ] && [ -d $ENTRY/.git ]; then
                 if [ ! -f $ENTRY/.git/no_updates ]; then
-                        cd $ENTRY 
-                        if [ ! -z "$LINE_SEPARATOR" ]; then 
+                        cd $ENTRY
+                        if [ -n "$LINE_SEPARATOR" ]; then
                              echo "\033[44m $(tput el) $(tput sgr0)"
                         fi
                         LASTTAG=`git describe --tags --dirty=* --always 2> /dev/null`
                         PROJECT20=`basename $ENTRY`
                         PROJECT20=`printf '%-20s' $PROJECT20`
-                        echo "\033[32m $ENTRY\033[0m cleaning.." 
+                        echo "\033[32m $ENTRY\033[0m cleaning.."
                         BRANCH=`git branch | egrep "^\*" | cut -d' ' -f2`
-						if [ ! -z "$SHOW_SIZE" ];  then
+						if [ -n "$SHOW_SIZE" ];  then
 							git count-objects $VERBOSE_FLAG
 						fi
-						if [ ! -z "$DRY_RUN" ];  then
+						if [ -n "$DRY_RUN" ];  then
 							git prune -n $VERBOSE_FLAG
 						else
 	                        git reset --hard origin/$BRANCH
     	                    git gc --quiet $PRUNE_FLAG $AGGRESSIVE_FLAG
     	                    git clean -dfx
-							if [ ! -z "$SHOW_SIZE" ];  then
+							if [ -n "$SHOW_SIZE" ];  then
 								git count-objects
 							fi
 						fi
@@ -107,7 +92,7 @@ do
 done
 
 if [ -z "$NO_SUMMARY" ]; then
-        if [ ! -z "$LINE_SEPARATOR" ]; then 
+        if [ -n "$LINE_SEPARATOR" ]; then
              echo "\033[44m $(tput el) $(tput sgr0)"
         fi
         TIME=`date +%H:%M:%S`
