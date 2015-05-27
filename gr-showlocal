@@ -26,15 +26,13 @@ usage() {
 
 while [ $# -gt 0 ]; do
   case "$1" in
-    -V | --version) echo "`basename $0` ${VERSION} ${VERSION_DATE}"; exit 0 ;;  
-    -h | --help) usage; exit ;;
-    -v  | --verbose) VERBOSE=1;;
-    -s|--stashes) STASHES=1;;
-    -ls | --line-separator)
-		LINE_SEPARATOR=1
-		;;
-    -ns | --no-summary) NO_SUMMARY=1 ;;
-    * )       PROJECT_DIR=$1;; 
+    -V|--version) echo "`basename $0` ${VERSION} ${VERSION_DATE}" ; exit 0 ;;
+    -h|--help) usage ; exit 0 ;;
+    -v|--verbose)         VERBOSE=1 ;;
+    -s|--stashes)         STASHES=1 ;;
+    -ls|--line-separator) LINE_SEPARATOR=1 ;;
+    -ns|--no-summary)     NO_SUMMARY=1 ;;
+    *)                    PROJECT_DIR=$1 ;;
   esac
   shift
 done
@@ -44,7 +42,7 @@ if [ -z "$PROJECT_DIR" ]; then
 fi
 
 if [ ! -d "$PROJECT_DIR" ]; then
-    echo "directory $PROJECT_DIR does not exist";
+    echo "directory $PROJECT_DIR does not exist"
     exit 1
 fi
 
@@ -54,54 +52,50 @@ PROJECT_DIR=`pwd`
 
 find "$PROJECT_DIR" -type d -name ".git*"  |  sed 's/\/.git//g' | sort | while read ENTRY
 do
-        cd $ENTRY 
-        if [ ! -z "$LINE_SEPARATOR" ]; then 
-             echo "\033[44m $(tput el) $(tput sgr0)"
-        fi
-        LASTTAG=`git describe --tags --dirty=* --always 2> /dev/null`
-        BRANCH=`git branch | egrep "^\*" | cut -d' ' -f2`
-        #commits to push
-        COMMITCOUNT=`git shortlog origin/$BRANCH..HEAD | grep -E '^[ ]+\w+' | wc -l`
-        LASTMSG=`git --no-pager log -1 --pretty=tformat:'%Cred%h%Creset - %s' | cut -c -80`
-        PROJECT20=`basename $ENTRY`
-        PROJECT20=`printf '\e[1m%-22.22s\e[21m' $PROJECT20`
-        if [ "0" = "$COMMITCOUNT" ]; then
-            echo "\033[32m$PROJECT20\033[0m \033[01;34m $LASTTAG \033[0m (o/$BRANCH) $LASTMSG"
-        else
-            echo "\033[32m$PROJECT20\033[0m \033[01;34m $LASTTAG \033[0m (o/$BRANCH\033[33m+$COMMITCOUNT\033[0m) $LASTMSG"
-        fi
+    cd $ENTRY
+    if [ -n "$LINE_SEPARATOR" ]; then
+        echo "\033[44m $(tput el) $(tput sgr0)"
+    fi
+    LASTTAG=`git describe --tags --dirty=* --always 2> /dev/null`
+    BRANCH=$( git branch | egrep "^\*" | cut -d' ' -f2 )
+    #commits to push
+    COMMITCOUNT=$( git shortlog origin/$BRANCH..HEAD 2> /dev/null | grep -E '^[ ]+\w+' | wc -l )
+    LASTMSG=`git --no-pager log -1 --pretty=tformat:'%Cred%h%Creset - %s' | cut -c -80`
+    PROJECT20=`basename $ENTRY`
+    PROJECT20=`printf '\e[1m%-22.22s\e[21m' $PROJECT20`
+    if [ $COMMITCOUNT -eq 0 ]; then
+        echo "\033[32m$PROJECT20\033[0m \033[01;34m $LASTTAG \033[0m (o/$BRANCH) $LASTMSG"
+    else
+        echo "\033[32m$PROJECT20\033[0m \033[01;34m $LASTTAG \033[0m (o/$BRANCH\033[33m+$COMMITCOUNT\033[0m) $LASTMSG"
+    fi
 
-        #local changes
-        LOCAL_CHANGES=`git status -s`
-        LOCAL_CHANGES_COUNT=`echo "$LOCAL_CHANGES" | grep -v '^$'| wc -l`
+    #local changes
+    LOCAL_CHANGES=`git status -s`
+    LOCAL_CHANGES_COUNT=$( echo "$LOCAL_CHANGES" | grep -v '^$'| wc -l )
 	LOCAL_STASHES_COUNT=0
-	if [ ! -z "$STASHES" ]; then
-                LOCAL_STASHES=`git stash list`
-	        LOCAL_STASHES_COUNT=`echo "$LOCAL_STASHES" | grep -v '^$'| wc -l`
-		STASHINFO="/stashes:$LOCAL_STASHES_COUNT"
+	if [ -n "$STASHES" ]; then
+        LOCAL_STASHES=`git stash list`
+        LOCAL_STASHES_COUNT=$( echo "$LOCAL_STASHES" | grep -v '^$'| wc -l )
+	    STASHINFO="/stashes:$LOCAL_STASHES_COUNT"
 	fi
-        if [ "x$LOCAL_CHANGES_COUNT" != "x0" ] || [ "x$COMMITCOUNT" != "x0" ] || [ "x$LOCAL_STASHES_COUNT" != "x0" ]
-        then
-                echo "\033[43m NEEDS COMMIT (push:$COMMITCOUNT/local-files:$LOCAL_CHANGES_COUNT$STASHINFO)\033[0m"    
-        fi
+    if [ $LOCAL_CHANGES_COUNT -ne 0 ] || [ $COMMITCOUNT -ne 0 ] || [ $LOCAL_STASHES_COUNT -ne 0 ]; then
+        echo "\033[43m NEEDS COMMIT (push:$COMMITCOUNT/local-files:$LOCAL_CHANGES_COUNT$STASHINFO)\033[0m"    
+    fi
 
-        if [ ! -z "$VERBOSE" ]; then
-                echo "$LOCAL_CHANGES"
-        fi
-        if [ ! -z "$VERBOSE" ] && [ "x$LOCAL_STASHES_COUNT" != "x0" ] ; then
-            echo "$LOCAL_STASHES"
-        fi
-        cd $PROJECT_DIR
+    if [ -n "$VERBOSE" ]; then
+        echo "$LOCAL_CHANGES"
+    fi
+    if [ -n "$VERBOSE" ] && [ $LOCAL_STASHES_COUNT -ne 0 ]; then
+        echo "$LOCAL_STASHES"
+    fi
+    cd $PROJECT_DIR
 done
 
 if [ -z "$NO_SUMMARY" ]; then
-        if [ ! -z "$LINE_SEPARATOR" ]; then 
-             echo "\033[44m $(tput el) $(tput sgr0)"
-        fi
-        TIME=`date +%H:%M:%S`
-        ELAPSED_TIME=$((`date +'%s'` - $START_TIME))
-        echo "$BASENAME finished:$TIME took:$(($ELAPSED_TIME/60)) min $(($ELAPSED_TIME%60)) s"
+    if [ -n "$LINE_SEPARATOR" ]; then
+        echo "\033[44m $(tput el) $(tput sgr0)"
+    fi
+    TIME=`date +%H:%M:%S`
+    ELAPSED_TIME=$((`date +'%s'` - $START_TIME))
+    echo "$BASENAME finished:$TIME took:$(($ELAPSED_TIME/60)) min $(($ELAPSED_TIME%60)) s"
 fi
-
-
-
