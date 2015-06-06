@@ -86,7 +86,7 @@ do
         COMMITCOUNT_PUSH=0
         if ! echo "$BRANCH" | grep -q "deatached from" ; then BRANCH=master ; fi
         if [ "$LASTTAG" != "$TO" ]; then
-              COMMITCOUNT_PULL=$( git shortlog HEAD..origin/$BRANCH | grep -E '^[ ]+\w+' | wc -l )
+              COMMITCOUNT_PULL=$( git shortlog HEAD..$BRANCH | grep -E '^[ ]+\w+' | wc -l )
               COMMITCOUNT_PUSH=$( git shortlog origin/$BRANCH..$BRANCH | grep -E '^[ ]+\w+' | wc -l )
         fi
         LOCAL_STASHES_COUNT=0
