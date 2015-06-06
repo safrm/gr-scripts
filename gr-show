@@ -15,6 +15,7 @@ usage() {
     echo "Usage:$BASENAME [OPTIONS]... [PROJECT_DIR]"
     echo " options: "
     echo " -v,  --verbose ...................... prints more output"
+    echo " -ld, --limit-depth <N> .............. limit revcursion depth for directory structure"
     echo " -s,  --stashes ...................... shows info about stashes"
     echo " -h,  --help ......................... shows command line help"
     echo " -ls, --line-separator ............... project separated by colored line"
@@ -29,6 +30,7 @@ while [ $# -gt 0 ]; do
     -V|--version) echo "`basename $0` ${VERSION} ${VERSION_DATE}" ; exit 0 ;;
     -h|--help) usage ; exit 0 ;;
     -v|--verbose)         VERBOSE=1 ;;
+    -ld|--limit-depth) shift ; LIMIT_DEPTH="-maxdepth $1" ;;
     -s|--stashes)         STASHES=1 ;;
     -ls|--line-separator) LINE_SEPARATOR=1 ;;
     -ns|--no-summary)     NO_SUMMARY=1 ;;
@@ -50,7 +52,7 @@ CWD=`pwd`
 cd $PROJECT_DIR
 PROJECT_DIR=`pwd`
 
-find "$PROJECT_DIR" -type d -name ".git*"  |  sed 's/\/.git//g' | sort | while read ENTRY
+find "$PROJECT_DIR" -type d -name ".git*" $LIMIT_DEPTH | sed 's/\/.git//g' | sort | while read ENTRY
 do
     if [ ! -f $ENTRY/.git/skip ]; then
         cd $ENTRY
@@ -82,13 +84,14 @@ do
         #remote & local repo
         COMMITCOUNT_PULL=0
         COMMITCOUNT_PUSH=0
+        if ! echo "$BRANCH" | grep -q "deatached from" ; then BRANCH=master ; fi
         if [ "$LASTTAG" != "$TO" ]; then
               COMMITCOUNT_PULL=$( git shortlog HEAD..origin/$BRANCH | grep -E '^[ ]+\w+' | wc -l )
               COMMITCOUNT_PUSH=$( git shortlog origin/$BRANCH..$BRANCH | grep -E '^[ ]+\w+' | wc -l )
         fi
         LOCAL_STASHES_COUNT=0
         if [ -n "$STASHES" ]; then
-	        LOCAL_STASHES=`git stash list`
+            LOCAL_STASHES=`git stash list`
             LOCAL_STASHES_COUNT=`echo "$LOCAL_STASHES" | grep -v '^$'| wc -l`
             STASHINFO="/stashes:$LOCAL_STASHES_COUNT"
         fi
@@ -117,3 +120,4 @@ if [ -z "$NO_SUMMARY" ]; then
     ELAPSED_TIME=$((`date +'%s'` - $START_TIME))
     echo "$BASENAME finished:$TIME took:$(($ELAPSED_TIME/60)) min $(($ELAPSED_TIME%60)) s"
 fi
+
