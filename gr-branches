@@ -24,65 +24,51 @@ usage() {
 
 while [ $# -gt 0 ]; do
   case "$1" in
-    -V | --version) echo "`basename $0` ${VERSION} ${VERSION_DATE}"; exit 0 ;;  
-    -h | --help) usage; exit ;;
-    -a | --all) 
-               ALL_BRANCHES=1
-               ;;
-    -ls | --line-separator)
-		LINE_SEPARATOR=1
-		;;
-    -ns | --no-summary) 
-               NO_SUMMARY=1
-               ;;
-        * )    PROJECT_DIR=$1;
-               ;; 
+    -V|--version) echo "$BASENAME ${VERSION} ${VERSION_DATE}" ; exit 0 ;;
+    -h|--help) usage ; exit ;;
+    -a|--all) ALL_BRANCHES=1 ;;
+    -ls|--line-separator) LINE_SEPARATOR=1 ;;
+    -ns|--no-summary) NO_SUMMARY=1 ;;
+    *) PROJECT_DIR="$1" ;; 
   esac
   shift
 done
 
-if [ -z "$PROJECT_DIR" ]
-then
-        PROJECT_DIR="./"
+if [ -z "$PROJECT_DIR" ]; then
+    PROJECT_DIR="./"
 fi
 
-if [ ! -d "$PROJECT_DIR" ] 
-then
-        echo "directory $PROJECT_DIR does not exist";
-        exit 1        
+if [ ! -d "$PROJECT_DIR" ]; then
+    echo "directory $PROJECT_DIR does not exist"
+    exit 1        
 fi
 
 CWD=`pwd`
-cd $PROJECT_DIR
-PROJECT_DIR=`pwd`
-CWD=`pwd`
-cd $PROJECT_DIR
+cd "$PROJECT_DIR"
 PROJECT_DIR=`pwd`
 
-find "$PROJECT_DIR" -type d -name ".git*"  |  sed 's/\/.git//g' | sort | while read ENTRY
+find "$PROJECT_DIR" -type d -name ".git*" | sed 's/\/.git//g' | sort | while read ENTRY
 do
-        cd $ENTRY 
-        if [ ! -z "$LINE_SEPARATOR" ]; then 
-             echo "\033[44m $(tput el) $(tput sgr0)"
+        cd "$ENTRY" 
+        if [ -n "$LINE_SEPARATOR" ]; then
+            echo "\033[44m $(tput el) $(tput sgr0)"
         fi
-        if [ ! -z "$ALL_BRANCHES" ]; then       
-                BRANCHES=`echo && git branch -a ` 
+        if [ -n "$ALL_BRANCHES" ]; then
+            BRANCHES=`echo && git branch -a `
         else
-                BRANCHES=`git branch  | tr -d '\n'` 
+            BRANCHES=`git branch  | tr -d '\n'`
         fi
         PROJECT20=`basename $ENTRY`
         PROJECT20=`printf '\e[1m%-22.22s\e[21m' $PROJECT20`
         echo "\033[32m$PROJECT20\033[0m $BRANCHES"
-        cd $PROJECT_DIR
+        cd "$PROJECT_DIR"
 done
 
 if [ -z "$NO_SUMMARY" ]; then
-        if [ ! -z "$LINE_SEPARATOR" ]; then 
+        if [ -n "$LINE_SEPARATOR" ]; then 
              echo "\033[44m $(tput el) $(tput sgr0)"
         fi
         TIME=`date +%H:%M:%S`
         echo "`basename $0` finished:$TIME"
 fi
-
-
 

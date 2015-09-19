@@ -11,11 +11,11 @@ BASENAME=`basename $0`
 START_TIME=`date +'%s'`
 PROJECT_DIR=`pwd`
 
-find "$PROJECT_DIR" -type d -name ".git*"  |  sed 's/\/.git//g' | sort | while read ENTRY
+find "$PROJECT_DIR" -type d -name ".git*" | sed 's/\/.git//g' | sort | while read ENTRY
 do
-                cd $ENTRY
-                $*
-                cd $PROJECT_DIR
+    cd $ENTRY
+    $*
+    cd "$PROJECT_DIR"
 done
 
 TIME=`date +%H:%M:%S`

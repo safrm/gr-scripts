@@ -31,18 +31,11 @@ REPO_NAME=
 DESCRIPTION=
 while [ $# -gt 0 ]; do
   case "$1" in
-    -V | --version) echo "`basename $0` ${VERSION} ${VERSION_DATE}"; exit 0 ;;
-    -d | --description) shift
-               DESCRIPTION=$1
-               ;;
-    -kc | --keep-clone)
-               KEEP_CLONE=1
-               ;;
-    -h | --help ) usage
-                  exit 0
-               ;;
-        * )   REPO_NAME=$1
-        ;;
+    -V|--version) echo "`basename $0` ${VERSION} ${VERSION_DATE}" ; exit 0 ;;
+    -d|--description) shift ; DESCRIPTION="$1" ;;
+    -kc|--keep-clone) KEEP_CLONE=1 ;;
+    -h|--help) usage ; exit 0 ;;
+    *) REPO_NAME="$1" ;;
   esac
   shift
 done
@@ -61,7 +54,7 @@ REPO_PATH=`pwd`
 echo "$REPO_PATH"
 git init --bare
 
-if [ "x$DESCRIPTION" != "x" ]; then
+if [ -n "$DESCRIPTION" ]; then
   echo "$DESCRIPTION" > description
 else
   echo "$REPO_NAME " > description
@@ -79,12 +72,11 @@ git tag 0.0.0 -m "init tag"
 git push origin master -u
 git push --tags
 echo "new reposistory: $REPO_PATH"
-if [ ! -z "$KEEP_CLONE" ]; then 
+if [ -n "$KEEP_CLONE" ]; then 
 	echo "cloned to:       `pwd`"
 else
     cd ..
 	rm -fr $REPO_NAME-clone
 fi
-
 
 

@@ -28,67 +28,48 @@ usage() {
     echo " "
 }
 
-MAX_COMMITS=200 #maximum commits to show
-TFORMAT=' %Cred%h%Creset - %s %Cgreen(%cr) %C(bold blue)<%an>%Creset ' #default relative format cr
+MAX_COMMITS=200 
+#default relative format cr
+TFORMAT=' %Cred%h%Creset - %s %Cgreen(%cr) %C(bold blue)<%an>%Creset '
 
 while [ $# -gt 0 ]; do
   case "$1" in
-    -V | --version) echo "`basename $0` ${VERSION} ${VERSION_DATE}"; exit 0 ;;  
-    -v|--verbose) 
-               VERBOSE=1
-               ;;
-    -h | --help) usage; exit ;;
-    -or|--only-remote) 
-               ONLY_REMOTE=1
-               ;;
-    -ls | --line-separator)
-		LINE_SEPARATOR=1
-		;;
-    -ns|--no-summary) 
-               NO_SUMMARY=1
-               ;;
-    -hm|--header-message) shift;
-                HEADER_MESSAGE=$1;
-                ;;
-                -mc|--max-commits) shift;
-                MAX_COMMITS=$1;
-                ;;
-    -ti| --time-iso)
-              TFORMAT=' %Cred%h%Creset - %s %Cgreen(%ci) %C(bold blue)<%an>%Creset '
-              ;;
-    -tr| --time-relative)
-              TFORMAT=' %Cred%h%Creset - %s %Cgreen(%cr) %C(bold blue)<%an>%Creset '
-              ;;
-        * )    PROJECT_DIR=$1;
-               ;; 
+    -V|--version) echo "`basename $0` ${VERSION} ${VERSION_DATE}" ; exit 0 ;;  
+    -v|--verbose) VERBOSE=1 ;;
+    -h|--help) usage ; exit ;;
+    -or|--only-remote) ONLY_REMOTE=1 ;;
+    -ls|--line-separator) LINE_SEPARATOR=1 ;;
+    -ns|--no-summary) NO_SUMMARY=1 ;;
+    -hm|--header-message) shift ; HEADER_MESSAGE="$1" ;;
+    -mc|--max-commits) shift ; MAX_COMMITS=$1 ;;
+    -ti|--time-iso) TFORMAT=' %Cred%h%Creset - %s %Cgreen(%ci) %C(bold blue)<%an>%Creset ' ;;
+    -tr|--time-relative) TFORMAT=' %Cred%h%Creset - %s %Cgreen(%cr) %C(bold blue)<%an>%Creset ';;
+     *) PROJECT_DIR="$1" ;; 
   esac
   shift
 done
 
-if [ -z "$PROJECT_DIR" ]
-then
-        PROJECT_DIR="./"
+if [ -z "$PROJECT_DIR" ]; then
+    PROJECT_DIR="./"
 fi
 
-if [ ! -d "$PROJECT_DIR" ] 
-then
-        echo "directory $PROJECT_DIR does not exist";
-        exit 1
+if [ ! -d "$PROJECT_DIR" ]; then
+    echo "directory $PROJECT_DIR does not exist" ; exit 1
 fi
 
 CWD=`pwd`
 cd $PROJECT_DIR
 PROJECT_DIR=`pwd`
 
-if [ ! -z "$HEADER_MESSAGE" ]; then
-        echo "$HEADER_MESSAGE"
+if [ -n "$HEADER_MESSAGE" ]; then
+    echo "$HEADER_MESSAGE"
 fi
 
-find "$PROJECT_DIR"  -type d -name ".git*"  |  sed 's/\/.git//g' | sort | ( while read ENTRY
+find "$PROJECT_DIR" -type d -name ".git*" | sed 's/\/.git//g' | sort | ( while read ENTRY
 do
-     if [ ! -f $ENTRY/.git/skip ]; then
-        cd $ENTRY 
-        if [ ! -z "$LINE_SEPARATOR" ]; then 
+    if [ ! -f "$ENTRY/.git/skip" ]; then
+        cd "$ENTRY"
+        if [ -n "$LINE_SEPARATOR" ]; then
              echo "\033[44m $(tput el) $(tput sgr0)"
         fi
         git fetch origin 2> /dev/null
@@ -125,53 +106,54 @@ do
 
 
         if [ -z "$ONLY_REMOTE" ]; then
-                LOCAL_COMMITS_FROM_LASTTAG_LOCAL=`git log --pretty=tformat:"$TFORMAT" ${FROM_LASTTAG}master 2> /dev/null`
-                LCFT_COUNT=`echo "$LOCAL_COMMITS_FROM_LASTTAG_LOCAL" | grep -v '^$'  | wc -l`
-                LOCAL_COMMITS_HEAD=`git log --pretty=tformat:"$TFORMAT" master..HEAD  2> /dev/null`
-                LCH_COUNT=`echo "$LOCAL_COMMITS_HEAD" | grep -v '^$' |wc -l`
+            LOCAL_COMMITS_FROM_LASTTAG_LOCAL=`git log --pretty=tformat:"$TFORMAT" ${FROM_LASTTAG}master 2> /dev/null`
+            LCFT_COUNT=`echo "$LOCAL_COMMITS_FROM_LASTTAG_LOCAL" | grep -v '^$' | wc -l`
+            LOCAL_COMMITS_HEAD=`git log --pretty=tformat:"$TFORMAT" master..HEAD  2> /dev/null`
+            LCH_COUNT=`echo "$LOCAL_COMMITS_HEAD" | grep -v '^$' |wc -l`
 
-                echo "\033[46mhead  :\033[0m \033[01;34m $HEAD \033[0m \033[42m$LCH_COUNT\033[0m"
-                if [ ! -z "$LOCAL_COMMITS_HEAD" ]; then echo "$LOCAL_COMMITS_HEAD"; fi
-                echo "\033[46mlocal :\033[0m \033[01;34m $MASTER_LOCAL \033[0m \033[42m$LCFT_COUNT\033[0m"
-                if [ ! -z "$LOCAL_COMMITS_FROM_LASTTAG_LOCAL" ]; then 
-                        echo "$LOCAL_COMMITS_FROM_LASTTAG_LOCAL"; fi
-                fi        
-                echo "\033[46mremote:\033[0m \033[01;34m $MASTER_REMOTE \033[0m \033[42m$RCFT_COUNT\033[0m $NC"
-                if [ ! -z "$REMOTE_COMMITS_FROM_LASTTAG_LOCAL" ]; then echo "$REMOTE_COMMITS_FROM_LASTTAG_LOCAL"; fi
+            echo "\033[46mhead  :\033[0m \033[01;34m $HEAD \033[0m \033[42m$LCH_COUNT\033[0m"
+            if [ n "$LOCAL_COMMITS_HEAD" ]; then echo "$LOCAL_COMMITS_HEAD" ; fi
+            echo "\033[46mlocal :\033[0m \033[01;34m $MASTER_LOCAL \033[0m \033[42m$LCFT_COUNT\033[0m"
+            if [ -n "$LOCAL_COMMITS_FROM_LASTTAG_LOCAL" ]; then 
+                echo "$LOCAL_COMMITS_FROM_LASTTAG_LOCAL" ; 
+            fi
+        fi        
+        echo "\033[46mremote:\033[0m \033[01;34m $MASTER_REMOTE \033[0m \033[42m$RCFT_COUNT\033[0m $NC"
+        if [ -n "$REMOTE_COMMITS_FROM_LASTTAG_LOCAL" ]; then echo "$REMOTE_COMMITS_FROM_LASTTAG_LOCAL" ; fi
 
-                if [ -z "$ONLY_REMOTE" ]; then
-                    #local changes
-                    LOCAL_CHANGES=`git status -s`
-                    LOCAL_CHANGES_COUNT=`echo "$LOCAL_CHANGES" | grep -v '^$'| wc -l`
-                    #remote & local repo
-                    COMMITCOUNT_PULL=0
-                    COMMITCOUNT_PUSH=0
-                    if [ "$HEAD" != "$MASTER_REMOTE" ]; then
-                        COMMITCOUNT_PULL=`git shortlog origin/$BRANCH..$BRANCH | grep -E '^[ ]+\w+' | wc -l`
-                        COMMITCOUNT_PUSH=`git shortlog $BRANCH..HEAD | grep -E '^[ ]+\w+' | wc -l`
-                    fi
+        if [ -z "$ONLY_REMOTE" ]; then
+            #local changes
+            LOCAL_CHANGES=`git status -s`
+            LOCAL_CHANGES_COUNT=`echo "$LOCAL_CHANGES" | grep -v '^$'| wc -l`
+            #remote & local repo
+            COMMITCOUNT_PULL=0
+            COMMITCOUNT_PUSH=0
+            if [ "$HEAD" != "$MASTER_REMOTE" ]; then
+                COMMITCOUNT_PULL=`git shortlog origin/$BRANCH..$BRANCH | grep -E '^[ ]+\w+' | wc -l`
+                COMMITCOUNT_PUSH=`git shortlog $BRANCH..HEAD | grep -E '^[ ]+\w+' | wc -l`
+            fi
 
-                    if [ "x$LOCAL_CHANGES_COUNT" != "x0" ] || [ "x$COMMITCOUNT_PULL" != "x0" ] || [ "x$COMMITCOUNT_PUSH" != "x0" ] 
-                    then
-                        echo "\033[43m NEEDS UPDATE OR COMMIT (pull:$COMMITCOUNT_PULL/push:$COMMITCOUNT_PUSH/local-files:$LOCAL_CHANGES_COUNT)\033[0m"    
-                    fi
-                    if [ ! -z "$VERBOSE" ] && [ "x$LOCAL_CHANGES" != "x" ] ; then
-                        echo "$LOCAL_CHANGES"
-                    fi
-                fi
-                cd $PROJECT_DIR
+            if [ "x$LOCAL_CHANGES_COUNT" != "x0" ] || [ "x$COMMITCOUNT_PULL" != "x0" ] || [ "x$COMMITCOUNT_PUSH" != "x0" ] 
+            then
+                echo "\033[43m NEEDS UPDATE OR COMMIT (pull:$COMMITCOUNT_PULL/push:$COMMITCOUNT_PUSH/local-files:$LOCAL_CHANGES_COUNT)\033[0m"    
+            fi
+            if [ -n "$VERBOSE" ] && [ "x$LOCAL_CHANGES" != "x" ] ; then
+                echo "$LOCAL_CHANGES"
+            fi
         fi
-        REMOTE_TOTAL_COUNT=$(($REMOTE_TOTAL_COUNT + $RCFT_COUNT )) ;
-        [ "x$RCFT_COUNT" != "x0" ] && COMPONENTSC=$(($COMPONENTSC + 1 )) 
+        cd "$PROJECT_DIR"
+    fi
+    REMOTE_TOTAL_COUNT=$(($REMOTE_TOTAL_COUNT + $RCFT_COUNT )) ;
+    [ "x$RCFT_COUNT" != "x0" ] && COMPONENTSC=$(($COMPONENTSC + 1 )) 
 done
 
 if [ -z "$NO_SUMMARY" ]; then
-        if [ ! -z "$LINE_SEPARATOR" ]; then 
-             echo "\033[44m $(tput el) $(tput sgr0)"
-        fi
-        TIME=`date +%H:%M:%S`
-        ELAPSED_TIME=$((`date +'%s'` - $START_TIME))
-        echo "found untagged commits:\033[42m$REMOTE_TOTAL_COUNT\033[0m for $COMPONENTSC components, finished:$TIME took:$(($ELAPSED_TIME/60)) min $(($ELAPSED_TIME%60)) s"
+    if [ -n "$LINE_SEPARATOR" ]; then 
+         echo "\033[44m $(tput el) $(tput sgr0)"
+    fi
+    TIME=`date +%H:%M:%S`
+    ELAPSED_TIME=$((`date +'%s'` - $START_TIME))
+    echo "found untagged commits:\033[42m$REMOTE_TOTAL_COUNT\033[0m for $COMPONENTSC components, finished:$TIME took:$(($ELAPSED_TIME/60)) min $(($ELAPSED_TIME%60)) s"
 fi
 )
 

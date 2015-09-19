@@ -32,62 +32,43 @@ TOTAL_COUNT=0
 FOUND_COUNT=0
 while [ $# -gt 0 ]; do
   case "$1" in
-    -v | --verbose) 
-	VERBOSE=1
-	;;
-    -V | --version) 
-	echo "`basename $0` ${VERSION} ${VERSION_DATE}"; 
-	exit 0 
-	;;
-    -h | --help) 
-	usage; 
-	exit 
-	;;
-    -cs | --case-sensitive) 
-	CASE_SENS=1 
-	;;
-    -a | --all) 
-	ALL_BRANCHES=1 
-	;;
-    -ls | --line-separator)
-	LINE_SEPARATOR=1
-	;;
-    -ns|--no-summary) 
-	NO_SUMMARY=1 
-	;;
-    * )
-        if [ -z "$WHAT" ]; then
-            WHAT=$1 ; 
+    -v|--verbose) VERBOSE=1 ;;
+    -V|--version) echo "`basename $0` ${VERSION} ${VERSION_DATE}" ; exit 0 ;;
+    -h|--help) usage ; exit 0 ;;
+    -cs|--case-sensitive) CASE_SENS=1 ;;
+    -a|--all) ALL_BRANCHES=1 ;;
+    -ls|--line-separator) LINE_SEPARATOR=1 ;;
+    -ns|--no-summary) NO_SUMMARY=1 ;;
+    *)  if [ -z "$WHAT" ]; then
+            WHAT="$1" ; 
         elif [ -z "$PROJECT_DIR" ]; then
-            PROJECT_DIR=$1 ;
+            PROJECT_DIR="$1" ;
         else
-            echo "There can be only 2 arguments without <WHAT> <WHERE>, exiting.."
-            usage
-            exit 1
-        fi
-        ;;
+            echo "There can be only 2 arguments without <WHAT> <WHERE>, exiting.." 
+            usage ; exit 1
+        fi ;;
   esac
   shift
 done
 
 if [ -z "$WHAT" ]; then 
-    echo "You have to specify searching pattern, exiting.."; exit 1;
+    echo "You have to specify searching pattern, exiting.." ; exit 1 ;
 fi
 
 if [ -z "$PROJECT_DIR" ] || [ ! -d "$PROJECT_DIR" ]; then
         PROJECT_DIR="./"
 fi
 CWD=`pwd`
-cd $PROJECT_DIR
+cd "$PROJECT_DIR"
 PROJECT_DIR=`pwd`
 
 echo "searching for '\033[32m$WHAT\033[0m' in \033[01;34m$PROJECT_DIR\033[0m, CS: $CASE_SENS, VERBOSE:$VERBOSE"
 
 #so far the difference is only about new lines..
 if [ $VERBOSE -eq 1 ]; then
-    LOGFORMAT=" %Cred%h%Creset %d -%C(yellow)%d%Creset %s %Cgreen(%cr) %n %C(bold blue)A:%an <%ae>%Creset %n%C(bold cyan) C:%cn <%ce>%Creset";
+    LOGFORMAT=" %Cred%h%Creset %d -%C(yellow)%d%Creset %s %Cgreen(%cr) %n %C(bold blue)A:%an <%ae>%Creset %n%C(bold cyan) C:%cn <%ce>%Creset"
 else
-    LOGFORMAT=" %Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %n %C(bold blue) A:%an <%ae>%Creset %C(bold cyan)C:%cn <%ce>%Creset";
+    LOGFORMAT=" %Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %n %C(bold blue) A:%an <%ae>%Creset %C(bold cyan)C:%cn <%ce>%Creset"
 fi
 
 
@@ -102,30 +83,30 @@ trap 'rm -f $FIFO' 0
 trap 'rm -f $FIFO2' 0
 mkfifo $FIFO
 mkfifo $FIFO2
-find "$PROJECT_DIR" -type d -name ".git*"  |  sed 's/\/.git//g' | sort | while read ENTRY
+find "$PROJECT_DIR" -type d -name ".git*" | sed 's/\/.git//g' | sort | while read ENTRY
 do
-    cd $ENTRY ;
-    if [ ! -z "$LINE_SEPARATOR" ]; then 
+    cd $ENTRY
+    if [ -n "$LINE_SEPARATOR" ]; then 
          echo "\033[44m $(tput el) $(tput sgr0)"
     fi
-    DIR_COMMIT_COUNT=`git --no-pager log --pretty=tformat:'%h' $ALL_BRANCHES_CMDPARAM 2> /dev/null | grep -v '^$'  | wc -l`
+    DIR_COMMIT_COUNT=`git --no-pager log --pretty=tformat:'%h' $ALL_BRANCHES_CMDPARAM 2> /dev/null | grep -v '^$' | wc -l`
     PROJECT20=`basename $ENTRY`
     PROJECT20=`printf '\e[1m%-22.22s\e[21m' $PROJECT20`
     echo "\033[32m$PROJECT20\033[0m ($DIR_COMMIT_COUNT commits) \c"
     if [ $CASE_SENS -eq 1 ]; then
-        git --no-pager log --pretty=tformat:"$LOGFORMAT" $ALL_BRANCHES_CMDPARAM --author=$WHAT --committer=$WHAT 2> /dev/null ;
+        git --no-pager log --pretty=tformat:"$LOGFORMAT" $ALL_BRANCHES_CMDPARAM --author=$WHAT --committer=$WHAT 2> /dev/null
     else
         FOUND_COMMITS=`git --no-pager log --pretty=tformat:'%H %an %ae %cn %ce' $ALL_BRANCHES_CMDPARAM  2> /dev/null | grep -i $WHAT | cut -d ' ' -f1`
-        FOUND=`echo "$FOUND_COMMITS" | grep -v '^$' | wc -l`;
+        FOUND=`echo "$FOUND_COMMITS" | grep -v '^$' | wc -l`
         if [ $FOUND -ne 0 ]; then echo ; fi
-        for COMMIT in $FOUND_COMMITS; do  
+        for COMMIT in $FOUND_COMMITS ; do  
             git --no-pager log -1 --pretty=tformat:"$LOGFORMAT" $COMMIT   2> /dev/null
         done
     fi
     cd $CWD
-    FOUND_COUNT=$(($FOUND_COUNT + $FOUND));
-    TOTAL_COUNT=$(($TOTAL_COUNT + $DIR_COMMIT_COUNT));
-#    echo "\tFOUND local:\033[42m$FOUND/$DIR_COMMIT_COUNT\033[0m";
+    FOUND_COUNT=$(($FOUND_COUNT + $FOUND))
+    TOTAL_COUNT=$(($TOTAL_COUNT + $DIR_COMMIT_COUNT))
+#    echo "\tFOUND local:\033[42m$FOUND/$DIR_COMMIT_COUNT\033[0m"
     echo "$TOTAL_COUNT" > $FIFO &
     echo "$FOUND_COUNT" > $FIFO2 &
 done

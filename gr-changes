@@ -6,8 +6,8 @@ VERSION=NA
 VERSION_DATE=NA
 #support color escape characters on different terminals
 alias echo="/bin/echo -e"
-debug(){ [ ${DEBUG_FLAG:-0} -eq 0 ] || echo "Running($#): $*"; }
-verbose(){ [ ${VERBOSE_FLAG:-0} -eq 0 ] || echo "\033[36m$*\033[00m"; }
+debug(){ [ ${DEBUG_FLAG:-0} -eq 0 ] || echo "Running($#): $*" ; }
+verbose(){ [ ${VERBOSE_FLAG:-0} -eq 0 ] || echo "\033[36m$*\033[00m" ; }
 fail() { printf "\n\033[01;31mERROR: $*\033[00m\n" ; exit 1 ; }
 
 BASENAME=`basename $0`
@@ -41,49 +41,48 @@ REVERSE_FLAG=-r
 CUT_COMMAND=head
 while [ $# -gt 0 ]; do
   case "$1" in
-	-s  | --selection) shift ; SELECTED_PROJECTS=`echo $1 | tr "," "\n"` ;;
-	-m  | --max-commits) shift ; MAX_COMMITS=$1 ;;
-	-b  | --branch) shift ; MASTER_BRANCH=$1 ;;
-    -vv | --debug) VERBOSE_FLAG=1 ; DEBUG_FLAG=1 ;;
-    -v  | --verbose) VERBOSE_FLAG=1 ;;
-    -d  | --depth) shift ; TAGS_DEPTH=$1 ;;
-    -r  | --reverse)  REVERSE_FLAG= ; CUT_COMMAND=tail ;;
-    -a  | --author) shift ; AUTHOR_FLAG="--author=$1 --committer=$1" ;;
+	-s|--selection) shift ; SELECTED_PROJECTS=`echo $1 | tr "," "\n"` ;;
+	-m|--max-commits) shift ; MAX_COMMITS=$1 ;;
+	-b|--branch) shift ; MASTER_BRANCH=$1 ;;
+    -vv|--debug) VERBOSE_FLAG=1 ; DEBUG_FLAG=1 ;;
+    -v|--verbose) VERBOSE_FLAG=1 ;;
+    -d|--depth) shift ; TAGS_DEPTH=$1 ;;
+    -r|--reverse)  REVERSE_FLAG= ; CUT_COMMAND=tail ;;
+    -a|--author) shift ; AUTHOR_FLAG="--author=$1 --committer=$1" ;;
     --after) shift ; AFTER_FLAG="--after=$1" ;;
     --before) shift ; AFTER_FLAG="--before=$1" ;;
-    -h  | --help) usage; exit ;;
-    -ns | --no-summary) NO_SUMMARY=1 ;;
-    -hm | --header-message) shift; HEADER_MESSAGE=$1 ;;
-    -V  | --version) echo "`basename $0` ${VERSION} ${VERSION_DATE}"; exit 0 ;;                           
-    * )    PROJECT_DIR=$1 ;; 
+    -h|--help) usage ; exit ;;
+    -ns|--no-summary) NO_SUMMARY=1 ;;
+    -hm|--header-message) shift ; HEADER_MESSAGE=$1 ;;
+    -V|--version) echo "`basename $0` ${VERSION} ${VERSION_DATE}" ; exit 0 ;;
+    *) PROJECT_DIR="$1" ;; 
   esac
   shift
 done
 
-if [ -z "$PROJECT_DIR" ]
-then
-        PROJECT_DIR="./"
+if [ -z "$PROJECT_DIR" ]; then
+    PROJECT_DIR="./"
 fi
 
 if [ ! -d "$PROJECT_DIR" ] 
 then
-        echo "directory $PROJECT_DIR does not exist";
-        exit 1
+    echo "directory $PROJECT_DIR does not exist"
+    exit 1
 fi
 
 CWD=`pwd`
-cd $PROJECT_DIR
+cd "$PROJECT_DIR"
 PROJECT_DIR=`pwd`
 
-if [ ! -z "$HEADER_MESSAGE" ]; then
-        echo "$HEADER_MESSAGE"
+if [ -n "$HEADER_MESSAGE" ]; then
+    echo "$HEADER_MESSAGE"
 fi
-verbose "MAX_COMMITS=$MAX_COMMITS, REVERSE_FLAG=$REVERSE_FLAG, $BEFORE_FLAG $AFTER_FLAG " ;
+verbose "MAX_COMMITS=$MAX_COMMITS, REVERSE_FLAG=$REVERSE_FLAG, $BEFORE_FLAG $AFTER_FLAG "
 
-ALLPROJECTS=`find "$PROJECT_DIR" -type d -name ".git*" |  sed 's/\/.git//g' | sort `
+ALLPROJECTS=`find "$PROJECT_DIR" -type d -name ".git*" | sed 's/\/.git//g' | sort `
 for ENTRY in $ALLPROJECTS
 do 
-    if [ -f $ENTRY/.git/skip ]; then	
+    if [ -f "$ENTRY/.git/skip" ]; then	
 		verbose "skipped: $ENTRY "
 		continue
 	fi
@@ -105,8 +104,6 @@ do
 done
 echo "\033[32m$PROJECTS_LIST:\033[0m \033[31m[$MASTER_BRANCH]\033[0m" ;
 
-#Set the field separator to new line
-
 for ENTRY in $PROJECTS
 do
 	cd $ENTRY 
@@ -118,10 +115,10 @@ do
 	fi
 	
 	LOG=$( git --no-pager log --pretty=tformat:'%C(yellow)%ci - %Cred%h%Creset - %s  %C(bold blue)<%an>%Creset %n'  -$MAX_COMMITS $AUTHOR_FLAG $AFTER_FLAG $BEFORE_FLAG )
-	export BASENAME=`basename $ENTRY` 
-	LOG=$(  echo "$LOG" | awk -v "basename=$BASENAME" '{ if(length($0) > 0 ) print $0 " \033[32m"basename"\033[0m" }' )
+	export BASENAME=`basename $ENTRY`
+	LOG=$( echo "$LOG" | awk -v "basename=$BASENAME" '{ if(length($0) > 0 ) print $0 " \033[32m"basename"\033[0m" }' )
 	LOGS="$LOGS\n$LOG"
-	LOGS=$( echo "$LOGS" | sort -u -t '/' $REVERSE_FLAG | $CUT_COMMAND -$MAX_COMMITS)
+	LOGS=$( echo "$LOGS" | sort -u -t '/' $REVERSE_FLAG | $CUT_COMMAND -$MAX_COMMITS )
 
     cd "$PROJECT_DIR"
 done
@@ -129,7 +126,7 @@ done
 echo "$LOGS"
 
 if [ -z "$NO_SUMMARY" ]; then
-        if [ ! -z "$LINE_SEPARATOR" ]; then 
+        if [ -n "$LINE_SEPARATOR" ]; then 
              echo "\033[44m $(tput el) $(tput sgr0)"
         fi
         TIME=`date +%H:%M:%S`

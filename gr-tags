@@ -29,61 +29,47 @@ usage() {
 DEPTH=1
 while [ $# -gt 0 ]; do
   case "$1" in
-    -v | --verbose) 
-               VERBOSE=1
-               ;;
-    -d | --depth) shift 
-                DEPTH=$1 
-                ;;
-    -c | --commits)
-                COMMITS=1 
-                ;;
-    -ls | --line-separator)
-		LINE_SEPARATOR=1
-		;;
-    -h  | --help) usage; exit ;;
-    -ns | --no-summary) 
-               NO_SUMMARY=1
-               ;;
-    -hm | --header-message) shift;
-               HEADER_MESSAGE=$1;
-                           ;;
-    -V | --version) echo "`basename $0` ${VERSION} ${VERSION_DATE}"; exit 0 ;;                           
-    * )    PROJECT_DIR=$1;
-               ;; 
+    -v|--verbose) VERBOSE=1 ;;
+    -d|--depth) shift ; DEPTH=$1 ;;
+    -c|--commits) COMMITS=1 ;;
+    -ls|--line-separator) LINE_SEPARATOR=1 ;;
+    -h|--help) usage ; exit 0 ;;
+    -ns|--no-summary) NO_SUMMARY=1 ;;
+    -hm|--header-message) shift ; HEADER_MESSAGE="$1" ;;
+    -V|--version) echo "`basename $0` ${VERSION} ${VERSION_DATE}" ; exit 0 ;;
+    *) PROJECT_DIR="$1" ;;
   esac
   shift
 done
 if [ -z "$PROJECT_DIR" ]
 then
-        PROJECT_DIR="./"
+    PROJECT_DIR="./"
 fi
 
 if [ ! -d "$PROJECT_DIR" ] 
 then
-        echo "directory $PROJECT_DIR does not exist";
-        exit 1
+    echo "directory $PROJECT_DIR does not exist" ; exit 1
 fi
 
 CWD=`pwd`
-cd $PROJECT_DIR
+cd "$PROJECT_DIR"
 PROJECT_DIR=`pwd`
 
-if [ ! -z "$HEADER_MESSAGE" ]; then
-        echo "$HEADER_MESSAGE"
+if [ -n "$HEADER_MESSAGE" ]; then
+    echo "$HEADER_MESSAGE"
 fi
 
 find "$PROJECT_DIR" -type d -name ".git*"  |  sed 's/\/.git//g' | sort | while read ENTRY
 do
-     if [ ! -f $ENTRY/.git/skip ]; then
-          cd $ENTRY 
-          if [ ! -z "$LINE_SEPARATOR" ]; then 
+     if [ ! -f "$ENTRY/.git/skip" ]; then
+          cd "$ENTRY"
+          if [ -n "$LINE_SEPARATOR" ]; then 
                echo "\033[44m $(tput el) $(tput sgr0)"
           fi
 
           BRANCH=`git branch | egrep "^\*" | cut -d' ' -f2`
           git fetch origin --tags 2> /dev/null 
-          if [ $? = 128 ] ; then
+          if [ $? = 128 ]; then
                NC=" remote \033[41mNOT CONNECTED\033[0m "
           else
                NC=
@@ -97,35 +83,35 @@ do
           if [ -z $LASTTAG_NAME ]; then 
                #no tags
                TAGMESSAGE_COLOR="\033[41m no tags available \033[0m"
-               if [ ! -z "$VERBOSE" ]; then
+               if [ -n "$VERBOSE" ]; then
                     COUNT_FROM_TAG=`git log --pretty=tformat:'%h' HEAD  | grep -v '^$' |wc -l`
                     TAGMESSAGE_COLOR="$TAGMESSAGE_COLOR (+$COUNT_FROM_TAG)"
                fi
-               echo "\033[32m$PROJECT20:\033[0m \033[31m$BRANCH20\033[0m $TAGMESSAGE_COLOR $NC" ;
-               if [ ! -z "$COMMITS" ]; then
+               echo "\033[32m$PROJECT20:\033[0m \033[31m$BRANCH20\033[0m $TAGMESSAGE_COLOR $NC"
+               if [ -n "$COMMITS" ]; then
                     git --no-pager log --pretty=oneline --abbrev-commit 
                fi
            else        
                TAGS=$( for REF in $(git rev-list $LASTTAG_NAME ); do  git describe --exact-match $REF 2> /dev/null ; done | head -$DEPTH)   
-               for TAG in $TAGS; do 
+               for TAG in $TAGS ; do 
                    if [ -z "$VERBOSE" ]; then
                         TAGMESSAGE=$TAG
                         TAGMESSAGE_COLOR="\033[01;34m $TAGMESSAGE \033[0m"          
                    else
-                        COUNT_FROM_TAG=`git log --pretty=tformat:'%h' $TAG..$LASTTAG_NAME  | grep -v '^$' |wc -l`
+                        COUNT_FROM_TAG=`git log --pretty=tformat:'%h' $TAG..$LASTTAG_NAME  | grep -v '^$' | wc -l`
                         TAGMESSAGE=`git tag -l -n1 $TAG`
                         TAGMESSAGE_COLOR="\033[01;34m $TAGMESSAGE \033[0m  (-$COUNT_FROM_TAG)"
                         #LASTMSG=`git log -1 --format="%s"  $LASTTAG_NAME`
                    fi
-                   if [ ! -z "$COMMITS" -a ! -z "$HIGHER_TAG" ]; then
+                   if [ -n "$COMMITS" -a -n "$HIGHER_TAG" ]; then
                         git --no-pager log --pretty=oneline --abbrev-commit $TAG..$HIGHER_TAG
                    fi
                    if [ "x$TAG" = "x$LASTTAG_NAME" ]; then
                         COUNT_FROM_TAG=`git log --pretty=tformat:'%h' $TAG..HEAD  | grep -v '^$' |wc -l`
                         TAGMESSAGE_COLOR="\033[01;34m $TAGMESSAGE \033[0m  (+$COUNT_FROM_TAG)"
-                        echo "\033[32m$PROJECT20:\033[0m \033[31m$BRANCH20\033[0m $TAGMESSAGE_COLOR $NC" ;
+                        echo "\033[32m$PROJECT20:\033[0m \033[31m$BRANCH20\033[0m $TAGMESSAGE_COLOR $NC"
                    else
-                        echo "                                               $TAGMESSAGE_COLOR $NC" ;  
+                        echo "                                               $TAGMESSAGE_COLOR $NC"
                    fi
                    HIGHER_TAG=$TAG
                 done
@@ -135,12 +121,12 @@ do
 done
 
 if [ -z "$NO_SUMMARY" ]; then
-        if [ ! -z "$LINE_SEPARATOR" ]; then 
-             echo "\033[44m $(tput el) $(tput sgr0)"
-        fi
-        TIME=`date +%H:%M:%S`
-        ELAPSED_TIME=$((`date +'%s'` - $START_TIME))
-        echo "$BASENAME finished:$TIME took:$(($ELAPSED_TIME/60)) min $(($ELAPSED_TIME%60)) s"
+    if [ -n "$LINE_SEPARATOR" ]; then 
+        echo "\033[44m $(tput el) $(tput sgr0)"
+    fi
+    TIME=`date +%H:%M:%S`
+    ELAPSED_TIME=$((`date +'%s'` - $START_TIME))
+    echo "$BASENAME finished:$TIME took:$(($ELAPSED_TIME/60)) min $(($ELAPSED_TIME%60)) s"
 fi
 
 

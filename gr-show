@@ -34,7 +34,7 @@ while [ $# -gt 0 ]; do
     -s|--stashes)         STASHES=1 ;;
     -ls|--line-separator) LINE_SEPARATOR=1 ;;
     -ns|--no-summary)     NO_SUMMARY=1 ;;
-    *)                    PROJECT_DIR=$1 ;;
+    *)                    "$1" ;;
   esac
   shift
 done
@@ -44,18 +44,17 @@ if [ -z "$PROJECT_DIR" ]; then
 fi
 
 if [ ! -d "$PROJECT_DIR" ]; then
-    echo "directory $PROJECT_DIR does not exist"
-    exit 1
+    echo "directory $PROJECT_DIR does not exist" ; exit 1
 fi
 
 CWD=`pwd`
-cd $PROJECT_DIR
+cd "$PROJECT_DIR"
 PROJECT_DIR=`pwd`
 
 find "$PROJECT_DIR" -type d -name ".git*" $LIMIT_DEPTH | sed 's/\/.git//g' | sort | while read ENTRY
 do
-    if [ ! -f $ENTRY/.git/skip ]; then
-        cd $ENTRY
+    if [ ! -f "$ENTRY/.git/skip" ]; then
+        cd "$ENTRY"
         if [ -n "$LINE_SEPARATOR" ]; then
              echo "\033[44m $(tput el) $(tput sgr0)"
         fi
@@ -108,7 +107,7 @@ do
                 if [ -n "$VERBOSE" ] && [ $LOCAL_STASHES_COUNT -ne 0 ]; then
                     echo "$LOCAL_STASHES"
                 fi
-                cd $PROJECT_DIR
+                cd "$PROJECT_DIR"
         fi
 done
 
