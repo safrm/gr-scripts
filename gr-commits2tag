@@ -28,13 +28,13 @@ usage() {
     echo " "
 }
 
-MAX_COMMITS=200 
+MAX_COMMITS=200
 #default relative format cr
 TFORMAT=' %Cred%h%Creset - %s %Cgreen(%cr) %C(bold blue)<%an>%Creset '
 
 while [ $# -gt 0 ]; do
   case "$1" in
-    -V|--version) echo "`basename $0` ${VERSION} ${VERSION_DATE}" ; exit 0 ;;  
+    -V|--version) echo "`basename $0` ${VERSION} ${VERSION_DATE}" ; exit 0 ;;
     -v|--verbose) VERBOSE=1 ;;
     -h|--help) usage ; exit ;;
     -or|--only-remote) ONLY_REMOTE=1 ;;
@@ -43,8 +43,8 @@ while [ $# -gt 0 ]; do
     -hm|--header-message) shift ; HEADER_MESSAGE="$1" ;;
     -mc|--max-commits) shift ; MAX_COMMITS=$1 ;;
     -ti|--time-iso) TFORMAT=' %Cred%h%Creset - %s %Cgreen(%ci) %C(bold blue)<%an>%Creset ' ;;
-    -tr|--time-relative) TFORMAT=' %Cred%h%Creset - %s %Cgreen(%cr) %C(bold blue)<%an>%Creset ';;
-     *) PROJECT_DIR="$1" ;; 
+    -tr|--time-relative) TFORMAT=' %Cred%h%Creset - %s %Cgreen(%cr) %C(bold blue)<%an>%Creset ' ;;
+     *) PROJECT_DIR="$1" ;;
   esac
   shift
 done
@@ -85,16 +85,16 @@ do
         PROJECT20=`printf '\e[1m%-22.22s\e[21m' $PROJECT20`
         BRANCH20=`printf '%-22.22s' [$BRANCH]`
 
-        if [ -z $LASTTAG_NAME ]; then 
+        if [ -z $LASTTAG_NAME ]; then
               #no tags
               FROM_LASTTAG=""
               echo "\033[32m$PROJECT20\033[0m \033[31m$BRANCH20\033[0m \033[41m no tags available \033[0m"
-         else 
+         else
               #valid tag
               FROM_LASTTAG="${LASTTAG_NAME}.."
               TAGMESSAGE=`git tag -l -n1 $LASTTAG_NAME`
               echo "\033[32m$PROJECT20\033[0m \033[31m$BRANCH20\033[0m \033[33m$TAGMESSAGE\033[0m"
-        fi   
+        fi
 
         HEAD=`git describe --tags --dirty=* --always 2> /dev/null`
         MASTER_LOCAL=`git describe --tags master --always 2> /dev/null`
@@ -112,12 +112,12 @@ do
             LCH_COUNT=`echo "$LOCAL_COMMITS_HEAD" | grep -v '^$' |wc -l`
 
             echo "\033[46mhead  :\033[0m \033[01;34m $HEAD \033[0m \033[42m$LCH_COUNT\033[0m"
-            if [ n "$LOCAL_COMMITS_HEAD" ]; then echo "$LOCAL_COMMITS_HEAD" ; fi
+            if [ -n "$LOCAL_COMMITS_HEAD" ]; then echo "$LOCAL_COMMITS_HEAD" ; fi
             echo "\033[46mlocal :\033[0m \033[01;34m $MASTER_LOCAL \033[0m \033[42m$LCFT_COUNT\033[0m"
-            if [ -n "$LOCAL_COMMITS_FROM_LASTTAG_LOCAL" ]; then 
-                echo "$LOCAL_COMMITS_FROM_LASTTAG_LOCAL" ; 
+            if [ -n "$LOCAL_COMMITS_FROM_LASTTAG_LOCAL" ]; then
+                echo "$LOCAL_COMMITS_FROM_LASTTAG_LOCAL" ;
             fi
-        fi        
+        fi
         echo "\033[46mremote:\033[0m \033[01;34m $MASTER_REMOTE \033[0m \033[42m$RCFT_COUNT\033[0m $NC"
         if [ -n "$REMOTE_COMMITS_FROM_LASTTAG_LOCAL" ]; then echo "$REMOTE_COMMITS_FROM_LASTTAG_LOCAL" ; fi
 
@@ -133,9 +133,8 @@ do
                 COMMITCOUNT_PUSH=`git shortlog $BRANCH..HEAD | grep -E '^[ ]+\w+' | wc -l`
             fi
 
-            if [ "x$LOCAL_CHANGES_COUNT" != "x0" ] || [ "x$COMMITCOUNT_PULL" != "x0" ] || [ "x$COMMITCOUNT_PUSH" != "x0" ] 
-            then
-                echo "\033[43m NEEDS UPDATE OR COMMIT (pull:$COMMITCOUNT_PULL/push:$COMMITCOUNT_PUSH/local-files:$LOCAL_CHANGES_COUNT)\033[0m"    
+            if [ "x$LOCAL_CHANGES_COUNT" != "x0" ] || [ "x$COMMITCOUNT_PULL" != "x0" ] || [ "x$COMMITCOUNT_PUSH" != "x0" ]; then
+                echo "\033[43m NEEDS UPDATE OR COMMIT (pull:$COMMITCOUNT_PULL/push:$COMMITCOUNT_PUSH/local-files:$LOCAL_CHANGES_COUNT)\033[0m"
             fi
             if [ -n "$VERBOSE" ] && [ "x$LOCAL_CHANGES" != "x" ] ; then
                 echo "$LOCAL_CHANGES"
@@ -144,11 +143,11 @@ do
         cd "$PROJECT_DIR"
     fi
     REMOTE_TOTAL_COUNT=$(($REMOTE_TOTAL_COUNT + $RCFT_COUNT )) ;
-    [ "x$RCFT_COUNT" != "x0" ] && COMPONENTSC=$(($COMPONENTSC + 1 )) 
+    [ "x$RCFT_COUNT" != "x0" ] && COMPONENTSC=$(($COMPONENTSC + 1 ))
 done
 
 if [ -z "$NO_SUMMARY" ]; then
-    if [ -n "$LINE_SEPARATOR" ]; then 
+    if [ -n "$LINE_SEPARATOR" ]; then
          echo "\033[44m $(tput el) $(tput sgr0)"
     fi
     TIME=`date +%H:%M:%S`
