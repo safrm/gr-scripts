@@ -40,16 +40,16 @@ while [ $# -gt 0 ]; do
   shift
 done
 
-if [ "x$REPO_NAME" = "x" ]; then
+if [ -z "$REPO_NAME" ]; then
     exiting "No new git repository name."
-elif [ -d $REPO_NAME ]; then
+elif [ -d "$REPO_NAME" ]; then
     exiting "Directory $REPO_NAME already exists."
 fi
 #echo "REPONAME: $REPO_NAME"
 
 #check params
-mkdir $REPO_NAME.git
-cd $REPO_NAME.git
+mkdir "$REPO_NAME.git"
+cd "$REPO_NAME.git"
 REPO_PATH=`pwd`
 echo "$REPO_PATH"
 git init --bare
@@ -67,16 +67,15 @@ cd $REPO_NAME-clone
 
 #set up directory structure
 cp -f ../$REPO_NAME.git/description .git/
-git commit --allow-empty -m "init" 
+git commit --allow-empty -m "init"
 git tag 0.0.0 -m "init tag"
 git push origin master -u
 git push --tags
 echo "new reposistory: $REPO_PATH"
-if [ -n "$KEEP_CLONE" ]; then 
+if [ -n "$KEEP_CLONE" ]; then
 	echo "cloned to:       `pwd`"
 else
     cd ..
 	rm -fr $REPO_NAME-clone
 fi
-
 
