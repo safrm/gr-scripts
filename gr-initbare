@@ -48,7 +48,7 @@ fi
 #echo "REPONAME: $REPO_NAME"
 
 #check params
-mkdir "$REPO_NAME.git"
+mkdir -m 775 "$REPO_NAME.git"
 cd "$REPO_NAME.git"
 REPO_PATH=`pwd`
 echo "$REPO_PATH"
