@@ -63,7 +63,6 @@ do
             if [ -n "$LINE_SEPARATOR" ]; then
                 echo "\033[44m $(tput el) $(tput sgr0)"
             fi
-            LASTTAG=`git describe --tags --dirty=* --always 2> /dev/null`
             PROJECT20=`basename $ENTRY`
             PROJECT20=`printf '%-20s' $PROJECT20`
             echo "\033[32m $ENTRY\033[0m cleaning.."
