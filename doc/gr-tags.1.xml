@@ -32,6 +32,7 @@
         <arg choice="opt">-c --commits</arg>
         <arg choice="opt">-ls --line-separator</arg>
         <arg choice="opt">-hm --header-message &lt;message&gt;</arg>
+        <arg choice="opt">-m --max-commits &lt;N&gt;</arg>
         <arg choice="opt">-v --verbose</arg>
         <arg choice="opt">-h --help</arg>
         <arg choice="opt">-ns --no-summary</arg>
@@ -55,7 +56,6 @@
           </para>
         </listitem>
       </varlistentry>
-
       <varlistentry><term>-c --commits</term>
         <listitem>
           <para>
@@ -63,7 +63,6 @@
           </para>
         </listitem>
       </varlistentry>
-
       <varlistentry><term>-ls --line-separator</term>
         <listitem>
           <para>
@@ -71,7 +70,6 @@
           </para>
         </listitem>
       </varlistentry>
-
       <varlistentry><term>-hm --header-message &lt;message&gt;</term>
         <listitem>
           <para>
@@ -79,7 +77,13 @@
           </para>
         </listitem>
       </varlistentry>
-      
+      <varlistentry><term>-m --max-commits &lt;N&gt;</term>
+        <listitem>
+          <para>
+            Limits maximum commit count (default 200).
+          </para>
+        </listitem>
+      </varlistentry>      
       <varlistentry><term>-v --verbose</term>
         <listitem>
           <para>

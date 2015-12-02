@@ -60,7 +60,6 @@
           </para>
         </listitem>
       </varlistentry>
-
       <varlistentry><term>-b --branch &lt;BranchName&gt;</term>
         <listitem>
           <para>
@@ -68,7 +67,6 @@
           </para>
         </listitem>
       </varlistentry>
-
       <varlistentry><term>-m --max-commits &lt;N&gt;</term>
         <listitem>
           <para>
@@ -76,7 +74,6 @@
           </para>
         </listitem>
       </varlistentry>
-
       <varlistentry><term>-r --reverse</term>
         <listitem>
           <para>
