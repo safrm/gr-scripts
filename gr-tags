@@ -83,11 +83,11 @@ do
           PROJECT20=`printf '\e[1m%-22.22s\e[21m' $PROJECT20`
           BRANCH20=`printf '%-22.22s' [$BRANCH]`
             
-          if [ -z $LASTTAG_NAME ]; then 
+          if [ -z "$LASTTAG_NAME" ]; then 
                #no tags
                TAGMESSAGE_COLOR="\033[41m no tags available \033[0m"
                if [ -n "$VERBOSE" ]; then
-                    COUNT_FROM_TAG=`git log --pretty=tformat:'%h' HEAD  | grep -v '^$' |wc -l`
+                    COUNT_FROM_TAG=`git log --pretty=tformat:'%h' HEAD | grep -v '^$' |wc -l`
                     TAGMESSAGE_COLOR="$TAGMESSAGE_COLOR (+$COUNT_FROM_TAG)"
                fi
                echo "\033[32m$PROJECT20:\033[0m \033[31m$BRANCH20\033[0m $TAGMESSAGE_COLOR $NC"
@@ -95,14 +95,14 @@ do
                     git --no-pager log -$MAX_COMMITS --pretty=oneline --abbrev-commit 
                fi
            else        
-               TAGS=$( for REF in $(git rev-list $LASTTAG_NAME ); do  git describe --exact-match $REF 2> /dev/null ; done | head -$DEPTH)   
+               TAGS=$( for REF in $(git rev-list "$LASTTAG_NAME" ); do  git describe --exact-match $REF 2> /dev/null ; done | head -$DEPTH)   
                for TAG in $TAGS ; do 
                    if [ -z "$VERBOSE" ]; then
-                        TAGMESSAGE=$TAG
+                        TAGMESSAGE="$TAG"
                         TAGMESSAGE_COLOR="\033[01;34m $TAGMESSAGE \033[0m"          
                    else
-                        COUNT_FROM_TAG=`git log --pretty=tformat:'%h' "$TAG".."$LASTTAG_NAME"  | grep -v '^$' | wc -l`
-                        TAGMESSAGE=`git tag -l -n1 $TAG`
+                        COUNT_FROM_TAG=`git log --pretty=tformat:'%h' "$TAG".."$LASTTAG_NAME" | grep -v '^$' | wc -l`
+                        TAGMESSAGE=`git tag -l -n1 "$TAG"`
                         TAGMESSAGE_COLOR="\033[01;34m $TAGMESSAGE \033[0m  (-$COUNT_FROM_TAG)"
                         #LASTMSG=`git log -1 --format="%s"  $LASTTAG_NAME`
                    fi
@@ -116,7 +116,7 @@ do
                    else
                         echo "                                               $TAGMESSAGE_COLOR $NC"
                    fi
-                   HIGHER_TAG=$TAG
+                   HIGHER_TAG="$TAG"
                 done
         fi
         cd "$PROJECT_DIR"
