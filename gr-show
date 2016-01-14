@@ -15,7 +15,7 @@ usage() {
     echo "Usage:$BASENAME [OPTIONS]... [PROJECT_DIR]"
     echo " options: "
     echo " -v,  --verbose ...................... prints more output"
-    echo " -ld, --limit-depth <N> .............. limit revcursion depth for directory structure"
+    echo " -ld, --limit-depth <N> .............. limit recursion depth for directory structure"
     echo " -s,  --stashes ...................... shows info about stashes"
     echo " -h,  --help ......................... shows command line help"
     echo " -ls, --line-separator ............... project separated by colored line"
