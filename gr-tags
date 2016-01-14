@@ -102,8 +102,12 @@ do
             fi
         else
             HIGHER_TAG=
-            TAGS=$( for REF in $(git rev-list "$LASTTAG_NAME" ); do  git describe --exact-match $REF 2> /dev/null ; done | head -$DEPTH )
-            for TAG in "$TAGS" ; do
+            FOUND_TAGS=0
+            TAGS=$( for REF in $(git rev-list "$LASTTAG_NAME" );
+                    do  git describe --exact-match $REF 2> /dev/null && FOUND_TAGS=$(($FOUND_TAGS +1)) ;
+                        if [ $FOUND_TAGS -gt $DEPTH ]; then break ; fi
+                    done | head -$DEPTH )
+            for TAG in $TAGS ; do
                 if [ -z "$VERBOSE" ]; then
                     TAGMESSAGE="$TAG"
                     TAGMESSAGE_COLOR="\033[01;34m $TAGMESSAGE \033[0m"
