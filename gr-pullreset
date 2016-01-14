@@ -3,7 +3,7 @@
 #author: Miroslav Safr <miroslav.safr@gmail.com>
 #
 VERSION=NA
-VERSION_DATE=NA
+    VERSION_DATE=NA
 #support color escape characters on different terminals
 alias echo="/bin/echo -e"
 
@@ -15,6 +15,7 @@ usage() {
     echo "Usage:$BASENAME [OPTIONS]... [PROJECT_DIR]"
     echo " options: "
     echo " -h, --help .......................... shows command line help"
+    echo " -ld, --limit-depth <N> .............. limit recursion depth for directory structure"
     echo " -ls, --line-separator ............... project separated by colored line"
     echo " -ns, --no-summary ................... do not print execution summary"
     echo " -V, --version  ...................... prints version of scripts"
@@ -25,6 +26,7 @@ while [ $# -gt 0 ]; do
   case "$1" in
     -V|--version)         echo "`basename $0` ${VERSION} ${VERSION_DATE}" ; exit 0 ;;
     -h|--help)            usage ; exit 0 ;;
+    -ld|--limit-depth) shift ; LIMIT_DEPTH="-maxdepth $1" ;;
     -ls|--line-separator) LINE_SEPARATOR=1 ;;
     -ns|--no-summary)     NO_SUMMARY=1 ;;
 	-b|--branch)		  USER_BRANCH=$1 ;;
@@ -44,7 +46,7 @@ CWD=`pwd`
 cd "$PROJECT_DIR"
 PROJECT_DIR=`pwd`
 
-find "$PROJECT_DIR" -type d -name ".git*"  |  sed 's/\/.git//g' | sort | while read ENTRY
+find "$PROJECT_DIR" $LIMIT_DEPTH -type d -name ".git*"  |  sed 's/\/.git//g' | sort | while read ENTRY
 do
         PROJECT20=`basename $ENTRY`
         PROJECT20=`printf '\e[1m%-22.22s\e[21m' $PROJECT20`
