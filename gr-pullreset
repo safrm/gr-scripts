@@ -30,7 +30,7 @@ while [ $# -gt 0 ]; do
     -ls|--line-separator) LINE_SEPARATOR=1 ;;
     -ns|--no-summary)     NO_SUMMARY=1 ;;
 	-b|--branch)		  USER_BRANCH=$1 ;;
-    *)                    PROJECT_DIR=$1 ;;
+    *)                    PROJECT_DIR="$1" ;;
   esac
   shift
 done
@@ -52,29 +52,29 @@ do
         PROJECT20=`printf '\e[1m%-22.22s\e[21m' $PROJECT20`
         if [ ! -f "$ENTRY/.git/skip" ]; then
             cd "$ENTRY"
-            if [ ! -z "$LINE_SEPARATOR" ]; then 
+            if [ ! -z "$LINE_SEPARATOR" ]; then
                 echo "\033[44m $(tput el) $(tput sgr0)"
             fi
             LASTTAG=`git describe --tags --dirty=* --always 2> /dev/null`
 			BRANCH=`git branch | egrep "^\*" | cut -d' ' -f2`
             BRANCH20=`printf '%-22.22s' [$BRANCH]`
-            echo "\033[32m$PROJECT20\033[0m \033[31m$BRANCH20\033[0m from: \033[01;34m $LASTTAG \033[0m \c" 
+            echo "\033[32m$PROJECT20\033[0m \033[31m$BRANCH20\033[0m from: \033[01;34m $LASTTAG \033[0m \c"
             [ -n "$USER_BRANCH" -a "$USER_BRANCH" != "$BRANCH" ] && BRANCH=$USER_BRANCH && echo "Switching to user defined branch: $BRANCH"
 
-            git fetch origin 2> /dev/null
+            git fetch -a 2> /dev/null
             if [ $? = 128 ] ; then
                 echo "remote \033[41mNOT CONNECTED\033[0m "
             else
             echo
-            git fetch origin --tags
+            git fetch --tags
             git reset --hard origin/$BRANCH
             git gc --quiet
             git pull
             if [ $? != 0 ]; then
-                 echo "\033[41mPULL FAILED, FIX CONFLICT MANUALLY\033[0m"  
+                 echo "\033[41mPULL FAILED, FIX CONFLICT MANUALLY\033[0m"
             fi
         fi
-    
+
         TO=`git describe --tags --dirty=* --always 2> /dev/null`
         if [ "$LASTTAG" != "$TO" ]; then
             echo " \033[33mupdated to:\033[0m \033[01;34m $TO \033[0m  "
@@ -83,12 +83,12 @@ do
         fi
             cd "$PROJECT_DIR"
         else
-            echo "\033[32m$PROJECT20\033[0m \033[35m skipped update \033[0m" 
+            echo "\033[32m$PROJECT20\033[0m \033[35m skipped update \033[0m"
         fi
 done
 
 if [ -z "$NO_SUMMARY" ]; then
-    if [ -n "$LINE_SEPARATOR" ]; then 
+    if [ -n "$LINE_SEPARATOR" ]; then
         echo "\033[44m $(tput el) $(tput sgr0)"
     fi
     TIME=`date +%H:%M:%S`
