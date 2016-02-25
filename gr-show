@@ -15,11 +15,11 @@ usage() {
     echo "Usage:$BASENAME [OPTIONS]... [PROJECT_DIR]"
     echo " options: "
     echo " -v,  --verbose ...................... prints more output"
-    echo " -ld, --limit-depth <N> .............. limit recursion depth for directory structure"
     echo " -s,  --stashes ...................... shows info about stashes"
     echo " -h,  --help ......................... shows command line help"
     echo " -ls, --line-separator ............... project separated by colored line"
     echo " -ns, --no-summary ................... do not print execution summary"
+    echo " -ld, --limit-depth <N> .............. limit recursion depth for directory structure search"
     echo " -V,  --version  ..................... prints version of scripts"
     echo "Note: touch <dir>/.git/skip skips selected repo"
     echo " "
@@ -30,10 +30,10 @@ while [ $# -gt 0 ]; do
     -V|--version) echo "`basename $0` ${VERSION} ${VERSION_DATE}" ; exit 0 ;;
     -h|--help) usage ; exit 0 ;;
     -v|--verbose)         VERBOSE=1 ;;
-    -ld|--limit-depth) shift ; LIMIT_DEPTH="-maxdepth $1" ;;
     -s|--stashes)         STASHES=1 ;;
     -ls|--line-separator) LINE_SEPARATOR=1 ;;
     -ns|--no-summary)     NO_SUMMARY=1 ;;
+    -ld|--limit-depth) shift ; LIMIT_DEPTH="-maxdepth $1" ;;
     *)                    "$1" ;;
   esac
   shift
@@ -51,7 +51,7 @@ CWD=`pwd`
 cd "$PROJECT_DIR"
 PROJECT_DIR=`pwd`
 
-find "$PROJECT_DIR" -type d -name ".git*" $LIMIT_DEPTH | sed 's/\/.git//g' | sort | while read ENTRY
+find "$PROJECT_DIR" $LIMIT_DEPTH -type d -name ".git*" | sed 's/\/.git//g' | sort | while read ENTRY
 do
     if [ ! -f "$ENTRY/.git/skip" ]; then
         cd "$ENTRY"

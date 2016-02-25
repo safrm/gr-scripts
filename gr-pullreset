@@ -18,6 +18,7 @@ usage() {
     echo " -ld, --limit-depth <N> .............. limit recursion depth for directory structure"
     echo " -ls, --line-separator ............... project separated by colored line"
     echo " -ns, --no-summary ................... do not print execution summary"
+    echo " -ld, --limit-depth <N> .............. limit recursion depth for directory structure search"
     echo " -V, --version  ...................... prints version of scripts"
     echo "Note: touch <dir>/.git/skip skips selected repo"
     echo " "
@@ -30,6 +31,7 @@ while [ $# -gt 0 ]; do
     -ls|--line-separator) LINE_SEPARATOR=1 ;;
     -ns|--no-summary)     NO_SUMMARY=1 ;;
 	-b|--branch)		  USER_BRANCH=$1 ;;
+    -ld|--limit-depth) shift ; LIMIT_DEPTH="-maxdepth $1" ;;
     *)                    PROJECT_DIR="$1" ;;
   esac
   shift
