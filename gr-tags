@@ -74,7 +74,8 @@ do
 
         BRANCH=`git branch | egrep "^\*" | cut -d' ' -f2`
         if [ -n "$LOCAL_ONLY" ]; then
-            NC=" remote \033[41mLOCAL ONLY\033[0m "
+#            NC=" local only remote \033[41mLOCAL ONLY\033[0m "
+            NC=" local only "
         else
             git fetch origin --tags 2> /dev/null
             if [ $? = 128 ]; then
