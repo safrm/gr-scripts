@@ -53,26 +53,30 @@ PROJECT_DIR=`pwd`
 
 find "$PROJECT_DIR" $LIMIT_DEPTH -type d -name ".git*"  |  sed 's/\/.git//g' | sort | while read ENTRY
 do
-        PROJECT20=`basename $ENTRY`
-        PROJECT20=`printf '\e[1m%-22.22s\e[21m' $PROJECT20`
-        if [ ! -f "$ENTRY/.git/skip" ]; then
-            cd "$ENTRY"
-            if [ ! -z "$LINE_SEPARATOR" ]; then
-                echo "\033[44m $(tput el) $(tput sgr0)"
-            fi
-            LASTTAG=`git describe --tags --dirty=* --always 2> /dev/null`
-            BRANCH=`git branch | egrep "^\*" | cut -d' ' -f2`
-            BRANCH20=`printf '%-22.22s' [$BRANCH]`
-            echo "\033[32m$PROJECT20\033[0m \033[31m$BRANCH20\033[0m from: \033[01;34m $LASTTAG \033[0m \c"
-            [ -n "$USER_BRANCH" -a "$USER_BRANCH" != "$BRANCH" ] && BRANCH=$USER_BRANCH && echo "Switching to user defined branch: $BRANCH"
+    PROJECT20=`basename $ENTRY`
+    PROJECT20=`printf '\e[1m%-22.22s\e[21m' $PROJECT20`
+    if [ ! -f "$ENTRY/.git/skip" ]; then
+        cd "$ENTRY"
+        if [ ! -z "$LINE_SEPARATOR" ]; then
+            echo "\033[44m $(tput el) $(tput sgr0)"
+        fi
+        LASTTAG=`git describe --tags --dirty=* --always 2> /dev/null`
+        BRANCH=`git branch | egrep "^\*" | cut -d' ' -f2`
+        BRANCH20=`printf '%-22.22s' [$BRANCH]`
+        echo "\033[32m$PROJECT20\033[0m \033[31m$BRANCH20\033[0m from: \033[01;34m $LASTTAG \033[0m \c"
+        [ -n "$USER_BRANCH" -a "$USER_BRANCH" != "$BRANCH" ] && BRANCH=$USER_BRANCH && echo "Switching to user defined branch: $BRANCH"
 
-            git fetch $FETCH_REMOTE 2> /dev/null
-            if [ $? = 128 ] ; then
-                echo "remote \033[41mNOT CONNECTED\033[0m "
-            else
+        git fetch $FETCH_REMOTE 2> /dev/null
+        if [ $? = 128 ] ; then
+            echo "remote \033[41mNOT CONNECTED\033[0m "
+        else
             echo
             git fetch $FETCH_REMOTE --tags
-            git reset --hard origin/$BRANCH
+            # check that branch is remote
+            if git branch -a | grep -q -i "remotes/origin/$BRANCH" ; then
+                 REMOTE="origin/"
+            fi
+            git reset --hard $REMOTE$BRANCH
             git gc --quiet
             git pull -q
             if [ $? != 0 ]; then
