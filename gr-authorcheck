@@ -81,8 +81,8 @@ fi
 
 FIFO=/tmp/TOTAL_COUNT.$$
 FIFO2=/tmp/FOUND_COUNT.$$
-trap 'rm -f $FIFO' 0
-trap 'rm -f $FIFO2' 0
+trap "rm -f $FIFO" 0
+trap "rm -f $FIFO2" 0
 mkfifo $FIFO
 mkfifo $FIFO2
 find "$PROJECT_DIR" $LIMIT_DEPTH -type d -name ".git*" | sed 's/\/.git//g' | sort | while read ENTRY
