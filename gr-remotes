@@ -5,7 +5,7 @@
 VERSION=NA
 VERSION_DATE=NA
 #support color escape characters on different terminals
-alias echo="/bin/echo -e"
+alias echo="$(which echo) -e"
 
 BASENAME=`basename $0`
 START_TIME=`date +'%s'`
@@ -28,8 +28,8 @@ while [ $# -gt 0 ]; do
     -ls|--line-separator) LINE_SEPARATOR=1 ;;
     -ns|--no-summary) NO_SUMMARY=1 ;;
     -ld|--limit-depth) shift ; LIMIT_DEPTH="-maxdepth $1" ;;
-    -V|--version) echo "`basename $0` ${VERSION} ${VERSION_DATE}" ; exit 0 ;;  
-    *) PROJECT_DIR="$1" ;; 
+    -V|--version) echo "`basename $0` ${VERSION} ${VERSION_DATE}" ; exit 0 ;;
+    *) PROJECT_DIR="$1" ;;
   esac
   shift
 done
@@ -38,8 +38,7 @@ if [ -z "$PROJECT_DIR" ] || [ ! -d "$PROJECT_DIR" ]; then
     PROJECT_DIR="./"
 fi
 
-if [ ! -d "$PROJECT_DIR" ] 
-then
+if [ ! -d "$PROJECT_DIR" ]; then
   echo "directory $PROJECT_DIR does not exist" ; exit 1
 fi
 
@@ -50,11 +49,11 @@ PROJECT_DIR=`pwd`
 find "$PROJECT_DIR" $LIMIT_DEPTH -type d -name ".git*" | sed 's/\/.git//g' | sort | while read ENTRY
 do
     cd "$ENTRY"
-    if [ -n "$LINE_SEPARATOR" ]; then 
+    if [ -n "$LINE_SEPARATOR" ]; then
         echo "\033[44m $(tput el) $(tput sgr0)"
     fi
     #URLS=`git config --get remote.origin.url`
-    URLS=`git remote -v | awk '{print $1 " " $2 }' | sort -u`  
+    URLS=`git remote -v | awk '{print $1 " " $2 }' | sort -u`
     PROJECT20=`basename $ENTRY`
     PROJECT20=`printf '\e[1m%-22.22s\e[21m' $PROJECT20`
     echo "\033[32m$PROJECT20\033[0m $URLS"
@@ -62,7 +61,7 @@ do
 done
 
 if [ -z "$NO_SUMMARY" ]; then
-    if [ -n "$LINE_SEPARATOR" ]; then 
+    if [ -n "$LINE_SEPARATOR" ]; then
         echo "\033[44m $(tput el) $(tput sgr0)"
     fi
     TIME=`date +%H:%M:%S`

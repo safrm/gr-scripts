@@ -5,7 +5,7 @@
 VERSION=NA
 VERSION_DATE=NA
 #support color escape characters on different terminals
-alias echo="/bin/echo -e"
+alias echo="$(which echo) -e"
 debug(){ [ ${DEBUG_FLAG:-0} -eq 0 ] || echo "Running($#): $*" ; }
 verbose(){ [ ${VERBOSE_FLAG:-0} -eq 0 ] || echo "\033[36m$*\033[00m" ; }
 fail() { printf "\n\033[01;31mERROR: $*\033[00m\n" ; exit 1 ; }

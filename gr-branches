@@ -5,7 +5,7 @@
 VERSION=NA
 VERSION_DATE=NA
 #support color escape characters on different terminals
-alias echo="/bin/echo -e"
+alias echo="$(which echo) -e"
 
 BASENAME=`basename $0`
 START_TIME=`date +'%s'`
@@ -31,7 +31,7 @@ while [ $# -gt 0 ]; do
     -ls|--line-separator) LINE_SEPARATOR=1 ;;
     -ns|--no-summary) NO_SUMMARY=1 ;;
     -ld|--limit-depth) shift ; LIMIT_DEPTH="-maxdepth $1" ;;
-    *) PROJECT_DIR="$1" ;; 
+    *) PROJECT_DIR="$1" ;;
   esac
   shift
 done
@@ -42,7 +42,7 @@ fi
 
 if [ ! -d "$PROJECT_DIR" ]; then
     echo "directory $PROJECT_DIR does not exist"
-    exit 1        
+    exit 1
 fi
 
 CWD=`pwd`
@@ -67,7 +67,7 @@ do
 done
 
 if [ -z "$NO_SUMMARY" ]; then
-        if [ -n "$LINE_SEPARATOR" ]; then 
+        if [ -n "$LINE_SEPARATOR" ]; then
              echo "\033[44m $(tput el) $(tput sgr0)"
         fi
         TIME=`date +%H:%M:%S`

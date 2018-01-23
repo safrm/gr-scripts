@@ -5,7 +5,7 @@
 VERSION=NA
 VERSION_DATE=NA
 #support color escape characters on different terminals
-alias echo="/bin/echo -e"
+alias echo="$(which echo) -e"
 
 BASENAME=`basename $0`
 START_TIME=`date +'%s'`
@@ -33,7 +33,7 @@ while [ $# -gt 0 ]; do
     -s|--stashes)         STASHES=1 ;;
     -ls|--line-separator) LINE_SEPARATOR=1 ;;
     -ns|--no-summary)     NO_SUMMARY=1 ;;
-    -ld|--limit-depth) shift ; LIMIT_DEPTH="-maxdepth $1" ;;    
+    -ld|--limit-depth) shift ; LIMIT_DEPTH="-maxdepth $1" ;;
     *)                    PROJECT_DIR="$1" ;;
   esac
   shift
@@ -80,7 +80,7 @@ do
 	    STASHINFO="/stashes:$LOCAL_STASHES_COUNT"
 	fi
     if [ $LOCAL_CHANGES_COUNT -ne 0 ] || [ $COMMITCOUNT -ne 0 ] || [ $LOCAL_STASHES_COUNT -ne 0 ]; then
-        echo "\033[43m NEEDS COMMIT (push:$COMMITCOUNT/local-files:$LOCAL_CHANGES_COUNT$STASHINFO)\033[0m"    
+        echo "\033[43m NEEDS COMMIT (push:$COMMITCOUNT/local-files:$LOCAL_CHANGES_COUNT$STASHINFO)\033[0m"
     fi
 
     if [ -n "$VERBOSE" ]; then

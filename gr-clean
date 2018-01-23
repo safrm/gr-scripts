@@ -5,7 +5,7 @@
 VERSION=NA
 VERSION_DATE=NA
 #support color escape characters on different terminals
-alias echo="/bin/echo -e"
+alias echo="$(which echo) -e"
 
 BASENAME=`basename $0`
 START_TIME=`date +'%s'`
@@ -31,7 +31,7 @@ usage() {
 while [ $# -gt 0 ]; do
   case "$1" in
     -h|--help) usage ; exit ;;
-    -V|--version) echo "`basename $0` ${VERSION} ${VERSION_DATE}" ; exit 0 ;;  
+    -V|--version) echo "`basename $0` ${VERSION} ${VERSION_DATE}" ; exit 0 ;;
     -ls|--line-separator) LINE_SEPARATOR=1 ;;
     -ns|--no-summary)     NO_SUMMARY=1 ;;
     -n|--dry-run)         DRY_RUN=1 ;;
