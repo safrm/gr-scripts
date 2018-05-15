@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN" "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd">
+<refentry id="gr-update.1">
+
+<refentryinfo>
+    <title>Git recursive directories scripts</title>
+    <author>
+        <personname><firstname>Miroslav</firstname><surname>Safr</surname></personname>
+        <email>miroslav.safr@gmail.com</email>
+        <personblurb><para>Author and maintainer</para></personblurb>
+    </author>
+    <date>2013-02-03</date>
+    <productnumber>NA</productnumber>
+    <productname>gr-scripts</productname>
+</refentryinfo>
+
+<refmeta>
+    <refentrytitle>gr-update</refentrytitle>
+	<manvolnum>1</manvolnum>
+</refmeta>
+
+
+<refnamediv>
+    <refname>gr-update</refname>
+    <refpurpose>Updates remotes.</refpurpose>
+</refnamediv>
+
+<refsynopsisdiv>
+	<cmdsynopsis>
+        <command>gr-update  [OPTIONS] ... [PROJECT_DIR]</command>
+        <arg choice="opt">-h --help</arg>
+        <arg choice="opt">-ls --line-separator</arg>
+        <arg choice="opt">-ns --no-summary</arg>
+        <arg choice="opt">-V --version</arg>
+	</cmdsynopsis>
+</refsynopsisdiv>
+
+  <refsect1><title>DESCRIPTION</title>
+    <para>
+      Updates all remotes.
+    </para>
+  </refsect1>
+
+  <refsect1>
+    <title>OPTIONS</title>
+
+    <variablelist>
+      <varlistentry><term>-h --help</term>
+        <listitem>
+          <para>
+            Print help text to the screen.
+          </para>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry><term>-ls --line-separator</term>
+        <listitem>
+          <para>
+            Projects are separated by colored line
+          </para>
+        </listitem>
+      </varlistentry>
+      
+      <varlistentry><term>-ns --no-summary</term>
+        <listitem>
+          <para>
+            Does not print execution summary.
+          </para>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry><term>-V --version</term>
+        <listitem>
+          <para>
+            Prints version to the screen and exits.
+          </para>
+        </listitem>
+      </varlistentry>
+
+    </variablelist>
+  </refsect1>
+
+  <refsect1>
+    <title>PROJECT_DIR</title>
+    <para>
+      Root directory with git clones. By default is used current directory.
+    </para>
+    <para>
+      All gr-scipts support subdirectory hierarchy &lt;my-dir&gt;/&lt;my-project-group&gt;/&lt;git-clone&gt;.
+      Project update can be skiped by creating file skip in .git directory.
+      <screen format="linespecific">
+        touch &lt;my-project&gt;/.git/skip
+      </screen>
+    </para>
+  </refsect1>
+
+  <refsect1><title>SEE ALSO</title>
+    <para>
+      gr-scripts(1).
+      <ulink url="http://safrm.net/projects/gr-scripts/"/>
+    </para>
+  </refsect1>
+
+  <refsect1>
+    <title>AUTHOR</title>
+    <para>
+        Miroslav Šafr &lt;miroslav.safr@gmail.com&gt;
+    </para>
+  </refsect1>
+  <refsect1>
+  <title>LICENSE</title>
+      <para>
+       LGPL2
+    </para>       
+  </refsect1>
+</refentry>

@@ -69,6 +69,9 @@ sed -i".bkp" "1,/^VERSION_DATE=/s/^VERSION_DATE=.*/VERSION_DATE=%{APP_BUILD_DATE
 install -m 755 ./gr-changes  %{buildroot}%{_bindir}/
 sed -i".bkp" "1,/^VERSION=/s/^VERSION=.*/VERSION=%{version}/" %{buildroot}%{_bindir}/gr-changes && rm -f %{buildroot}%{_bindir}/gr-changes.bkp
 sed -i".bkp" "1,/^VERSION_DATE=/s/^VERSION_DATE=.*/VERSION_DATE=%{APP_BUILD_DATE}/" %{buildroot}%{_bindir}/gr-changes && rm -f %{buildroot}%{_bindir}/gr-changes.bkp
+install -m 755 ./gr-update  %{buildroot}%{_bindir}/
+sed -i".bkp" "1,/^VERSION=/s/^VERSION=.*/VERSION=%{version}/" %{buildroot}%{_bindir}/gr-update && rm -f %{buildroot}%{_bindir}/gr-update.bkp
+sed -i".bkp" "1,/^VERSION_DATE=/s/^VERSION_DATE=.*/VERSION_DATE=%{APP_BUILD_DATE}/" %{buildroot}%{_bindir}/gr-update && rm -f %{buildroot}%{_bindir}/gr-update.bkp
 
 mkdir -p -m 0755  %{buildroot}%{_sysconfdir}/bash_completion.d
 install -m 0777 -v ./gr-scripts_completion  %{buildroot}%{_sysconfdir}/bash_completion.d
@@ -106,6 +109,7 @@ done
 %{_bindir}/gr-show
 %{_bindir}/gr-showlocal
 %{_bindir}/gr-tags
+%{_bindir}/gr-update
 
 %{_sysconfdir}/bash_completion.d/gr-scripts_completion
 
@@ -124,4 +128,5 @@ done
 %{_mandir}/man1/gr-show.1*
 %{_mandir}/man1/gr-showlocal.1*
 %{_mandir}/man1/gr-tags.1*
+%{_mandir}/man1/gr-update.1*
 

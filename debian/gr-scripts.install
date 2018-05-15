@@ -11,6 +11,7 @@ gr-remotes /usr/bin/
 gr-show /usr/bin/
 gr-showlocal /usr/bin/
 gr-tags /usr/bin/
+gr-update /usr/bin/
 
 gr-scripts_completion /etc/bash_completion.d/
 

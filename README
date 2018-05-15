@@ -18,6 +18,7 @@ content:
  gr-show ............ shows local tags versus current remote situation in subdirectories 
  gr-showlocal ....... shows local tags and if it was edited in subdirectories
  gr-tags ............ shows tags 
+ gr-update .......... do basic remote update 
 
  install.sh ......... executes installation to /urs/local/bin directory
 
