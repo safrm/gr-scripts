@@ -1,4 +1,4 @@
-#/bin/sh
+#!/bin/sh
 #git recursive directories scripts - http://safrm.net/projects/gr-scripts
 #version: 1.0
 #author:  Miroslav Safr miroslav.safr@gmail.com
@@ -16,6 +16,8 @@ appver_update_version_and_date $BINDIR/gr-clean
 $INSTALL_755 ./gr-commits2tag $BINDIR
 appver_update_version_and_date $BINDIR/gr-commits2tag
 $INSTALL_755 ./gr-pull $BINDIR
+appver_update_version_and_date $BINDIR/gr-gr
+$INSTALL_755 ./gr-gr $BINDIR
 appver_update_version_and_date $BINDIR/gr-pull
 $INSTALL_755 ./gr-pullreset $BINDIR
 appver_update_version_and_date $BINDIR/gr-pullreset
